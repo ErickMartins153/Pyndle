@@ -1,0 +1,43 @@
+#fundo {
+    background-color: #FFF9EF;
+    border-radius: 15px;
+}
+
+#formulario {
+    background-color: #4E3D2C;
+    border-radius: 15px;
+}
+
+#logoFrame {
+    background-color: #F8F3EF;
+    border-radius: 15px;
+}
+
+#pyndleLogo{
+    font-size: 60px;
+}
+
+#labelCaixa {
+    font-size: 20px;
+    color: #F8F3EF
+}
+
+#caixaEntrada {
+    border-radius: 8px;
+    font-size: 15px;
+    padding: 2px 5px;
+}
+
+#logarBotao {
+    border-radius: 15%;
+    padding: 2%;
+    font-size: 20px;
+    background-color: #F0D097;
+}
+
+#registrarBotao {
+    border-radius: 15%;
+    padding: 2%;
+    font-size: 20px;
+    background-color: #A9A9A9;
+}
