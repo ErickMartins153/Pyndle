@@ -23,7 +23,7 @@ class Formulario(QtWidgets.QFrame):
 
         fundoLogoLayout = QtWidgets.QHBoxLayout()
         fundoLogoLayout.setContentsMargins(5, 0, 5, 0)
-        fundoLogoLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        fundoLogoLayout.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         logoFrame.setLayout(fundoLogoLayout)
 
         pyndleLogo = QtWidgets.QLabel(logoFrame)

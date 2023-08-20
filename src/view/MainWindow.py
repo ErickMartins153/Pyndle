@@ -1,8 +1,8 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 import sys
-from src.view.components.dashboard.Dashboard import Dashboard
-from src.view.components.login.TelaLogin import TelaLogin
-from src.view.assets.styles import non_css_styles
+from components.dashboard.Dashboard import Dashboard
+from components.login.TelaLogin import TelaLogin
+from assets.styles import non_css_styles
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -37,6 +37,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Instância catalogo (pagina)
         catalogo = QtWidgets.QWidget(self.paginas)
         self.paginas.addWidget(catalogo)
+
 
 application = QtWidgets.QApplication(sys.argv)
 janela = MainWindow()
