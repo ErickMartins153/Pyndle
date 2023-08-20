@@ -1,6 +1,6 @@
 import sqlite3
 
-conexao = sqlite3.connect("../model/Pyndle.db")
+conexao = sqlite3.connect("src/model/Pyndle.db")
 sgbd = conexao.cursor()
 
 

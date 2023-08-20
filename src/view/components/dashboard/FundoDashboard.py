@@ -1,16 +1,13 @@
-import os, pathlib
-
 from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 from src.view.components.Menu import Menu
-import sys
+
 
 class FundoDashboard(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
         self.setParent(parent)
-        #path = os.fspath(pathlib.Path(__file__).parent.parent.pare / 'fundo_dashboard.css')
-        self.setStyleSheet(open('assets/styles/fundo_dashboard.css').read())
+        self.setStyleSheet(open('src/view/assets/styles/fundo_dashboard.css').read())
 
         fundoLayout = QtWidgets.QVBoxLayout()
         self.setLayout(fundoLayout)
@@ -48,9 +45,9 @@ class FundoDashboard(QtWidgets.QFrame):
         meusLivrosLayout = QtWidgets.QGridLayout()
         meusLivros.setLayout(meusLivrosLayout)
 
-        #verMais = QtWidgets.QPushButton()
-        #verMais.setObjectName('verMais')
-        #meusLivrosLayout.addWidget(verMais, 0, 1)
+        # verMais = QtWidgets.QPushButton()
+        # verMais.setObjectName('verMais')
+        # meusLivrosLayout.addWidget(verMais, 0, 1)
 
         # QFrame (Grupo: Catálogo) ----------------------------
         groupCatalogo = QtWidgets.QFrame(self)

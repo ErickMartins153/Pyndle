@@ -1,14 +1,13 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 import sys
-import src.controller.login
-from components.login.Formulario import Formulario
+from src.view.components.login.Formulario import Formulario
 
 class TelaLogin(QtWidgets.QWidget):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
         self.setParent(parent)
-        self.setStyleSheet(open("assets/styles/telaLogin.css").read())
+        self.setStyleSheet(open("src/view/assets/styles/telaLogin.css").read())
 
         loginLayout = QtWidgets.QVBoxLayout()
         self.setLayout(loginLayout)

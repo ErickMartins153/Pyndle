@@ -12,7 +12,7 @@ class Menu(QtWidgets.QFrame):
 
         super().__init__()
         self.setParent(parent)
-        self.setStyleSheet(open('assets/styles/menu.css').read())
+        self.setStyleSheet(open('src/view/assets/styles/menu.css').read())
         self.setMaximumHeight(70)
 
         menuLayout = QtWidgets.QHBoxLayout()

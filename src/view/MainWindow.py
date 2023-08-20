@@ -1,14 +1,14 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 import sys
-from components.dashboard.Dashboard import Dashboard
-from components.login.TelaLogin import TelaLogin
-from assets.styles import non_css_styles
+from src.view.components.dashboard.Dashboard import Dashboard
+from src.view.components.login.TelaLogin import TelaLogin
+from src.view.assets.styles import non_css_styles
 
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet(open('assets/styles/style.css').read())
+        self.setStyleSheet(open('src/view/assets/styles/style.css').read())
         self.setMinimumSize(1024, 650)
 
         # Central QWidget (mainWindowSpace)
@@ -37,9 +37,3 @@ class MainWindow(QtWidgets.QMainWindow):
         # Instância catalogo (pagina)
         catalogo = QtWidgets.QWidget(self.paginas)
         self.paginas.addWidget(catalogo)
-
-
-application = QtWidgets.QApplication(sys.argv)
-janela = MainWindow()
-janela.show()
-sys.exit(application.exec())

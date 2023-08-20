@@ -1,8 +1,8 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
-from components.Menu import Menu
-from components.dashboard.FundoDashboard import FundoDashboard
-import sys
+from src.view.components.Menu import Menu
+from src.view.components.dashboard.FundoDashboard import FundoDashboard
+
 
 class Dashboard(QtWidgets.QWidget):
     def __init__(self, parent: QtWidgets.QWidget):
