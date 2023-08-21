@@ -1,7 +1,7 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 import sys
-from src.controller.login import logar
+from controller.telaInicial import logar
 
 
 class Formulario(QtWidgets.QFrame):
