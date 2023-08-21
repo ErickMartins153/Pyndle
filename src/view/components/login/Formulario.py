@@ -1,7 +1,8 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 import sys
-from controller.telaInicial import logar
+from src.controller.telaInicial import checar
+from src.view.components.login.Registrar import Registrar
 
 
 class Formulario(QtWidgets.QFrame):
@@ -75,6 +76,7 @@ class Formulario(QtWidgets.QFrame):
         self.registrarBotao = QtWidgets.QPushButton(botoesFrame)
         self.registrarBotao.setText("Registrar")
         self.registrarBotao.setObjectName("registrarBotao")
+        self.registrarBotao.clicked.connect(self.registrarBotaoClicado)
         botoesFrameLayout.addWidget(self.registrarBotao)
 
     # Funções
@@ -84,10 +86,14 @@ class Formulario(QtWidgets.QFrame):
         senha = self.entradaSenha.text()
 
         try:
-            status = logar(usuario, senha)
+            status = checar(usuario, senha)
             if status is True:
                 self.parent().parent().parent().setCurrentIndex(1)
             else:
                 pass
         except IndexError:
             print("Usuário não encontrado")
+
+    def registrarBotaoClicado(self):
+        self.hide()
+        self.parent().findChild(Registrar).show()

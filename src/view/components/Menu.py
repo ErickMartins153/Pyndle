@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 import sys
 
+
 class Menu(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         """
@@ -12,7 +13,7 @@ class Menu(QtWidgets.QFrame):
 
         super().__init__()
         self.setParent(parent)
-        self.setStyleSheet(open('src/view/assets/styles/menu.css').read())
+        self.setStyleSheet(open("src/view/assets/styles/menu.css").read())
         self.setMaximumHeight(70)
 
         menuLayout = QtWidgets.QHBoxLayout()
@@ -63,7 +64,11 @@ class Menu(QtWidgets.QFrame):
         botao.pressed.connect(self.abrirMenu)
 
     def abrirMenu(self):
-        self.menu.exec(self.sender().mapToGlobal(self.sender().rect().bottomLeft() + QtCore.QPoint(-15, 0)))
+        self.menu.exec(
+            self.sender().mapToGlobal(
+                self.sender().rect().bottomLeft() + QtCore.QPoint(-15, 0)
+            )
+        )
 
     def deslogar(self):
         pass
