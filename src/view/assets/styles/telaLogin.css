@@ -19,7 +19,8 @@
 
 #labelCaixa {
     font-size: 20px;
-    color: #F8F3EF
+    color: #F8F3EF;
+
 }
 
 #caixaEntrada {
@@ -35,9 +36,18 @@
     background-color: #F0D097;
 }
 
+#logarBotao:hover {
+    background-color: #c9ad7b;
+}
+
 #registrarBotao {
     border-radius: 15%;
     padding: 2%;
     font-size: 20px;
     background-color: #A9A9A9;
+}
+
+#registrarBotao:hover {
+    background-color: #828181;
+    color: #F8F3EF;
 }
