@@ -8,7 +8,7 @@ class Registrar(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
         self.setParent(parent)
-        self.setContentsMargins(173, 60, 173, 60)
+        self.setContentsMargins(165, 60, 160, 60)
         self.hide()
 
         formLayout = QtWidgets.QVBoxLayout()
@@ -18,7 +18,7 @@ class Registrar(QtWidgets.QFrame):
         # LOGO -----------------------------------------
         logoFrame = QtWidgets.QFrame(self)
         logoFrame.setMinimumSize(200, 100)
-        logoFrame.setMaximumSize(600, 300)
+        logoFrame.setMaximumSize(225, 111)
         logoFrame.setObjectName("logoFrame")
         formLayout.addWidget(logoFrame)
 
@@ -36,62 +36,68 @@ class Registrar(QtWidgets.QFrame):
         # Frame
         entradasFrame = QtWidgets.QFrame(self)
         formLayout.addWidget(entradasFrame)
-        entradasLayout = QtWidgets.QVBoxLayout(self)
-        entradasLayout.setSpacing(5)
-        entradasFrame.setLayout(entradasLayout)
+        self.entradasLayout = QtWidgets.QVBoxLayout(self)
+        self.entradasLayout.setSpacing(5)
+        entradasFrame.setLayout(self.entradasLayout)
 
         # elementos
 
         usuarioLabel = QtWidgets.QLabel(entradasFrame)
         usuarioLabel.setText("Usuário")
         usuarioLabel.setObjectName("labelCaixa")
-        entradasLayout.addWidget(usuarioLabel)
+        self.entradasLayout.addWidget(usuarioLabel)
 
         self.entradaUsuario = QtWidgets.QLineEdit(entradasFrame)
         self.entradaUsuario.setObjectName("caixaEntrada")
-        entradasLayout.addWidget(self.entradaUsuario)
+        self.entradasLayout.addWidget(self.entradaUsuario)
 
         senhaLabel = QtWidgets.QLabel(entradasFrame)
         senhaLabel.setText("Senha")
         senhaLabel.setObjectName("labelCaixa")
-        entradasLayout.addWidget(senhaLabel)
+        self.entradasLayout.addWidget(senhaLabel)
 
         self.entradaSenha = QtWidgets.QLineEdit(entradasFrame)
         self.entradaSenha.setObjectName("caixaEntrada")
-        entradasLayout.addWidget(self.entradaSenha)
+        self.entradasLayout.addWidget(self.entradaSenha)
 
         repetirSenhaLabel = QtWidgets.QLabel(entradasFrame)
         repetirSenhaLabel.setText("Repita sua senha")
         repetirSenhaLabel.setObjectName("labelCaixa")
-        entradasLayout.addWidget(repetirSenhaLabel)
+        self.entradasLayout.addWidget(repetirSenhaLabel)
 
-        self.entradaSenha = QtWidgets.QLineEdit(entradasFrame)
-        self.entradaSenha.setObjectName("caixaEntrada")
-        entradasLayout.addWidget(self.entradaSenha)
+        self.repetirEntradaSenha = QtWidgets.QLineEdit(entradasFrame)
+        self.repetirEntradaSenha.setObjectName("caixaEntrada")
+        self.entradasLayout.addWidget(self.repetirEntradaSenha)
 
         # BOTÕES --------------------------
         # Frame
         botoesFrame = QtWidgets.QFrame(self)
-        entradasLayout.addWidget(botoesFrame)
+        self.entradasLayout.addWidget(botoesFrame)
         botoesFrameLayout = QtWidgets.QVBoxLayout(botoesFrame)
         botoesFrame.setLayout(botoesFrameLayout)
-
-        self.logarBotao = QtWidgets.QPushButton(botoesFrame)
-        self.logarBotao.setText("Logar")
-        self.logarBotao.clicked.connect(self.logarBotaoCliclado)
-        self.logarBotao.setObjectName("logarBotao")
-        botoesFrameLayout.addWidget(self.logarBotao)
 
         self.registrarBotao = QtWidgets.QPushButton(botoesFrame)
         self.registrarBotao.setText("Registrar")
         self.registrarBotao.setObjectName("registrarBotao")
+        self.registrarBotao.clicked.connect(self.checarRegistro)
         botoesFrameLayout.addWidget(self.registrarBotao)
 
     # Funções
 
-    def logarBotaoCliclado(self):
+    def checarRegistro(self):
         usuario = self.entradaUsuario.text()
         senha = self.entradaSenha.text()
+        repetirSenha = self.repetirEntradaSenha.text()
+
+        if senha == repetirSenha:
+            print(self.parent().parent().parent().objectName)
+            self.parent().parent().parent().setCurrentIndex(1)
+        else:
+            if self.findChild(QtWidgets.QLabel, "repetirSenhaLabel") == None:
+                repetirSenhaLabel = QtWidgets.QLabel(self)
+                repetirSenhaLabel.setText("As senhas são diferentes")
+                repetirSenhaLabel.setObjectName("repetirSenhaLabel")
+                self.entradasLayout.addWidget(repetirSenhaLabel)
 
         try:
             status = checar(usuario, senha)
@@ -101,6 +107,3 @@ class Registrar(QtWidgets.QFrame):
                 pass
         except IndexError:
             print("Usuário não encontrado")
-
-    def mostrarRegistrar(self):
-        self.show()
