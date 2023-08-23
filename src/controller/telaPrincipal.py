@@ -47,7 +47,7 @@ def uploadLivro(arquivo, idUsuario):
         sgbd.execute("INSERT INTO livro(arquivoPdf, titulo, genero, autor, anoPublicacao, review, pagTotais) VALUES (?,?,?,?,?,?,?)",
                     (sqlite3.Binary(pdf_content), titulo, genero, autor, ano, review, paginas))
 
-
+# Função para buscar por uma palavra específica no livro
 def buscarPalavraChave(arquivo, palavraChave):
     documento = PyMuPDF.open(arquivo)
     paginasEncontradas = []
@@ -58,5 +58,15 @@ def buscarPalavraChave(arquivo, palavraChave):
             paginasEncontradas.append(paginaNum)
 
     documento.close()
-
+    # Retorna o número de todas as páginas do livro em que a palavra foi encontrada
     return paginasEncontradas
+
+# Função para inserir livros no catálogo 
+def adicionarLivroCatalogo(titulo, genero, autor, anoPublicacao, arquivoPdf):
+    # Abre o arquivo PDF
+    livro = PyMuPDF.open(arquivoPdf)
+    pagTotal = livro.page_count
+    arquivoPdfBytes = open(arquivoPdf, 'rb').read()
+
+    sgbd.execute("INSERT INTO livros (titulo, genero, autor, anoPublicacao, arquivoPdf) VALUES (?, ?, ?, ?, ?)",
+                 (titulo, genero, autor, anoPublicacao, arquivoPdfBytes))
