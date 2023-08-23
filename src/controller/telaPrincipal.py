@@ -46,3 +46,17 @@ def uploadLivro(arquivo, idUsuario):
         # Insere os dados do livro, incluindo o conteúdo do PDF, na tabela do banco de dados
         sgbd.execute("INSERT INTO livro(arquivoPdf, titulo, genero, autor, anoPublicacao, review, pagTotais) VALUES (?,?,?,?,?,?,?)",
                     (sqlite3.Binary(pdf_content), titulo, genero, autor, ano, review, paginas))
+
+
+def buscarPalavraChave(arquivo, palavraChave):
+    documento = PyMuPDF.open(arquivo)
+    paginasEncontradas = []
+    
+    for paginaNum, pagina in enumerate(documento, start=1):
+        texto = pagina.get_text()
+        if palavraChave.lower() in texto.lower():
+            paginasEncontradas.append(paginaNum)
+
+    documento.close()
+
+    return paginasEncontradas
