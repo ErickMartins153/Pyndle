@@ -1,7 +1,6 @@
-from PyQt6 import QtWidgets, QtGui, QtCore
-from PyQt6.QtCore import Qt
+from PyQt6 import QtWidgets
 from src.view.components.Menu import Menu
-from src.view.components.dashboard.FundoDashboard import FundoDashboard
+from src.view.components.dashboard.subcomponents.FundoDashboard import FundoDashboard
 
 
 class Dashboard(QtWidgets.QWidget):
@@ -12,10 +11,11 @@ class Dashboard(QtWidgets.QWidget):
 
         :param parent: Define o parente do widget
         """
-
+        # Configurações
         super().__init__()
         self.setParent(parent)
 
+        # Definição do layout
         dashboardLayout = QtWidgets.QVBoxLayout()
         dashboardLayout.setSpacing(0)
         self.setLayout(dashboardLayout)
@@ -26,6 +26,6 @@ class Dashboard(QtWidgets.QWidget):
         dashboardLayout.addWidget(menu)
 
         # QFrame (fundo) -----------------------------
-        fundo = FundoDashboard(self)
-        fundo.setObjectName("fundo")
-        dashboardLayout.addWidget(fundo)
+        fundoDashboard = FundoDashboard(self)
+        fundoDashboard.setObjectName("fundoDashboard")
+        dashboardLayout.addWidget(fundoDashboard)

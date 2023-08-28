@@ -1,17 +1,28 @@
-from PyQt6 import QtWidgets, QtGui, QtCore
+from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
-import sys
-from src.controller.telaInicial import checar
+from src.controller import telaInicial
+from src.view.utils import widgetSearch
 
 
 class Formulario(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
+        """
+        QFrame constituido pelos widgets que serão preenchidos com as informações para logar ou registrar
+
+        :param parent: Define o parente do widget
+
+        Métodos:
+            - logarBotaoCliclado(): verifica o usuário e muda para a tela principal
+        """
+        # Configurações
         super().__init__()
         self.setParent(parent)
         self.setContentsMargins(173, 60, 173, 115)
 
+        # Definição do layout do formulário
         formLayout = QtWidgets.QVBoxLayout()
         formLayout.setSpacing(40)
+        formLayout.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.setLayout(formLayout)
 
         # LOGO -----------------------------------------
@@ -77,16 +88,26 @@ class Formulario(QtWidgets.QFrame):
         self.registrarBotao.setObjectName("registrarBotao")
         botoesFrameLayout.addWidget(self.registrarBotao)
 
-    # Funções
 
     def logarBotaoCliclado(self):
+        """
+        - Verifica se as informações de login e senha correspondem a algum usuário registrado no banco de dados\n
+        - Depois muda para a tela principal da aplicação
+        """
         usuario = self.entradaUsuario.text()
         senha = self.entradaSenha.text()
 
         try:
-            status = checar(usuario, senha)
+            status = telaInicial.checar(usuario, senha)
             if status is True:
-                self.parent().parent().parent().setCurrentIndex(1)
+                # mainWindow para definir o usuario
+                mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
+                # Onde as páginas são guardadas
+                stackedWidget = widgetSearch.getAncestrais(self)["paginas"]
+                # Define o nome de usuário no "bem vindo" da tela principal
+                widgetSearch.getDescendentes(stackedWidget)["fundoDashboard"].setNomeUsuario(usuario)
+                stackedWidget.setCurrentIndex(1)  # Muda para a página principal
+                mainWindow.setUsuario(telaInicial.getTuplaUsuario(usuario))  # Define o usuário principal com as informações na mainWindow
             else:
                 pass
         except IndexError:

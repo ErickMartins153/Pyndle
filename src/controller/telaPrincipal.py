@@ -6,9 +6,9 @@ sgbd = conexao.cursor()
 
 def livrosCatalogo(): #Função que dá todas as colunas dos nossos 5 livros do catalogo. Daí você só precisa verificar como o output sai e pegar os dados de lá, qnd descobrir como pegar o PDF do sql a gnt tb ajusta isso.
     sgbd.execute("SELECT * FROM livros WHERE idLivro IN (1, 2, 3, 4, 5)")
-
     resultado = sgbd.fetchall()
-    print(resultado)
+
+    return resultado
 
 def livrosPessoais(idUsuario: int):
     sgbd.execute("""
@@ -16,7 +16,7 @@ def livrosPessoais(idUsuario: int):
                  JOIN usuariosLivros ON livros.idLivro = usuariosLivros.idLivro
                  WHERE usuariosLivros.idUsuario = (?)""",(idUsuario,))
     resultado = sgbd.fetchall()
-    print(resultado)
+    return resultado
 
 #codigo pra testar se funcionou
 #livrosPessoais(1)

@@ -1,10 +1,14 @@
-# Função que a partir do id do livro oferece todos os dados registrados dele
-def dadosLivro(idLivro):
+def dadosLivro(idLivro: int):
+    """
+    Função que retorna todos os dados do livro em uma tupla, a partir de seu ID
+    :param int idLivro: Id do livro que deseja acessar os dados
+    :return: Retorna uma **tupla** com os dados, caso o livro exista, senão retorna **None**
+    """
     db.execute("SELECT * FROM livros WHERE idLivro = ?", (idLivro,))
-    resultado = db.fetchone()
+    dados = db.fetchone()
 
     if resultado:
-        idLivro, titulo, genero, autor, anoPublicacao, capaLivro, arquivoPdf, pagTotal = resultado
-        print(f"ID: {idLivro}, Título: {titulo}, Gênero: {genero}, Autor: {autor}, Ano de Publicação: {anoPublicacao}, Capa do Livro: {capaLivro}, Arquivo PDF: {arquivoPdf}, Páginas Totais: {pagTotal}")
+        return dados
     else:
         print(f"O livro com ID {idLivro} não foi encontrado.")
+        return None
