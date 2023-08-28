@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 import sys
 from src.view.components.dashboard.Dashboard import Dashboard
 from src.view.components.login.TelaLogin import TelaLogin
+from src.view.components.login.TelaRegistro import TelaRegistro
 from src.view.assets.styles import non_css_styles
 
 
@@ -39,3 +40,6 @@ class MainWindow(QtWidgets.QMainWindow):
         # Instância catalogo (pagina)
         catalogo = QtWidgets.QWidget(self.paginas)
         self.paginas.addWidget(catalogo)
+        # Instância Registro
+        telaRegistro = TelaRegistro(self.paginas)
+        self.paginas.addWidget(telaRegistro)

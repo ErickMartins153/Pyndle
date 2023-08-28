@@ -2,14 +2,14 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 import sys
 from src.controller.telaInicial import checar
-from src.view.components.login.Registrar import Registrar
+from src.view.components.login.TelaRegistro import TelaRegistro
 
 
 class Formulario(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
         self.setParent(parent)
-        self.setContentsMargins(173, 60, 173, 115)
+        self.setContentsMargins(165, 60, 160, 60)
 
         formLayout = QtWidgets.QVBoxLayout()
         formLayout.setSpacing(40)
@@ -96,4 +96,4 @@ class Formulario(QtWidgets.QFrame):
 
     def registrarBotaoClicado(self):
         self.hide()
-        self.parent().findChild(Registrar).show()
+        self.parent().findChild(TelaRegistro).show()

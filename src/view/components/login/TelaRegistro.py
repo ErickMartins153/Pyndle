@@ -4,7 +4,7 @@ import sys
 from src.controller.telaInicial import checar
 
 
-class Registrar(QtWidgets.QFrame):
+class TelaRegistro(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
         self.setParent(parent)
@@ -90,20 +90,14 @@ class Registrar(QtWidgets.QFrame):
         repetirSenha = self.repetirEntradaSenha.text()
 
         if senha == repetirSenha:
-            print(self.parent().parent().parent().objectName)
-            self.parent().parent().parent().setCurrentIndex(1)
+            self.hide()
+            formulario = (
+                self.parent().parent().findChild(QtWidgets.QFrame, "formulario")
+            )
+            formulario.show()
         else:
             if self.findChild(QtWidgets.QLabel, "repetirSenhaLabel") == None:
                 repetirSenhaLabel = QtWidgets.QLabel(self)
                 repetirSenhaLabel.setText("As senhas são diferentes")
                 repetirSenhaLabel.setObjectName("repetirSenhaLabel")
                 self.entradasLayout.addWidget(repetirSenhaLabel)
-
-        try:
-            status = checar(usuario, senha)
-            if status is True:
-                self.parent().parent().parent().setCurrentIndex(1)
-            else:
-                pass
-        except IndexError:
-            print("Usuário não encontrado")

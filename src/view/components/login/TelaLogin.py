@@ -2,7 +2,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 import sys
 from src.view.components.login.Formulario import Formulario
-from src.view.components.login.Registrar import Registrar
+from src.view.components.login.TelaRegistro import TelaRegistro
 
 
 class TelaLogin(QtWidgets.QWidget):
@@ -29,6 +29,6 @@ class TelaLogin(QtWidgets.QWidget):
         fundoLayout.addWidget(formulario)
 
         # QFrame (registrar)
-        self.registrar = Registrar(self)
-        self.registrar.setObjectName("formulario")
-        fundoLayout.addWidget(self.registrar)
+        self.TelaRegistro = TelaRegistro(self)
+        self.TelaRegistro.setObjectName("formulario")
+        fundoLayout.addWidget(self.TelaRegistro)
