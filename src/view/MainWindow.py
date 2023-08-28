@@ -3,7 +3,7 @@ import sys
 from src.view.components.dashboard.Dashboard import Dashboard
 from src.view.components.login.TelaLogin import TelaLogin
 from src.view.assets.styles import non_css_styles
-
+#
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
