@@ -1,7 +1,8 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 import sys
-from src.view.components.dashboard.Dashboard import Dashboard
 from src.view.components.login.TelaLogin import TelaLogin
+from src.view.components.dashboard.Dashboard import Dashboard
+from src.view.components.catalogo.TelaCatalogo import TelaCatalogo
 from src.view.assets.styles import non_css_styles
 
 
@@ -23,8 +24,9 @@ class MainWindow(QtWidgets.QMainWindow):
         # Configurações
         super().__init__()
         self.setObjectName("mainWindow")
-        self.setStyleSheet(open('src/view/assets/styles/style.css').read())
+        self.setStyleSheet(open('src/view/assets/styles/mainWindow.css').read())
         self.setMinimumSize(1300, 900)
+        self.currentSize = {"width": self.width(), "height": self.height()}
 
         # Central QWidget (mainWindowSpace)
         mainWindowSpace = QtWidgets.QWidget(self)
@@ -55,11 +57,19 @@ class MainWindow(QtWidgets.QMainWindow):
         biblioteca.setObjectName("biblioteca")
         self.paginas.addWidget(biblioteca)
         # Instância catalogo (pagina)
-        catalogo = QtWidgets.QWidget(self.paginas)
+        catalogo = TelaCatalogo(self.paginas)
         catalogo.setObjectName("catalogo")
         self.paginas.addWidget(catalogo)
 
-        self.paginas.setCurrentIndex(1)
+        self.paginas.setCurrentIndex(3)
+
+
+    """def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
+        if self.currentSize["width"] != self.width():
+            print("foi")
+            proport = self.width() / self.currentSize["width"]
+            self.resize(self.width(), int(self.height() * proport))
+            self.currentSize["width"] = self.width()"""
 
     def getUsuario(self):
         return self.usuarioAtual
