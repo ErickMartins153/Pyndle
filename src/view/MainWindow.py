@@ -3,7 +3,7 @@ import sys
 from src.view.components.dashboard.Dashboard import Dashboard
 from src.view.components.login.TelaLogin import TelaLogin
 from src.view.assets.styles import non_css_styles
-#
+
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -24,7 +24,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__()
         self.setObjectName("mainWindow")
         self.setStyleSheet(open('src/view/assets/styles/style.css').read())
-        self.setMinimumSize(1024, 650)
+        self.setMinimumSize(1300, 900)
 
         # Central QWidget (mainWindowSpace)
         mainWindowSpace = QtWidgets.QWidget(self)
@@ -40,6 +40,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.paginas.setObjectName("paginas")
         mainWindowLayout.addWidget(self.paginas)
         self.paginas.setGraphicsEffect(non_css_styles.BoxShadow(QtGui.QColor(0, 0, 0, 85), 4, 5, 4))
+
 
         # Instância login
         telaLogin = TelaLogin(self.paginas)
@@ -57,6 +58,8 @@ class MainWindow(QtWidgets.QMainWindow):
         catalogo = QtWidgets.QWidget(self.paginas)
         catalogo.setObjectName("catalogo")
         self.paginas.addWidget(catalogo)
+
+        self.paginas.setCurrentIndex(1)
 
     def getUsuario(self):
         return self.usuarioAtual

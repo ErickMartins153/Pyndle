@@ -8,5 +8,12 @@
 
 #listaLivros{
     background-color: #F0D097;
-    border-radius: 20px;
+    border-radius: 15px;
+}
+
+#botaoVerMais{
+    image: url(myfiles/icon/verMais.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
 }
