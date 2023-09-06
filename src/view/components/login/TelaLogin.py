@@ -1,5 +1,5 @@
 from PyQt6 import QtWidgets
-from src.view.components.login.subcomponents.Formulario import Formulario
+from src.view.components.login.subcomponents.FormularioLogin import Formulario
 
 class TelaLogin(QtWidgets.QWidget):
     def __init__(self, parent: QtWidgets.QWidget):

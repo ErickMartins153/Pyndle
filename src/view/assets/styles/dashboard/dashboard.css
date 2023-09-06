@@ -1,12 +1,14 @@
+/* FundoDashboard.py */
+
 #saudacao {
-    font-size: 20px;
+    font-size: 25px;
 }
 
-#indicadorListaLivros {
-    font-size: 20px;
+#labelFrameLivros {
+    font-size: 25px;
 }
 
-#listaLivros{
+#frameLivros{
     background-color: #F0D097;
     border-radius: 15px;
 }

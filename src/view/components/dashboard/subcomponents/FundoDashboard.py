@@ -20,7 +20,6 @@ class FundoDashboard(QtWidgets.QFrame):
         super().__init__()
         self.setParent(parent)
         self.setContentsMargins(20, 20, 20, 0)
-        self.setStyleSheet(open('src/view/assets/styles/fundo_dashboard.css').read())
 
         # Definição do Layout
         fundoLayout = QtWidgets.QVBoxLayout()
@@ -32,7 +31,7 @@ class FundoDashboard(QtWidgets.QFrame):
         fundoLayout.addWidget(self.saudacao)
 
         self.saudacao.setText(f"Bem vindo, <usuario>!")
-        self.saudacao.setMaximumHeight(20)
+        self.saudacao.setMaximumHeight(35)
         self.saudacao.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         # QFrame (Grupo: Minha Biblioteca) ----------------------------------
@@ -46,15 +45,15 @@ class FundoDashboard(QtWidgets.QFrame):
 
         # Label (Minha Biblioteca)
         myBibliotecaLabel = QtWidgets.QLabel(groupMyBiblioteca)
-        myBibliotecaLabel.setObjectName("indicadorListaLivros")
-        myBibliotecaLabel.setMaximumHeight(25)
+        myBibliotecaLabel.setObjectName("labelFrameLivros")
+        myBibliotecaLabel.setMaximumHeight(35)
         myBibliotecaLabel.setText("Minha Biblioteca")
         myBibliotecaLayout.addWidget(myBibliotecaLabel)
 
         # QFrame (Meus Livros)
         meusLivros = QtWidgets.QFrame(groupMyBiblioteca)
-        meusLivros.setMinimumHeight(200)
-        meusLivros.setObjectName("listaLivros")
+        meusLivros.setMinimumHeight(300)
+        meusLivros.setObjectName("frameLivros")
         myBibliotecaLayout.addWidget(meusLivros)
 
         meusLivrosLayout = QtWidgets.QHBoxLayout()
@@ -89,15 +88,15 @@ class FundoDashboard(QtWidgets.QFrame):
 
         # Label (Catálogo)
         catalogoLabel = QtWidgets.QLabel(groupCatalogo)
-        catalogoLabel.setMaximumHeight(25)
-        catalogoLabel.setObjectName("indicadorListaLivros")
+        catalogoLabel.setMaximumHeight(35)
+        catalogoLabel.setObjectName("labelFrameLivros")
         catalogoLabel.setText("Catálogo")
         catalogoLayout.addWidget(catalogoLabel)
 
         # QFrame (Catalogo Livros)
         catalogoLivros = QtWidgets.QFrame(groupCatalogo)
-        catalogoLivros.setMinimumHeight(200)
-        catalogoLivros.setObjectName("listaLivros")
+        catalogoLivros.setMinimumHeight(300)
+        catalogoLivros.setObjectName("frameLivros")
         catalogoLayout.addWidget(catalogoLivros)
 
         catalogoLivrosLayout = QtWidgets.QHBoxLayout()

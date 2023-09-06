@@ -8,13 +8,12 @@ from src.view.utils import widgetSearch
 class PainelLivros(QtWidgets.QScrollArea):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
-        self.setStyleSheet(open('src/view/assets/styles/catalogo/scrollArea.css').read())
+        self.setStyleSheet(open('src/view/assets/styles/catalogo/painelLivros.css').read())
 
         # Configurações
         self.setParent(parent)
         self.setWidgetResizable(True)
         self.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
-        #self.setFixedHeight(800)
 
         # Central widget
         self.contentWidget = QtWidgets.QWidget(self)
@@ -36,7 +35,6 @@ class PainelLivros(QtWidgets.QScrollArea):
             botaoImagem = BotaoImagem(livroTupla[0], livroTupla[5])
             botaoImagem.resizeButton(200, 280)
             self.listaBotaoLivro.append(botaoImagem)
-
 
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:

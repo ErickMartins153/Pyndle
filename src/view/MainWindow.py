@@ -64,13 +64,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.paginas.setCurrentIndex(3)
 
 
-    """def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
-        if self.currentSize["width"] != self.width():
-            print("foi")
-            proport = self.width() / self.currentSize["width"]
-            self.resize(self.width(), int(self.height() * proport))
-            self.currentSize["width"] = self.width()"""
-
     def getUsuario(self):
         return self.usuarioAtual
 
