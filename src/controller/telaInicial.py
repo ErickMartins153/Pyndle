@@ -12,10 +12,10 @@ def checar(nomeUsuario: str, senha: str):
     :return bool: retorna False, caso não exista, ou True, caso exista
     """
     quantidadeUsuario = sgbd.execute(
-        "SELECT COUNT(login) FROM usuarios WHERE login = ?", (nomeUsuario.lower(),)
+        "SELECT login, senha FROM usuarios WHERE login = ?", (nomeUsuario.lower(),)
     )
-    count = quantidadeUsuario.fetchone()[0]
-    if count != 0 and len(nomeUsuario) > 0 and len(senha) > 0:
+    count = quantidadeUsuario.fetchone()
+    if count != None and nomeUsuario == count[0] and senha == count[1]:
         return True
     else:
         return False
