@@ -1,6 +1,7 @@
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from src.controller import telaInicial
+from src.view.components.login.TelaRegistro import TelaRegistro
 from src.view.utils import widgetSearch
 
 
@@ -67,6 +68,7 @@ class Formulario(QtWidgets.QFrame):
         entradasLayout.addWidget(senhaLabel)
 
         self.entradaSenha = QtWidgets.QLineEdit(entradasFrame)
+        self.entradaSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.entradaSenha.setObjectName("caixaEntrada")
         entradasLayout.addWidget(self.entradaSenha)
 
@@ -86,8 +88,8 @@ class Formulario(QtWidgets.QFrame):
         self.registrarBotao = QtWidgets.QPushButton(botoesFrame)
         self.registrarBotao.setText("Registrar")
         self.registrarBotao.setObjectName("registrarBotao")
+        self.registrarBotao.clicked.connect(self.registrarBotaoClicado)
         botoesFrameLayout.addWidget(self.registrarBotao)
-
 
     def logarBotaoCliclado(self):
         """
@@ -105,10 +107,20 @@ class Formulario(QtWidgets.QFrame):
                 # Onde as páginas são guardadas
                 stackedWidget = widgetSearch.getAncestrais(self)["paginas"]
                 # Define o nome de usuário no "bem vindo" da tela principal
-                widgetSearch.getDescendentes(stackedWidget)["fundoDashboard"].setNomeUsuario(usuario)
+                widgetSearch.getDescendentes(stackedWidget)[
+                    "fundoDashboard"
+                ].setNomeUsuario(usuario)
                 stackedWidget.setCurrentIndex(1)  # Muda para a página principal
-                mainWindow.setUsuario(telaInicial.getTuplaUsuario(usuario))  # Define o usuário principal com as informações na mainWindow
+                mainWindow.setUsuario(
+                    telaInicial.getTuplaUsuario(usuario)
+                )  # Define o usuário principal com as informações na mainWindow
             else:
                 pass
         except IndexError:
             print("Usuário não encontrado")
+
+    def registrarBotaoClicado(self):
+        self.entradaSenha.clear()
+        self.entradaUsuario.clear()
+        self.hide()
+        self.parent().findChild(TelaRegistro).show()

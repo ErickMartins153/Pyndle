@@ -3,7 +3,8 @@ from PyQt6.QtCore import Qt
 from src.view.components.Menu import Menu
 from src.view.components.BotaoImagem import BotaoImagem
 from src.controller.telaPrincipal import livrosCatalogo
-from myfiles.bimages import getImages
+
+# from myfiles.bimages import getImages
 
 
 class FundoDashboard(QtWidgets.QFrame):
@@ -19,7 +20,7 @@ class FundoDashboard(QtWidgets.QFrame):
         # Configurações
         super().__init__()
         self.setParent(parent)
-        self.setStyleSheet(open('src/view/assets/styles/fundo_dashboard.css').read())
+        self.setStyleSheet(open("src/view/assets/styles/fundo_dashboard.css").read())
 
         # Definição do Layout
         fundoLayout = QtWidgets.QVBoxLayout()
@@ -59,13 +60,13 @@ class FundoDashboard(QtWidgets.QFrame):
         meusLivrosLayout = QtWidgets.QHBoxLayout()
         meusLivros.setLayout(meusLivrosLayout)
 
-        for tuplaImagem in getImages():
-            imageBotao = QtWidgets.QPushButton()
-            qimage = QtGui.QImage.fromData(tuplaImagem[1])
-            imageBotao.setIcon(QtGui.QIcon(QtGui.QPixmap.fromImage(qimage)))
-            imageBotao.setIconSize(QtCore.QSize(qimage.width(), qimage.height()))
-            imageBotao.setFixedSize(qimage.width(), qimage.height())
-            meusLivrosLayout.addWidget(imageBotao)
+        # for tuplaImagem in getImages():
+        #     imageBotao = QtWidgets.QPushButton()
+        #     qimage = QtGui.QImage.fromData(tuplaImagem[1])
+        #     imageBotao.setIcon(QtGui.QIcon(QtGui.QPixmap.fromImage(qimage)))
+        #     imageBotao.setIconSize(QtCore.QSize(qimage.width(), qimage.height()))
+        #     imageBotao.setFixedSize(qimage.width(), qimage.height())
+        #     meusLivrosLayout.addWidget(imageBotao)
 
         # QFrame (Grupo: Catálogo) ----------------------------------------------------
         groupCatalogo = QtWidgets.QFrame(self)
@@ -101,10 +102,9 @@ class FundoDashboard(QtWidgets.QFrame):
             imageBotao.clicked.connect(self.botaoApertado)
             catalogoLivrosLayout.addWidget(imageBotao)
 
-
     def setNomeUsuario(self, usuarioAtual: str):
         usuarioAtual = usuarioAtual
-        self.saudacao.setText(f"Bem vindo, {usuarioAtual}!")
+        self.saudacao.setText(f"Bem vindo, {usuarioAtual.capitalize()}!")
 
     def botaoApertado(self):
         print(self.sender().getID())

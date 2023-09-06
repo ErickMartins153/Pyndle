@@ -29,25 +29,37 @@
     padding: 2px 5px;
 }
 
-#logarBotao {
+#logarBotao, 
+#registrarBotao {
     border-radius: 15%;
     padding: 2%;
     font-size: 20px;
     background-color: #F0D097;
 }
 
-#logarBotao:hover {
+#logarBotao:hover,
+#registrarBotao:hover {
     background-color: #c9ad7b;
 }
 
-#registrarBotao {
+#voltarLoginBotao {
     border-radius: 15%;
     padding: 2%;
     font-size: 20px;
     background-color: #A9A9A9;
 }
 
-#registrarBotao:hover {
+#voltarLoginBotao:hover {
     background-color: #828181;
     color: #F8F3EF;
+}
+
+#mensagemDeErro {
+    font-size: 20px;
+    text-align: center;
+    border-radius: 15px;
+    width: min-content;
+    background-color: #A9A9A9;
+    border-radius: 15px;
+    color: #ff3535;
 }
