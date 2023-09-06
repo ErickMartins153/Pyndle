@@ -10,7 +10,7 @@ class TelaCatalogo(QtWidgets.QFrame):
 
         # Configurações
         self.setParent(parent)
-        self.setStyleSheet(open("src/view/assets/styles/telaCatalogo.css").read())
+        self.setStyleSheet(open("src/view/assets/styles/catalogo/telaCatalogo.css").read())
 
         # Definição do layout
         telaCatalogoLayout = QtWidgets.QVBoxLayout()

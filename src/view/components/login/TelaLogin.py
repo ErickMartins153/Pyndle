@@ -10,7 +10,7 @@ class TelaLogin(QtWidgets.QWidget):
         # Configurações
         super().__init__()
         self.setParent(parent)
-        self.setStyleSheet(open("src/view/assets/styles/telaLogin.css").read())
+        self.setStyleSheet(open("src/view/assets/styles/login/telaLogin.css").read())
 
         # Definição do layout
         loginLayout = QtWidgets.QVBoxLayout()

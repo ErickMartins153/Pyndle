@@ -8,6 +8,7 @@ from src.view.utils import widgetSearch
 class PainelLivros(QtWidgets.QScrollArea):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
+        self.setStyleSheet(open('src/view/assets/styles/catalogo/scrollArea.css').read())
 
         # Configurações
         self.setParent(parent)
