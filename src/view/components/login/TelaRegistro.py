@@ -7,7 +7,7 @@ class TelaRegistro(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
         self.setParent(parent)
-        self.setContentsMargins(165, 60, 160, 60)
+        self.setContentsMargins(165, 60, 160, 30)
         self.hide()
 
         formLayout = QtWidgets.QVBoxLayout()
@@ -119,6 +119,7 @@ class TelaRegistro(QtWidgets.QFrame):
         self.entradaSenha.clear()
         self.entradaUsuario.clear()
         self.entradaRepetirSenha.clear()
+        self.limparLabelMensagemDeErro()
         self.hide()
         formulario = self.parent().parent().findChild(QtWidgets.QFrame, "formulario")
         formulario.show()
