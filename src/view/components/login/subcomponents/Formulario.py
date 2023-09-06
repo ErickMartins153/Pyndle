@@ -69,6 +69,7 @@ class Formulario(QtWidgets.QFrame):
 
         self.entradaSenha = QtWidgets.QLineEdit(entradasFrame)
         self.entradaSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+        self.entradaSenha.returnPressed.connect(self.logarBotaoCliclado)
         self.entradaSenha.setObjectName("caixaEntrada")
         entradasLayout.addWidget(self.entradaSenha)
 
