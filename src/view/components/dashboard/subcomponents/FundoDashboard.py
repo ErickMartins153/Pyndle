@@ -3,6 +3,7 @@ from PyQt6.QtCore import Qt
 from src.view.components.Menu import Menu
 from src.view.components.BotaoImagem import BotaoImagem
 from src.controller.telaPrincipal import livrosCatalogo
+from src.view.components.ModuloLivro.Popup import Popup
 
 # from myfiles.bimages import getImages
 
@@ -31,7 +32,6 @@ class FundoDashboard(QtWidgets.QFrame):
         self.saudacao.setObjectName("saudacao")
         fundoLayout.addWidget(self.saudacao)
 
-        self.saudacao.setText(f"Bem vindo, <usuario>!")
         self.saudacao.setMaximumHeight(20)
         self.saudacao.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -107,4 +107,5 @@ class FundoDashboard(QtWidgets.QFrame):
         self.saudacao.setText(f"Bem vindo, {usuarioAtual.capitalize()}!")
 
     def botaoApertado(self):
-        print(self.sender().getID())
+        popup = Popup(self.sender().getID())
+        popup.exec()
