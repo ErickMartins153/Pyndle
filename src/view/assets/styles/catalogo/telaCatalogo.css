@@ -1,0 +1,34 @@
+/* ConteudoCatalogo.py */
+#conteudoCatalogo{
+    background-color: #FFF9EF;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+#barraPesquisa{
+    border-radius: 15px;
+    padding: 5px 5px;
+    font-size: 16px;
+}
+
+
+/*-------------------------------*/
+
+
+/* PainelLivros.py */
+#painelFiltro{
+    background-color: #F0D097;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+
+/*-------------------------------*/
+
+
+/* PainelLivros.py */
+#contentWidget{
+    background-color: #F0D097;
+    /*border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;*/
+}

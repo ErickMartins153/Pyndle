@@ -1,7 +1,11 @@
 from PyQt6 import QtWidgets
+<<<<<<< HEAD
 from src.view.components.login.subcomponents.Formulario import Formulario
 from src.view.components.login.TelaRegistro import TelaRegistro
 
+=======
+from src.view.components.login.subcomponents.FormularioLogin import Formulario
+>>>>>>> luan
 
 class TelaLogin(QtWidgets.QWidget):
     def __init__(self, parent: QtWidgets.QWidget):
@@ -12,7 +16,7 @@ class TelaLogin(QtWidgets.QWidget):
         # Configurações
         super().__init__()
         self.setParent(parent)
-        self.setStyleSheet(open("src/view/assets/styles/telaLogin.css").read())
+        self.setStyleSheet(open("src/view/assets/styles/login/telaLogin.css").read())
 
         # Definição do layout
         loginLayout = QtWidgets.QVBoxLayout()

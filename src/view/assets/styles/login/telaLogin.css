@@ -1,9 +1,15 @@
+/* --TelaLogin.py-- */
 #fundo {
     background-color: #FFF9EF;
     border-radius: 15px;
 }
 
-#formulario {
+
+/*-------------------------------*/
+
+
+/* --FormularioLogin.py-- */
+#formularioLogin {
     background-color: #4E3D2C;
     border-radius: 15px;
 }
