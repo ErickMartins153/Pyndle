@@ -51,19 +51,11 @@ class Menu(QtWidgets.QFrame):
         distancia2 = QtWidgets.QSpacerItem(300, 40)
         menuLayout.addSpacerItem(distancia2)
 
-        # Perfil
-        botao = QtWidgets.QPushButton("Acessar Perfil")
+        # botão de logout simplificado
+        botao = QtWidgets.QPushButton("Sair")
         menuLayout.addWidget(botao)
-
-        self.menu = QtWidgets.QMenu(self)
-        deslogar = QtGui.QAction("Deslogar", self.menu)
-        deslogar.triggered.connect(self.deslogar)
-        self.menu.addAction("Deslogar")
-
-        botao.pressed.connect(self.abrirMenu)
-
-    def abrirMenu(self):
-        self.menu.exec(self.sender().mapToGlobal(self.sender().rect().bottomLeft() + QtCore.QPoint(-15, 0)))
-
+        botao.clicked.connect(self.deslogar)
+        
+        # optei por simplificar a função de logout, para termos algo eficiente e funcional 
     def deslogar(self):
-        pass
+        QtWidgets.QMainWindow.close()
