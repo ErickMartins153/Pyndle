@@ -89,4 +89,4 @@ class Popup(QDialog):
         leitor_pdf = LeitorPDF(self.arquivoPDF)
         leitor_pdf.exec()
       else:
-        QMessageBox.critical(None, "Erro", "Nenhum arquivo PDF especificado")
+        QMessageBox.critical(None, "Erro", "Esse livro não está disponível")
