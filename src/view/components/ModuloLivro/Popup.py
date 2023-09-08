@@ -1,22 +1,12 @@
-from src.controller.telaPreviaLivro import dadosLivro
+from PyQt6.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QFrame, QLabel, QPushButton, QMessageBox
 from PyQt6.QtGui import QImage, QPixmap
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (
-    QVBoxLayout,
-    QHBoxLayout,
-    QPushButton,
-    QDialog,
-    QFrame,
-    QLabel,
-)
-
-# from src.view.components.ModuloLivro import Grafico
-
+from src.view.components.ModuloLivro.LeitorPDF import LeitorPDF
+from src.controller.telaPreviaLivro import dadosLivro
 
 class Popup(QDialog):
     def __init__(self, idLivro):
         super().__init__()
-        # montar um dicionário com nome do formado dic[coluna] = valor usando um for
         self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
         self.dadosLivro = dadosLivro(idLivro)
         self.titulo = self.dadosLivro[1]
@@ -55,6 +45,9 @@ class Popup(QDialog):
         lerLivroBotao.setText("Ler Livro")
         ImagemBotaoLayout.addWidget(lerLivroBotao)
 
+        # Conectando o botão "Ler Livro" à função para abrir o leitor de PDF
+        lerLivroBotao.clicked.connect(self.abrirLeitorPDF)
+
         groupInfos = QFrame(self)
         groupInfos.setObjectName("groupTexto")
         layout.addWidget(groupInfos)
@@ -87,3 +80,13 @@ class Popup(QDialog):
         button.clicked.connect(self.accept)
         infosLayout.addWidget(button)
         self.setLayout(layout)
+
+        self.leitor_pdf = None
+
+    def abrirLeitorPDF(self):
+      if self.arquivoPDF:
+        # Criando e mostrando o leitor de PDF com o caminho do PDF
+        leitor_pdf = LeitorPDF(self.arquivoPDF)
+        leitor_pdf.exec()
+      else:
+        QMessageBox.critical(None, "Erro", "Nenhum arquivo PDF especificado")

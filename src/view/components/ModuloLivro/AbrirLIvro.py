@@ -1,1 +1,0 @@
-# arquivo onde irá conter toda a lógica para abrir o livro com PyMuPDF
