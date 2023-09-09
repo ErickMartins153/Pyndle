@@ -14,8 +14,8 @@ def checar(nomeUsuario: str, senha: str):
     quantidadeUsuario = sgbd.execute(
         "SELECT login, senha FROM usuarios WHERE login = ?", (nomeUsuario,)
     )
-    count = quantidadeUsuario.fetchone()
-    if count != None and nomeUsuario == count[0] and senha == count[1]:
+    usuarioBD = quantidadeUsuario.fetchone()[0]
+    if usuarioBD != None and nomeUsuario == usuarioBD:
         return True
     else:
         return False
