@@ -136,6 +136,10 @@ class TelaRegistro(QtWidgets.QFrame):
         mensagemDeErroLabel = QtWidgets.QLabel(self)
         mensagemDeErroLabel.setText(mensagem)
         mensagemDeErroLabel.setObjectName("mensagemDeErro")
+        mensagemDeErroLabel.setStyleSheet(
+            "QLabel#mensagemDeErro {border-radius: 10px;}"
+        )
+        mensagemDeErroLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.entradasLayout.addWidget(mensagemDeErroLabel)
 
     def limparLabelMensagemDeErro(self):
