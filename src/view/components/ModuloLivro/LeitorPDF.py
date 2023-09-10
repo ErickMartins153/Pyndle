@@ -10,14 +10,13 @@ from PyQt6.QtWidgets import (
 class LeitorPDF(QDialog):
     def __init__(self, livroPdf, tituloLivro):
         super().__init__()
-
         self.setWindowTitle(tituloLivro)
         self.setGeometry(100, 100, 800, 600)
 
         self.layout = QVBoxLayout(self)
 
-        self.text_browser = QTextBrowser(self)
-        self.layout.addWidget(self.text_browser)
+        self.textoBrowser = QTextBrowser(self)
+        self.layout.addWidget(self.textoBrowser)
 
         self.botaoProximaPagina = QPushButton("Próxima Página", self)
         self.botaoProximaPagina.clicked.connect(self.passarPagina)
@@ -28,26 +27,34 @@ class LeitorPDF(QDialog):
         self.layout.addWidget(self.botaoPaginaAnterior)
 
         self.paginaAtual = 0
-        self.pdf_document = fitz.open(stream=livroPdf, filetype="pdf")
+        self.documentoPdf = fitz.open(stream=livroPdf, filetype="pdf")
+
+        self.totalPaginas = len(self.documentoPdf)
         self.mostrarPagina()
 
     def mostrarPagina(self):
-        if self.pdf_document is not None and 0 <= self.paginaAtual < len(
-            self.pdf_document
+        if self.documentoPdf is not None and 0 <= self.paginaAtual < len(
+            self.documentoPdf
         ):
-            page = self.pdf_document[self.paginaAtual]
-            text = page.get_text()
-            self.text_browser.setPlainText(text)
+            pagina = self.documentoPdf[self.paginaAtual]
+            texto = pagina.get_text()
+            self.textoBrowser.setPlainText(texto)
 
     def passarPagina(self):
-        if (
-            self.pdf_document is not None
-            and self.paginaAtual < len(self.pdf_document) - 1
-        ):
+        if self.documentoPdf is not None and self.paginaAtual < self.totalPaginas - 1:
             self.paginaAtual += 1
             self.mostrarPagina()
 
     def voltarPagina(self):
-        if self.pdf_document is not None and self.paginaAtual > 0:
+        if self.documentoPdf is not None and self.paginaAtual > 0:
             self.paginaAtual -= 1
             self.mostrarPagina()
+
+    def closeEvent(self, event):
+        """
+        Salvar em qual página o usuário estava \n
+        ao fechar o PDF
+        """
+        paginaAtual = self.paginaAtual
+        print(paginaAtual)
+        event.accept()
