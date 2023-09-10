@@ -54,12 +54,10 @@
     color: #F8F3EF;
 }
 
-#mensagemDeErro {
+QLabel#mensagemDeErro {
     font-size: 20px;
     text-align: center;
-    border-radius: 15px;
     width: min-content;
-    background-color: #A9A9A9;
-    border-radius: 15px;
-    color: #ff3535;
+    background-color: #A64B45;
+    color: #FFFFFF;
 }
