@@ -1,0 +1,188 @@
+Index: src/view/components/dashboard/subcomponents/FundoDashboard.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from PyQt6 import QtWidgets, QtGui, QtCore\r\nfrom PyQt6.QtCore import Qt\r\nfrom src.view.components.BotaoImagem import BotaoImagem\r\n<<<<<<< HEAD\r\nfrom src.controller.telaPrincipal import livrosCatalogo\r\n\r\n# from myfiles.bimages import getImages\r\n\r\n=======\r\nfrom src.controller import telaPrincipal\r\nfrom src.view.utils import imageTools\r\nfrom src.view.utils import widgetSearch\r\n>>>>>>> luan\r\n\r\ncounter = 0\r\nclass FundoDashboard(QtWidgets.QFrame):\r\n    def __init__(self, parent: QtWidgets.QWidget):\r\n        \"\"\"\r\n        Widget que compõe o conteúdo da tela principal | Contém a \"Minha Biblioteca\" e \"Catálogo\"\r\n\r\n        :param parent: define o parente do widget\r\n\r\n        Métodos:\r\n            - setNomeUsuario(): atualiza o nome de usuário nas saudações da tela principal\r\n        \"\"\"\r\n        # Configurações\r\n        super().__init__()\r\n        self.setParent(parent)\r\n<<<<<<< HEAD\r\n        self.setStyleSheet(open(\"src/view/assets/styles/fundo_dashboard.css\").read())\r\n=======\r\n        self.setContentsMargins(20, 20, 20, 0)\r\n>>>>>>> luan\r\n\r\n        # Definição do Layout\r\n        fundoLayout = QtWidgets.QVBoxLayout()\r\n        self.setLayout(fundoLayout)\r\n\r\n        # Label (Bem vindo) -----------------------------------------------\r\n        self.saudacao = QtWidgets.QLabel(self)\r\n        self.saudacao.setObjectName(\"saudacao\")\r\n        fundoLayout.addWidget(self.saudacao)\r\n\r\n        self.saudacao.setText(f\"Bem vindo, <usuario>!\")\r\n        self.saudacao.setMaximumHeight(35)\r\n        self.saudacao.setAlignment(Qt.AlignmentFlag.AlignCenter)\r\n\r\n        # QFrame (Grupo: Minha Biblioteca) ----------------------------------\r\n        groupMyBiblioteca = QtWidgets.QFrame(self)\r\n        groupMyBiblioteca.setObjectName(\"groupMyBiblioteca\")\r\n        fundoLayout.addWidget(groupMyBiblioteca)\r\n\r\n        myBibliotecaLayout = QtWidgets.QVBoxLayout()\r\n        myBibliotecaLayout.setSpacing(14)\r\n        groupMyBiblioteca.setLayout(myBibliotecaLayout)\r\n\r\n        # Label (Minha Biblioteca)\r\n        myBibliotecaLabel = QtWidgets.QLabel(groupMyBiblioteca)\r\n        myBibliotecaLabel.setObjectName(\"labelFrameLivros\")\r\n        myBibliotecaLabel.setMaximumHeight(35)\r\n        myBibliotecaLabel.setText(\"Minha Biblioteca\")\r\n        myBibliotecaLayout.addWidget(myBibliotecaLabel)\r\n\r\n        # QFrame (Meus Livros)\r\n        meusLivros = QtWidgets.QFrame(groupMyBiblioteca)\r\n        meusLivros.setMinimumHeight(300)\r\n        meusLivros.setObjectName(\"frameLivros\")\r\n        myBibliotecaLayout.addWidget(meusLivros)\r\n\r\n        meusLivrosLayout = QtWidgets.QHBoxLayout()\r\n        meusLivros.setLayout(meusLivrosLayout)\r\n\r\n<<<<<<< HEAD\r\n        # for tuplaImagem in getImages():\r\n        #     imageBotao = QtWidgets.QPushButton()\r\n        #     qimage = QtGui.QImage.fromData(tuplaImagem[1])\r\n        #     imageBotao.setIcon(QtGui.QIcon(QtGui.QPixmap.fromImage(qimage)))\r\n        #     imageBotao.setIconSize(QtCore.QSize(qimage.width(), qimage.height()))\r\n        #     imageBotao.setFixedSize(qimage.width(), qimage.height())\r\n        #     meusLivrosLayout.addWidget(imageBotao)\r\n=======\r\n        # Definindo \"meus livros\"\r\n        self.listaMeusLivros = list()\r\n        for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:\r\n            meuLivro = BotaoImagem(tuplaLivro[0], tuplaLivro[5])\r\n            meuLivro.resizeButton(200, 280)\r\n\r\n            meuLivro.clicked.connect(self.botaoApertado)  # Conectando ação\r\n\r\n            self.listaMeusLivros.append(meuLivro)\r\n            meusLivrosLayout.addWidget(meuLivro)\r\n\r\n        # Ver mais\r\n        botaoVerMais1 = QtWidgets.QPushButton()\r\n        botaoVerMais1.setObjectName(\"botaoVerMais\")\r\n        botaoVerMais1.setMaximumWidth(100)\r\n        meusLivrosLayout.addWidget(botaoVerMais1)\r\n\r\n>>>>>>> luan\r\n\r\n        # QFrame (Grupo: Catálogo) ----------------------------------------------------\r\n        groupCatalogo = QtWidgets.QFrame(self)\r\n        groupCatalogo.setObjectName(\"groupMyBiblioteca\")\r\n        fundoLayout.addWidget(groupCatalogo)\r\n\r\n        catalogoLayout = QtWidgets.QVBoxLayout()\r\n        catalogoLayout.setSpacing(14)\r\n        groupCatalogo.setLayout(catalogoLayout)\r\n\r\n        # Label (Catálogo)\r\n        catalogoLabel = QtWidgets.QLabel(groupCatalogo)\r\n        catalogoLabel.setMaximumHeight(35)\r\n        catalogoLabel.setObjectName(\"labelFrameLivros\")\r\n        catalogoLabel.setText(\"Catálogo\")\r\n        catalogoLayout.addWidget(catalogoLabel)\r\n\r\n        # QFrame (Catalogo Livros)\r\n        catalogoLivros = QtWidgets.QFrame(groupCatalogo)\r\n        catalogoLivros.setMinimumHeight(300)\r\n        catalogoLivros.setObjectName(\"frameLivros\")\r\n        catalogoLayout.addWidget(catalogoLivros)\r\n\r\n        catalogoLivrosLayout = QtWidgets.QHBoxLayout()\r\n        catalogoLivros.setLayout(catalogoLivrosLayout)\r\n\r\n        # Definindo livros (imageButtons)\r\n        self.listaLivrosCatalogo = list()  # Para acessar os botões em alguma função\r\n\r\n<<<<<<< HEAD\r\n=======\r\n        for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:  # Itera a lista de livros do catálogo\r\n\r\n            livroCatalogo = BotaoImagem(tuplaLivro[0], tuplaLivro[5])\r\n            livroCatalogo.resizeButton(200, 280)  # Redimensionando imagem\r\n\r\n            # Ação do botão\r\n            livroCatalogo.clicked.connect(self.botaoApertado)\r\n\r\n            self.listaLivrosCatalogo.append(livroCatalogo)\r\n            catalogoLivrosLayout.addWidget(livroCatalogo)\r\n\r\n        # Ver mais\r\n        botaoVerMais2 = QtWidgets.QPushButton()\r\n        botaoVerMais2.setObjectName(\"botaoVerMais\")\r\n        botaoVerMais2.setMaximumWidth(100)\r\n        catalogoLivrosLayout.addWidget(botaoVerMais2)\r\n\r\n\r\n    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:\r\n        mainWindow = widgetSearch.getAncestrais(self)['mainWindow']  # mainWindow para identificar redimensionamentos\r\n        print(f\"{mainWindow.width()}X{mainWindow.height()}\")\r\n        \r\n        # Redimensionamento dos livros\r\n        if mainWindow.width() >= 1600:  # Redimensiona de acordo com o tamanho da janela\r\n            print(\"Escalado\")\r\n            for livroCatalogo in self.listaLivrosCatalogo:\r\n                livroCatalogo.resizeButton(240, 336)\r\n            for livroMyLivro in self.listaMeusLivros:\r\n                livroMyLivro.resizeButton(240, 336)\r\n        else:\r\n            for livroCatalogo in self.listaLivrosCatalogo:\r\n                livroCatalogo.resizeButton(200, 280)\r\n            for livroMyLivro in self.listaMeusLivros:\r\n                livroMyLivro.resizeButton(200, 280)\r\n\r\n>>>>>>> luan\r\n    def setNomeUsuario(self, usuarioAtual: str):\r\n        usuarioAtual = usuarioAtual\r\n        self.saudacao.setText(f\"Bem vindo, {usuarioAtual.capitalize()}!\")\r\n\r\n    def botaoApertado(self):\r\n        print(self.sender().getID())\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/view/components/dashboard/subcomponents/FundoDashboard.py b/src/view/components/dashboard/subcomponents/FundoDashboard.py
+--- a/src/view/components/dashboard/subcomponents/FundoDashboard.py	(revision 1986183ea25c07daaf0a3f226a394c73c74b3f0a)
++++ b/src/view/components/dashboard/subcomponents/FundoDashboard.py	(date 1694046847506)
+@@ -1,18 +1,12 @@
+ from PyQt6 import QtWidgets, QtGui, QtCore
+ from PyQt6.QtCore import Qt
+ from src.view.components.BotaoImagem import BotaoImagem
+-<<<<<<< HEAD
+ from src.controller.telaPrincipal import livrosCatalogo
+-
+-# from myfiles.bimages import getImages
+-
+-=======
+ from src.controller import telaPrincipal
+ from src.view.utils import imageTools
+ from src.view.utils import widgetSearch
+->>>>>>> luan
+ 
+-counter = 0
++
+ class FundoDashboard(QtWidgets.QFrame):
+     def __init__(self, parent: QtWidgets.QWidget):
+         """
+@@ -26,11 +20,8 @@
+         # Configurações
+         super().__init__()
+         self.setParent(parent)
+-<<<<<<< HEAD
+-        self.setStyleSheet(open("src/view/assets/styles/fundo_dashboard.css").read())
+-=======
+         self.setContentsMargins(20, 20, 20, 0)
+->>>>>>> luan
++
+ 
+         # Definição do Layout
+         fundoLayout = QtWidgets.QVBoxLayout()
+@@ -70,16 +61,6 @@
+         meusLivrosLayout = QtWidgets.QHBoxLayout()
+         meusLivros.setLayout(meusLivrosLayout)
+ 
+-<<<<<<< HEAD
+-        # for tuplaImagem in getImages():
+-        #     imageBotao = QtWidgets.QPushButton()
+-        #     qimage = QtGui.QImage.fromData(tuplaImagem[1])
+-        #     imageBotao.setIcon(QtGui.QIcon(QtGui.QPixmap.fromImage(qimage)))
+-        #     imageBotao.setIconSize(QtCore.QSize(qimage.width(), qimage.height()))
+-        #     imageBotao.setFixedSize(qimage.width(), qimage.height())
+-        #     meusLivrosLayout.addWidget(imageBotao)
+-=======
+-        # Definindo "meus livros"
+         self.listaMeusLivros = list()
+         for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:
+             meuLivro = BotaoImagem(tuplaLivro[0], tuplaLivro[5])
+@@ -96,8 +77,6 @@
+         botaoVerMais1.setMaximumWidth(100)
+         meusLivrosLayout.addWidget(botaoVerMais1)
+ 
+->>>>>>> luan
+-
+         # QFrame (Grupo: Catálogo) ----------------------------------------------------
+         groupCatalogo = QtWidgets.QFrame(self)
+         groupCatalogo.setObjectName("groupMyBiblioteca")
+@@ -126,8 +105,7 @@
+         # Definindo livros (imageButtons)
+         self.listaLivrosCatalogo = list()  # Para acessar os botões em alguma função
+ 
+-<<<<<<< HEAD
+-=======
++
+         for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:  # Itera a lista de livros do catálogo
+ 
+             livroCatalogo = BotaoImagem(tuplaLivro[0], tuplaLivro[5])
+@@ -163,7 +141,7 @@
+             for livroMyLivro in self.listaMeusLivros:
+                 livroMyLivro.resizeButton(200, 280)
+ 
+->>>>>>> luan
++
+     def setNomeUsuario(self, usuarioAtual: str):
+         usuarioAtual = usuarioAtual
+         self.saudacao.setText(f"Bem vindo, {usuarioAtual.capitalize()}!")
+Index: src/view/MainWindow.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from PyQt6 import QtWidgets, QtGui, QtCore\r\nimport sys\r\nfrom src.view.components.login.TelaLogin import TelaLogin\r\nfrom src.view.components.dashboard.Dashboard import Dashboard\r\nfrom src.view.components.catalogo.TelaCatalogo import TelaCatalogo\r\nfrom src.view.assets.styles import non_css_styles\r\n\r\n\r\nclass MainWindow(QtWidgets.QMainWindow):\r\n    def __init__(self):\r\n        \"\"\"\r\n        Janela principal que contém todos os outros widgets e funcionalidades\r\n\r\n        Atributos:\r\n            - usuarioAtual (tuple): possui todas as informações do usuário atual. É definida após o ação de logar\r\n\r\n        Métodos:\r\n            - getUsuario(): retorna a tupla com as informações do usuário atual da aplicação\r\n            - setUsuario(): define a tupla com as informações usuário atual da aplicação\r\n        \"\"\"\r\n        # Atributos\r\n        self.usuarioAtual = tuple()\r\n\r\n        # Configurações\r\n        super().__init__()\r\n        self.setObjectName(\"mainWindow\")\r\n        self.setStyleSheet(open('src/view/assets/styles/mainWindow.css').read())\r\n        self.setMinimumSize(1300, 900)\r\n        self.currentSize = {\"width\": self.width(), \"height\": self.height()}\r\n\r\n        # Central QWidget (mainWindowSpace)\r\n        mainWindowSpace = QtWidgets.QWidget(self)\r\n        mainWindowSpace.setObjectName(\"mainWindowSpace\")\r\n        self.setCentralWidget(mainWindowSpace)\r\n\r\n        # mainWindowLayout\r\n        mainWindowLayout = QtWidgets.QVBoxLayout()\r\n        mainWindowSpace.setLayout(mainWindowLayout)\r\n\r\n        # QStackedWidget (paginas) ---------------------------------\r\n        self.paginas = QtWidgets.QStackedWidget(self)\r\n        self.paginas.setObjectName(\"paginas\")\r\n        mainWindowLayout.addWidget(self.paginas)\r\n        self.paginas.setGraphicsEffect(non_css_styles.BoxShadow(QtGui.QColor(0, 0, 0, 85), 4, 5, 4))\r\n\r\n\r\n        # Instância login\r\n        telaLogin = TelaLogin(self.paginas)\r\n        telaLogin.setObjectName(\"telaLogin\")\r\n        self.paginas.addWidget(telaLogin)\r\n        # Instância dashboard (pagina)\r\n        dashboard = Dashboard(self.paginas)\r\n        dashboard.setObjectName(\"dashboard\")\r\n        self.paginas.addWidget(dashboard)\r\n        # Instância biblioteca (pagina)\r\n        biblioteca = QtWidgets.QWidget(self.paginas)\r\n        biblioteca.setObjectName(\"biblioteca\")\r\n        self.paginas.addWidget(biblioteca)\r\n        # Instância catalogo (pagina)\r\n        catalogo = TelaCatalogo(self.paginas)\r\n        catalogo.setObjectName(\"catalogo\")\r\n        self.paginas.addWidget(catalogo)\r\n\r\n        self.paginas.setCurrentIndex(3)\r\n\r\n\r\n    def getUsuario(self):\r\n        return self.usuarioAtual\r\n\r\n    def setUsuario(self, tuplaUsuario: tuple):\r\n        self.usuarioAtual = tuplaUsuario\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/view/MainWindow.py b/src/view/MainWindow.py
+--- a/src/view/MainWindow.py	(revision 1986183ea25c07daaf0a3f226a394c73c74b3f0a)
++++ b/src/view/MainWindow.py	(date 1694046856466)
+@@ -61,7 +61,7 @@
+         catalogo.setObjectName("catalogo")
+         self.paginas.addWidget(catalogo)
+ 
+-        self.paginas.setCurrentIndex(3)
++        self.paginas.setCurrentIndex(1)
+ 
+ 
+     def getUsuario(self):
+Index: src/view/components/login/TelaLogin.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from PyQt6 import QtWidgets\r\n<<<<<<< HEAD\r\nfrom src.view.components.login.subcomponents.Formulario import Formulario\r\nfrom src.view.components.login.TelaRegistro import TelaRegistro\r\n\r\n=======\r\nfrom src.view.components.login.subcomponents.FormularioLogin import Formulario\r\n>>>>>>> luan\r\n\r\nclass TelaLogin(QtWidgets.QWidget):\r\n    def __init__(self, parent: QtWidgets.QWidget):\r\n        \"\"\"\r\n        Tela de login com os formulários de login e registro\r\n        :param parent: define o parente do widget\r\n        \"\"\"\r\n        # Configurações\r\n        super().__init__()\r\n        self.setParent(parent)\r\n        self.setStyleSheet(open(\"src/view/assets/styles/login/telaLogin.css\").read())\r\n\r\n        # Definição do layout\r\n        loginLayout = QtWidgets.QVBoxLayout()\r\n        self.setLayout(loginLayout)\r\n\r\n        # QFrame (fundo)\r\n        fundo = QtWidgets.QFrame(self)\r\n        fundo.setObjectName(\"fundo\")\r\n        loginLayout.addWidget(fundo)\r\n\r\n        fundoLayout = QtWidgets.QVBoxLayout()\r\n        fundoLayout.setContentsMargins(200, 20, 200, 20)\r\n        fundo.setLayout(fundoLayout)\r\n\r\n        # QFrame (formulario)\r\n        formulario = Formulario(fundo)\r\n        formulario.setObjectName(\"formulario\")\r\n        fundoLayout.addWidget(formulario)\r\n\r\n        # QFrame (registrar)\r\n        self.TelaRegistro = TelaRegistro(self)\r\n        self.TelaRegistro.setObjectName(\"formulario\")\r\n        fundoLayout.addWidget(self.TelaRegistro)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/view/components/login/TelaLogin.py b/src/view/components/login/TelaLogin.py
+--- a/src/view/components/login/TelaLogin.py	(revision 1986183ea25c07daaf0a3f226a394c73c74b3f0a)
++++ b/src/view/components/login/TelaLogin.py	(date 1694046729183)
+@@ -1,11 +1,7 @@
+ from PyQt6 import QtWidgets
+-<<<<<<< HEAD
+-from src.view.components.login.subcomponents.Formulario import Formulario
+-from src.view.components.login.TelaRegistro import TelaRegistro
++from src.view.components.login.subcomponents.FormularioLogin import FormularioLogin
++from src.view.components.login.subcomponents.FormularioRegistro import FormularioRegistro
+ 
+-=======
+-from src.view.components.login.subcomponents.FormularioLogin import Formulario
+->>>>>>> luan
+ 
+ class TelaLogin(QtWidgets.QWidget):
+     def __init__(self, parent: QtWidgets.QWidget):
+@@ -32,11 +28,11 @@
+         fundo.setLayout(fundoLayout)
+ 
+         # QFrame (formulario)
+-        formulario = Formulario(fundo)
++        formulario = FormularioLogin(fundo)
+         formulario.setObjectName("formulario")
+         fundoLayout.addWidget(formulario)
+ 
+         # QFrame (registrar)
+-        self.TelaRegistro = TelaRegistro(self)
++        self.TelaRegistro = FormularioRegistro(self)
+         self.TelaRegistro.setObjectName("formulario")
+         fundoLayout.addWidget(self.TelaRegistro)
+Index: src/view/components/login/TelaRegistro.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/view/components/login/TelaRegistro.py b/src/view/components/login/subcomponents/FormularioRegistro.py
+rename from src/view/components/login/TelaRegistro.py
+rename to src/view/components/login/subcomponents/FormularioRegistro.py
+--- a/src/view/components/login/TelaRegistro.py	(revision 1986183ea25c07daaf0a3f226a394c73c74b3f0a)
++++ b/src/view/components/login/subcomponents/FormularioRegistro.py	(date 1694046017849)
+@@ -3,7 +3,7 @@
+ from src.controller import telaInicial
+ 
+ 
+-class TelaRegistro(QtWidgets.QFrame):
++class FormularioRegistro(QtWidgets.QFrame):
+     def __init__(self, parent: QtWidgets.QWidget):
+         super().__init__()
+         self.setParent(parent)
+Index: src/view/components/login/subcomponents/FormularioLogin.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from PyQt6 import QtWidgets\r\nfrom PyQt6.QtCore import Qt\r\nfrom src.controller import telaInicial\r\nfrom src.view.components.login.TelaRegistro import TelaRegistro\r\nfrom src.view.utils import widgetSearch\r\n\r\n\r\nclass Formulario(QtWidgets.QFrame):\r\n    def __init__(self, parent: QtWidgets.QWidget):\r\n        \"\"\"\r\n        QFrame constituido pelos widgets que serão preenchidos com as informações para logar ou registrar\r\n\r\n        :param parent: Define o parente do widget\r\n\r\n        Métodos:\r\n            - logarBotaoCliclado(): verifica o usuário e muda para a tela principal\r\n        \"\"\"\r\n        # Configurações\r\n        super().__init__()\r\n        self.setParent(parent)\r\n        self.setContentsMargins(173, 60, 173, 115)\r\n\r\n        # Definição do layout do formulário\r\n        formLayout = QtWidgets.QVBoxLayout()\r\n        formLayout.setSpacing(40)\r\n        formLayout.setAlignment(Qt.AlignmentFlag.AlignHCenter)\r\n        self.setLayout(formLayout)\r\n\r\n        # LOGO -----------------------------------------\r\n        logoFrame = QtWidgets.QFrame(self)\r\n        logoFrame.setMinimumSize(200, 100)\r\n        logoFrame.setMaximumSize(600, 300)\r\n        logoFrame.setObjectName(\"logoFrame\")\r\n        formLayout.addWidget(logoFrame)\r\n\r\n        fundoLogoLayout = QtWidgets.QHBoxLayout()\r\n        fundoLogoLayout.setContentsMargins(5, 0, 5, 0)\r\n        fundoLogoLayout.setAlignment(Qt.AlignmentFlag.AlignHCenter)\r\n        logoFrame.setLayout(fundoLogoLayout)\r\n\r\n        pyndleLogo = QtWidgets.QLabel(logoFrame)\r\n        pyndleLogo.setObjectName(\"pyndleLogo\")\r\n        pyndleLogo.setText(\"Pyndle\")\r\n        fundoLogoLayout.addWidget(pyndleLogo)\r\n\r\n        # ENTRADAS -------------------------------------\r\n        # Frame\r\n        entradasFrame = QtWidgets.QFrame(self)\r\n        formLayout.addWidget(entradasFrame)\r\n        entradasLayout = QtWidgets.QVBoxLayout(self)\r\n        entradasLayout.setSpacing(5)\r\n        entradasFrame.setLayout(entradasLayout)\r\n\r\n        # elementos\r\n\r\n        usuarioLabel = QtWidgets.QLabel(entradasFrame)\r\n        usuarioLabel.setText(\"Usuário\")\r\n        usuarioLabel.setObjectName(\"labelCaixa\")\r\n        entradasLayout.addWidget(usuarioLabel)\r\n\r\n        self.entradaUsuario = QtWidgets.QLineEdit(entradasFrame)\r\n        self.entradaUsuario.setObjectName(\"caixaEntrada\")\r\n        entradasLayout.addWidget(self.entradaUsuario)\r\n\r\n        senhaLabel = QtWidgets.QLabel(entradasFrame)\r\n        senhaLabel.setText(\"Senha\")\r\n        senhaLabel.setObjectName(\"labelCaixa\")\r\n        entradasLayout.addWidget(senhaLabel)\r\n\r\n        self.entradaSenha = QtWidgets.QLineEdit(entradasFrame)\r\n        self.entradaSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)\r\n        self.entradaSenha.setObjectName(\"caixaEntrada\")\r\n        entradasLayout.addWidget(self.entradaSenha)\r\n\r\n        # BOTÕES --------------------------\r\n        # Frame\r\n        botoesFrame = QtWidgets.QFrame(self)\r\n        entradasLayout.addWidget(botoesFrame)\r\n        botoesFrameLayout = QtWidgets.QVBoxLayout(botoesFrame)\r\n        botoesFrame.setLayout(botoesFrameLayout)\r\n\r\n        self.logarBotao = QtWidgets.QPushButton(botoesFrame)\r\n        self.logarBotao.setText(\"Logar\")\r\n        self.logarBotao.clicked.connect(self.logarBotaoCliclado)\r\n        self.logarBotao.setObjectName(\"logarBotao\")\r\n        botoesFrameLayout.addWidget(self.logarBotao)\r\n\r\n        self.registrarBotao = QtWidgets.QPushButton(botoesFrame)\r\n        self.registrarBotao.setText(\"Registrar\")\r\n        self.registrarBotao.setObjectName(\"registrarBotao\")\r\n        self.registrarBotao.clicked.connect(self.registrarBotaoClicado)\r\n        botoesFrameLayout.addWidget(self.registrarBotao)\r\n\r\n    def logarBotaoCliclado(self):\r\n        \"\"\"\r\n        - Verifica se as informações de login e senha correspondem a algum usuário registrado no banco de dados\\n\r\n        - Depois muda para a tela principal da aplicação\r\n        \"\"\"\r\n        usuario = self.entradaUsuario.text()\r\n        senha = self.entradaSenha.text()\r\n\r\n        try:\r\n            status = telaInicial.checar(usuario, senha)\r\n            if status is True:\r\n                # mainWindow para definir o usuario\r\n                mainWindow = widgetSearch.getAncestrais(self)[\"mainWindow\"]\r\n                # Onde as páginas são guardadas\r\n                stackedWidget = widgetSearch.getAncestrais(self)[\"paginas\"]\r\n                # Define o nome de usuário no \"bem vindo\" da tela principal\r\n                widgetSearch.getDescendentes(stackedWidget)[\r\n                    \"fundoDashboard\"\r\n                ].setNomeUsuario(usuario)\r\n                stackedWidget.setCurrentIndex(1)  # Muda para a página principal\r\n                mainWindow.setUsuario(\r\n                    telaInicial.getTuplaUsuario(usuario)\r\n                )  # Define o usuário principal com as informações na mainWindow\r\n            else:\r\n                pass\r\n        except IndexError:\r\n            print(\"Usuário não encontrado\")\r\n\r\n    def registrarBotaoClicado(self):\r\n        self.entradaSenha.clear()\r\n        self.entradaUsuario.clear()\r\n        self.hide()\r\n        self.parent().findChild(TelaRegistro).show()\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/view/components/login/subcomponents/FormularioLogin.py b/src/view/components/login/subcomponents/FormularioLogin.py
+--- a/src/view/components/login/subcomponents/FormularioLogin.py	(revision 1986183ea25c07daaf0a3f226a394c73c74b3f0a)
++++ b/src/view/components/login/subcomponents/FormularioLogin.py	(date 1694046081980)
+@@ -1,11 +1,11 @@
+ from PyQt6 import QtWidgets
+ from PyQt6.QtCore import Qt
+ from src.controller import telaInicial
+-from src.view.components.login.TelaRegistro import TelaRegistro
++from src.view.components.login.subcomponents.FormularioRegistro import FormularioRegistro
+ from src.view.utils import widgetSearch
+ 
+ 
+-class Formulario(QtWidgets.QFrame):
++class FormularioLogin(QtWidgets.QFrame):
+     def __init__(self, parent: QtWidgets.QWidget):
+         """
+         QFrame constituido pelos widgets que serão preenchidos com as informações para logar ou registrar

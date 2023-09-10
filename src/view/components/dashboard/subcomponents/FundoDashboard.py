@@ -3,6 +3,9 @@ from PyQt6.QtCore import Qt
 from src.view.components.BotaoImagem import BotaoImagem
 from src.controller import telaPrincipal
 from src.view.utils import widgetSearch
+from src.controller.telaPrincipal import livrosCatalogo
+from src.view.components.ModuloLivro.Popup import Popup
+
 
 
 class FundoDashboard(QtWidgets.QFrame):
@@ -33,6 +36,7 @@ class FundoDashboard(QtWidgets.QFrame):
         self.saudacao.setText(f"Bem vindo, <usuario>!")
         self.saudacao.setMaximumHeight(35)
         self.saudacao.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
 
         # QFrame (Grupo: Minha Biblioteca) ----------------------------------
         groupMyBiblioteca = QtWidgets.QFrame(self)
@@ -150,6 +154,8 @@ class FundoDashboard(QtWidgets.QFrame):
 
     def botaoApertado(self):
         print(self.sender().getID())
+        popup = Popup(self.sender().getID())
+        popup.exec()
 
     def clickVerMaisCatalogo(self):
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]

@@ -25,11 +25,11 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__()
         self.setAcceptDrops(True)
         self.setObjectName("mainWindow")
+
         QtGui.QFontDatabase.addApplicationFont("src/view/assets/fonts/Baskervville.ttf")
         self.setStyleSheet(open('src/view/assets/styles/mainWindow.css').read())
         self.setMinimumSize(1300, 900)
         self.currentSize = {"width": self.width(), "height": self.height()}
-
 
         # Central QWidget (mainWindowSpace)
         mainWindowSpace = QtWidgets.QWidget(self)
@@ -45,7 +45,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.paginas = QtWidgets.QStackedWidget(self)
         self.paginas.setObjectName("paginas")
         mainWindowLayout.addWidget(self.paginas)
-        self.paginas.setGraphicsEffect(non_css_styles.BoxShadow(QtGui.QColor(0, 0, 0, 85), 4, 5, 4))
+        self.paginas.setGraphicsEffect(
+            non_css_styles.BoxShadow(QtGui.QColor(0, 0, 0, 85), 4, 5, 4)
+        )
 
 
         # Instância login
