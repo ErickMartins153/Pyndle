@@ -4,7 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e80a73c2-279e-4a2c-9029-20e532427938" name="Changes" comment="Deixando tela principal responsiva e criando TelaCatalogo.py" />
+    <list default="true" id="e80a73c2-279e-4a2c-9029-20e532427938" name="Changes" comment="Deixando tela principal responsiva e criando TelaCatalogo.py">
+      <change afterPath="$PROJECT_DIR$/src/view/components/login/TelaRegistro.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Pyndle.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/35f8cb13-7b8b-4b7d-8230-888b3a630c49.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/35f8cb13-7b8b-4b7d-8230-888b3a630c49/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_06_09_2023_21_35_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_06_09_2023_21_35__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_06_09_2023_21_42_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_06_09_2023_21_42_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_06_09_2023_21_42__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myfiles/bimages.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myfiles/imagens/livro1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myfiles/imagens/livro2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myfiles/imagens/livro3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myfiles/imagens/livro4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myfiles/imagens/livro5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myfiles/imagens/livro6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myfiles/imagens/livro7.jpg" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,7 +103,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Merging main",
     "last_opened_file_path": "C:/Users/Notebook/Desktop/Repositórios/ProjetosPython/Pyndle/src/view/assets/icons",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -265,7 +294,8 @@
       <workItem from="1694192552201" duration="22322000" />
       <workItem from="1694275091923" duration="1013000" />
       <workItem from="1694276145151" duration="274000" />
-      <workItem from="1694286322520" duration="26507000" />
+      <workItem from="1694286322520" duration="26884000" />
+      <workItem from="1694317132899" duration="318000" />
     </task>
     <task id="LOCAL-00001" summary="organizar o diretório">
       <option name="closed" value="true" />
@@ -416,7 +446,7 @@
     <SUITE FILE_PATH="coverage/Pyndle$teste.coverage" NAME="teste Coverage Results" MODIFIED="1692239916906" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/view" />
     <SUITE FILE_PATH="coverage/Pyndle$login.coverage" NAME="login Coverage Results" MODIFIED="1692409169795" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/controller" />
     <SUITE FILE_PATH="coverage/Pyndle$main.coverage" NAME="main Coverage Results" MODIFIED="1692286283314" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/controller" />
-    <SUITE FILE_PATH="coverage/Pyndle$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1694316298483" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pyndle$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1694317162779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pyndle$imageTools.coverage" NAME="imageTools Coverage Results" MODIFIED="1693454460198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/view/utils" />
     <SUITE FILE_PATH="coverage/Pyndle$imageTools__1_.coverage" NAME="imageTools Coverage Results" MODIFIED="1693455967108" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pyndle$janelinha.coverage" NAME="janelinha Coverage Results" MODIFIED="1692241385829" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/view" />
