@@ -1,0 +1,25 @@
+/* FundoDashboard.py */
+
+#saudacao {
+    font-size: 25px;
+}
+
+#labelFrameLivros {
+    font-size: 25px;
+}
+
+#frameLivros{
+    background-color: #F0D097;
+    border-radius: 15px;
+}
+
+#botaoVerMais{
+    image: url(src/view/assets/icons/verMais.svg);
+    width: 150px;
+    height: 150px;
+    background-color: transparent;
+}
+
+#botaoVerMais:hover{
+    image: url(src/view/assets/icons/verMaisSelecionado.svg);
+}

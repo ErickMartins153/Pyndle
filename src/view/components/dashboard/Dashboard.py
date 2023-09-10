@@ -14,6 +14,7 @@ class Dashboard(QtWidgets.QWidget):
         # Configurações
         super().__init__()
         self.setParent(parent)
+        self.setStyleSheet(open("src/view/assets/styles/dashboard/dashboard.css").read())
 
         # Definição do layout
         dashboardLayout = QtWidgets.QVBoxLayout()

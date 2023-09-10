@@ -1,0 +1,68 @@
+/* --TelaLogin.py-- */
+#fundo {
+    background-color: #FFF9EF;
+    border-radius: 15px;
+}
+
+#fundoFormulario {
+    background-color: #4E3D2C;
+    border-radius: 15px;
+}
+
+#labelCaixa {
+    font: 500 30px Baskervville, sans-serif;
+    color: #F8F3EF;
+    padding: 0 2px;
+}
+
+#caixaEntrada {
+    font: 500 25px Baskervville, sans-serif;
+    border-radius: 20px;
+    padding: 2px 10px;
+}
+
+
+/*-------------------------------*/
+
+
+/* --FormularioLogin.py-- */
+#formularioLogin {
+    background-color: #4E3D2C;
+    border-radius: 15px;
+}
+
+#logarBotao, #registrarBotao {
+    border-radius: 25px;
+    font-size: 30px;
+    background-color: #F0D097;
+}
+
+#logarBotao:hover, #registrarBotao:hover {
+    background-color: #c9ad7b;
+}
+
+#voltarLoginBotao {
+    background-color: #D9D9D9 ;
+    border-radius: 25px;
+    font-size: 30px;
+}
+
+#voltarLoginBotao:hover {
+    background-color: #828181;
+    color: #F8F3EF;
+}
+
+/* FormularioRegistro.py */
+#mensagemDeErro {
+    font: 500 20px Baskervville, sans-serif;
+    border-radius: 12px;
+    width: min-content;
+    background-color: #FFF9EF;
+    color: #ff3535;
+}
+
+#registrarBotao {
+    border-radius: 25px;
+    font-size: 30px;
+    background-color: #F0D097;
+}

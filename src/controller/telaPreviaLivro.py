@@ -11,7 +11,9 @@ def dadosLivro(idLivro: int):
     :return: Retorna uma **tupla** com os dados, caso o livro exista, senão retorna **None**
     """
     sgbd.execute("SELECT * FROM livros WHERE idLivro = ?", (idLivro,))
+
     dados = sgbd.fetchone()
+
     if dados:
         return dados
     else:
