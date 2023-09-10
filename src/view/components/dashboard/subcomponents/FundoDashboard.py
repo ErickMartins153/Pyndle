@@ -1,11 +1,10 @@
-from PyQt6 import QtWidgets, QtGui, QtCore
+from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtCore import Qt
 from src.view.components.BotaoImagem import BotaoImagem
 from src.controller import telaPrincipal
-from src.view.utils import imageTools
 from src.view.utils import widgetSearch
 
-counter = 0
+
 class FundoDashboard(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         """
@@ -19,6 +18,7 @@ class FundoDashboard(QtWidgets.QFrame):
         # Configurações
         super().__init__()
         self.setParent(parent)
+        self.setStyleSheet(open("src/view/assets/styles/dashboard/dashboard.css").read())
         self.setContentsMargins(20, 20, 20, 0)
 
         # Definição do Layout
@@ -59,10 +59,11 @@ class FundoDashboard(QtWidgets.QFrame):
         meusLivrosLayout = QtWidgets.QHBoxLayout()
         meusLivros.setLayout(meusLivrosLayout)
 
-        # Definindo "meus livros"
+        # Definindo "Meus Livros"
         self.listaMeusLivros = list()
         for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:
             meuLivro = BotaoImagem(tuplaLivro[0], tuplaLivro[5])
+            meuLivro.setObjectName("livroBotao")
             meuLivro.resizeButton(200, 280)
 
             meuLivro.clicked.connect(self.botaoApertado)  # Conectando ação
@@ -108,6 +109,7 @@ class FundoDashboard(QtWidgets.QFrame):
         for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:  # Itera a lista de livros do catálogo
 
             livroCatalogo = BotaoImagem(tuplaLivro[0], tuplaLivro[5])
+            livroCatalogo.setObjectName("livroBotao")
             livroCatalogo.resizeButton(200, 280)  # Redimensionando imagem
 
             # Ação do botão
@@ -119,6 +121,7 @@ class FundoDashboard(QtWidgets.QFrame):
         # Ver mais
         botaoVerMais2 = QtWidgets.QPushButton()
         botaoVerMais2.setObjectName("botaoVerMais")
+        botaoVerMais2.clicked.connect(self.clickVerMaisCatalogo)
         botaoVerMais2.setMaximumWidth(100)
         catalogoLivrosLayout.addWidget(botaoVerMais2)
 
@@ -140,9 +143,14 @@ class FundoDashboard(QtWidgets.QFrame):
             for livroMyLivro in self.listaMeusLivros:
                 livroMyLivro.resizeButton(200, 280)
 
+
     def setNomeUsuario(self, usuarioAtual: str):
         usuarioAtual = usuarioAtual
-        self.saudacao.setText(f"Bem vindo, {usuarioAtual}!")
+        self.saudacao.setText(f"Bem vindo, {usuarioAtual.capitalize()}!")
 
     def botaoApertado(self):
         print(self.sender().getID())
+
+    def clickVerMaisCatalogo(self):
+        mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
+        widgetSearch.getDescendentes(mainWindow)["paginas"].setCurrentIndex(3)

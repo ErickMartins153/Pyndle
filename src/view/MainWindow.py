@@ -23,10 +23,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Configurações
         super().__init__()
+        self.setAcceptDrops(True)
         self.setObjectName("mainWindow")
+        QtGui.QFontDatabase.addApplicationFont("src/view/assets/fonts/Baskervville.ttf")
         self.setStyleSheet(open('src/view/assets/styles/mainWindow.css').read())
         self.setMinimumSize(1300, 900)
         self.currentSize = {"width": self.width(), "height": self.height()}
+
 
         # Central QWidget (mainWindowSpace)
         mainWindowSpace = QtWidgets.QWidget(self)
@@ -35,6 +38,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # mainWindowLayout
         mainWindowLayout = QtWidgets.QVBoxLayout()
+        mainWindowLayout.setContentsMargins(25, 15, 25, 15)
         mainWindowSpace.setLayout(mainWindowLayout)
 
         # QStackedWidget (paginas) ---------------------------------
@@ -61,7 +65,7 @@ class MainWindow(QtWidgets.QMainWindow):
         catalogo.setObjectName("catalogo")
         self.paginas.addWidget(catalogo)
 
-        self.paginas.setCurrentIndex(3)
+        self.paginas.setCurrentIndex(0)
 
 
     def getUsuario(self):

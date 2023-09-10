@@ -1,5 +1,4 @@
-from PyQt6 import QtWidgets, QtGui, QtCore
-from PyQt6.QtCore import Qt
+from PyQt6 import QtWidgets, QtGui
 from src.controller.telaPrincipal import livrosCatalogo
 from src.view.components.BotaoImagem import BotaoImagem
 from src.view.utils import widgetSearch
@@ -44,7 +43,7 @@ class PainelLivros(QtWidgets.QScrollArea):
 
 
         # Redimensionamento dos livros
-        if mainWindow.width() >= 1600:  # Redimensiona de acordo com o tamanho da janela
+        if mainWindow.width() >= 1640:  # Redimensiona de acordo com o tamanho da janela
             print("Escalado")
 
             self.displayBotoesLivros(4, 240, 336)
