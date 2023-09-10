@@ -12,19 +12,34 @@ class ConteudoCatalogo(QtWidgets.QFrame):
         self.setParent(parent)
 
         # Definição de layout
-        conteudoCatalogoLayout = QtWidgets.QHBoxLayout()
+        conteudoCatalogoLayout = QtWidgets.QVBoxLayout()
         conteudoCatalogoLayout.setSpacing(0)
         self.setLayout(conteudoCatalogoLayout)
+
+        # QLabel (Catalogo)
+        conteinerLabelCatalogo = QtWidgets.QHBoxLayout()
+        conteudoCatalogoLayout.addLayout(conteinerLabelCatalogo)
+
+        labelCatalogo = QtWidgets.QLabel("CATÁLOGO")
+        labelCatalogo.setObjectName("labelCatalogo")
+        labelCatalogo.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        labelCatalogo.setMinimumHeight(60)
+        conteinerLabelCatalogo.addWidget(labelCatalogo)
+
+        # Definição do contêiner com os painéis
+        groupPaineis = QtWidgets.QHBoxLayout()
+        groupPaineis.setSpacing(0)
+        conteudoCatalogoLayout.addLayout(groupPaineis)
 
         # Painel de filtragem
         painelFiltro = PainelFiltro(self)
         painelFiltro.setObjectName("painelFiltro")
-        conteudoCatalogoLayout.addWidget(painelFiltro)
+        groupPaineis.addWidget(painelFiltro)
 
         # Painel de livros
         painelLivros = PainelLivros(self)
         painelLivros.setObjectName("painelLivros")
-        conteudoCatalogoLayout.addWidget(painelLivros)
+        groupPaineis.addWidget(painelLivros)
 
-        conteudoCatalogoLayout.setStretch(0, 41)
-        conteudoCatalogoLayout.setStretch(1, 100)
+        groupPaineis.setStretch(0, 41)
+        groupPaineis.setStretch(1, 100)

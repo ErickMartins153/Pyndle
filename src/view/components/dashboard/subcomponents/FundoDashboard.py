@@ -1,18 +1,10 @@
-from PyQt6 import QtWidgets, QtGui, QtCore
+from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtCore import Qt
 from src.view.components.BotaoImagem import BotaoImagem
-<<<<<<< HEAD
-from src.controller.telaPrincipal import livrosCatalogo
-
-# from myfiles.bimages import getImages
-
-=======
 from src.controller import telaPrincipal
-from src.view.utils import imageTools
 from src.view.utils import widgetSearch
->>>>>>> luan
 
-counter = 0
+
 class FundoDashboard(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         """
@@ -26,11 +18,8 @@ class FundoDashboard(QtWidgets.QFrame):
         # Configurações
         super().__init__()
         self.setParent(parent)
-<<<<<<< HEAD
-        self.setStyleSheet(open("src/view/assets/styles/fundo_dashboard.css").read())
-=======
+        self.setStyleSheet(open("src/view/assets/styles/dashboard/dashboard.css").read())
         self.setContentsMargins(20, 20, 20, 0)
->>>>>>> luan
 
         # Definição do Layout
         fundoLayout = QtWidgets.QVBoxLayout()
@@ -70,19 +59,11 @@ class FundoDashboard(QtWidgets.QFrame):
         meusLivrosLayout = QtWidgets.QHBoxLayout()
         meusLivros.setLayout(meusLivrosLayout)
 
-<<<<<<< HEAD
-        # for tuplaImagem in getImages():
-        #     imageBotao = QtWidgets.QPushButton()
-        #     qimage = QtGui.QImage.fromData(tuplaImagem[1])
-        #     imageBotao.setIcon(QtGui.QIcon(QtGui.QPixmap.fromImage(qimage)))
-        #     imageBotao.setIconSize(QtCore.QSize(qimage.width(), qimage.height()))
-        #     imageBotao.setFixedSize(qimage.width(), qimage.height())
-        #     meusLivrosLayout.addWidget(imageBotao)
-=======
-        # Definindo "meus livros"
+        # Definindo "Meus Livros"
         self.listaMeusLivros = list()
         for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:
             meuLivro = BotaoImagem(tuplaLivro[0], tuplaLivro[5])
+            meuLivro.setObjectName("livroBotao")
             meuLivro.resizeButton(200, 280)
 
             meuLivro.clicked.connect(self.botaoApertado)  # Conectando ação
@@ -96,7 +77,6 @@ class FundoDashboard(QtWidgets.QFrame):
         botaoVerMais1.setMaximumWidth(100)
         meusLivrosLayout.addWidget(botaoVerMais1)
 
->>>>>>> luan
 
         # QFrame (Grupo: Catálogo) ----------------------------------------------------
         groupCatalogo = QtWidgets.QFrame(self)
@@ -126,11 +106,10 @@ class FundoDashboard(QtWidgets.QFrame):
         # Definindo livros (imageButtons)
         self.listaLivrosCatalogo = list()  # Para acessar os botões em alguma função
 
-<<<<<<< HEAD
-=======
         for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:  # Itera a lista de livros do catálogo
 
             livroCatalogo = BotaoImagem(tuplaLivro[0], tuplaLivro[5])
+            livroCatalogo.setObjectName("livroBotao")
             livroCatalogo.resizeButton(200, 280)  # Redimensionando imagem
 
             # Ação do botão
@@ -142,6 +121,7 @@ class FundoDashboard(QtWidgets.QFrame):
         # Ver mais
         botaoVerMais2 = QtWidgets.QPushButton()
         botaoVerMais2.setObjectName("botaoVerMais")
+        botaoVerMais2.clicked.connect(self.clickVerMaisCatalogo)
         botaoVerMais2.setMaximumWidth(100)
         catalogoLivrosLayout.addWidget(botaoVerMais2)
 
@@ -163,10 +143,14 @@ class FundoDashboard(QtWidgets.QFrame):
             for livroMyLivro in self.listaMeusLivros:
                 livroMyLivro.resizeButton(200, 280)
 
->>>>>>> luan
+
     def setNomeUsuario(self, usuarioAtual: str):
         usuarioAtual = usuarioAtual
         self.saudacao.setText(f"Bem vindo, {usuarioAtual.capitalize()}!")
 
     def botaoApertado(self):
         print(self.sender().getID())
+
+    def clickVerMaisCatalogo(self):
+        mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
+        widgetSearch.getDescendentes(mainWindow)["paginas"].setCurrentIndex(3)

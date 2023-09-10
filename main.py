@@ -1,4 +1,4 @@
-from PyQt6 import QtWidgets
+from PyQt6 import QtWidgets, QtGui
 import sys
 from src.view.MainWindow import MainWindow
 

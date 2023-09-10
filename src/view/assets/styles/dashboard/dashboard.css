@@ -15,7 +15,11 @@
 
 #botaoVerMais{
     image: url(src/view/assets/icons/verMais.svg);
-    width: 200%;
-    height: 200%;
+    width: 150px;
+    height: 150px;
     background-color: transparent;
+}
+
+#botaoVerMais:hover{
+    image: url(src/view/assets/icons/verMaisSelecionado.svg);
 }
