@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e80a73c2-279e-4a2c-9029-20e532427938" name="Changes" comment="Deixando tela principal responsiva e criando TelaCatalogo.py">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/assets/styles/popup.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/components/ModuloLivro/Grafico.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/components/ModuloLivro/LeitorPDF.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/components/ModuloLivro/Popup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/telaInicial.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/telaInicial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/telaPreviaLivro.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/telaPreviaLivro.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Pyndle.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Pyndle.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/components/Menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/components/Menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/components/dashboard/subcomponents/FundoDashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/components/dashboard/subcomponents/FundoDashboard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/components/login/subcomponents/FormularioLogin.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/components/login/subcomponents/FormularioLogin.py" afterDir="false" />
-    </list>
+    <list default="true" id="e80a73c2-279e-4a2c-9029-20e532427938" name="Changes" comment="Deixando tela principal responsiva e criando TelaCatalogo.py" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,7 +74,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/Notebook/Desktop/Repositórios/ProjetosPython/Pyndle/src/view/assets/icons",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -278,7 +265,7 @@
       <workItem from="1694192552201" duration="22322000" />
       <workItem from="1694275091923" duration="1013000" />
       <workItem from="1694276145151" duration="274000" />
-      <workItem from="1694286322520" duration="25966000" />
+      <workItem from="1694286322520" duration="26507000" />
     </task>
     <task id="LOCAL-00001" summary="organizar o diretório">
       <option name="closed" value="true" />
@@ -429,7 +416,7 @@
     <SUITE FILE_PATH="coverage/Pyndle$teste.coverage" NAME="teste Coverage Results" MODIFIED="1692239916906" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/view" />
     <SUITE FILE_PATH="coverage/Pyndle$login.coverage" NAME="login Coverage Results" MODIFIED="1692409169795" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/controller" />
     <SUITE FILE_PATH="coverage/Pyndle$main.coverage" NAME="main Coverage Results" MODIFIED="1692286283314" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/controller" />
-    <SUITE FILE_PATH="coverage/Pyndle$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1694316097167" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pyndle$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1694316298483" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pyndle$imageTools.coverage" NAME="imageTools Coverage Results" MODIFIED="1693454460198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/view/utils" />
     <SUITE FILE_PATH="coverage/Pyndle$imageTools__1_.coverage" NAME="imageTools Coverage Results" MODIFIED="1693455967108" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pyndle$janelinha.coverage" NAME="janelinha Coverage Results" MODIFIED="1692241385829" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/view" />
