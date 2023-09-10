@@ -1,7 +1,7 @@
 *.pyc
 
-myfiles
+myfiles/
 
-.idea
+.idea/
 
 __pycache__
