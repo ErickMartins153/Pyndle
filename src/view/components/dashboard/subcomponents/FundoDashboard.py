@@ -7,7 +7,6 @@ from src.controller.telaPrincipal import livrosCatalogo
 from src.view.components.ModuloLivro.Popup import Popup
 
 
-
 class FundoDashboard(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         """
@@ -21,7 +20,9 @@ class FundoDashboard(QtWidgets.QFrame):
         # Configurações
         super().__init__()
         self.setParent(parent)
-        self.setStyleSheet(open("src/view/assets/styles/dashboard/dashboard.css").read())
+        self.setStyleSheet(
+            open("src/view/assets/styles/dashboard/dashboard.css").read()
+        )
         self.setContentsMargins(20, 20, 20, 0)
 
         # Definição do Layout
@@ -36,7 +37,6 @@ class FundoDashboard(QtWidgets.QFrame):
         self.saudacao.setText(f"Bem vindo, <usuario>!")
         self.saudacao.setMaximumHeight(35)
         self.saudacao.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
 
         # QFrame (Grupo: Minha Biblioteca) ----------------------------------
         groupMyBiblioteca = QtWidgets.QFrame(self)
@@ -81,7 +81,6 @@ class FundoDashboard(QtWidgets.QFrame):
         botaoVerMais1.setMaximumWidth(100)
         meusLivrosLayout.addWidget(botaoVerMais1)
 
-
         # QFrame (Grupo: Catálogo) ----------------------------------------------------
         groupCatalogo = QtWidgets.QFrame(self)
         groupCatalogo.setObjectName("groupMyBiblioteca")
@@ -110,8 +109,9 @@ class FundoDashboard(QtWidgets.QFrame):
         # Definindo livros (imageButtons)
         self.listaLivrosCatalogo = list()  # Para acessar os botões em alguma função
 
-        for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:  # Itera a lista de livros do catálogo
-
+        for tuplaLivro in telaPrincipal.livrosCatalogo()[
+            :4
+        ]:  # Itera a lista de livros do catálogo
             livroCatalogo = BotaoImagem(tuplaLivro[0], tuplaLivro[5])
             livroCatalogo.setObjectName("livroBotao")
             livroCatalogo.resizeButton(200, 280)  # Redimensionando imagem
@@ -129,14 +129,13 @@ class FundoDashboard(QtWidgets.QFrame):
         botaoVerMais2.setMaximumWidth(100)
         catalogoLivrosLayout.addWidget(botaoVerMais2)
 
-
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
-        mainWindow = widgetSearch.getAncestrais(self)['mainWindow']  # mainWindow para identificar redimensionamentos
-        print(f"{mainWindow.width()}X{mainWindow.height()}")
-        
+        mainWindow = widgetSearch.getAncestrais(self)[
+            "mainWindow"
+        ]  # mainWindow para identificar redimensionamentos
+
         # Redimensionamento dos livros
         if mainWindow.width() >= 1600:  # Redimensiona de acordo com o tamanho da janela
-            print("Escalado")
             for livroCatalogo in self.listaLivrosCatalogo:
                 livroCatalogo.resizeButton(240, 336)
             for livroMyLivro in self.listaMeusLivros:
@@ -147,13 +146,11 @@ class FundoDashboard(QtWidgets.QFrame):
             for livroMyLivro in self.listaMeusLivros:
                 livroMyLivro.resizeButton(200, 280)
 
-
     def setNomeUsuario(self, usuarioAtual: str):
         usuarioAtual = usuarioAtual
         self.saudacao.setText(f"Bem vindo, {usuarioAtual.capitalize()}!")
 
     def botaoApertado(self):
-        print(self.sender().getID())
         popup = Popup(self.sender().getID())
         popup.exec()
 

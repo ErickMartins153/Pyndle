@@ -106,8 +106,8 @@ class Popup(QDialog):
 
     def abrirLeitorPDF(self):
         if self.arquivoPDF:
-            # Criando e mostrando o leitor de PDF com o caminho do PDF
-            leitor_pdf = LeitorPDF(self.arquivoPDF)
+            # Criando e mostrando o leitor de PDF
+            leitor_pdf = LeitorPDF(self.arquivoPDF, self.titulo)
             leitor_pdf.exec()
         else:
             QMessageBox.critical(None, "Erro", "Esse livro não está disponível")
