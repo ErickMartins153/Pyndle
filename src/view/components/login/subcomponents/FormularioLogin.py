@@ -4,6 +4,7 @@ from src.view.components.Logo import Logo
 from src.controller import telaInicial
 from src.view.utils import widgetSearch
 from src.view.utils import imageTools
+from src.view.utils.imageTools import relHeight, relWidth
 
 
 class FormularioLogin(QtWidgets.QFrame):
@@ -20,22 +21,20 @@ class FormularioLogin(QtWidgets.QFrame):
 
         super().__init__()
         self.setParent(parent)
-        self.setContentsMargins(20, 60, 20, 60)
+        self.setContentsMargins(relWidth(20, 1920), relHeight(60, 1080), relWidth(20, 1920), relHeight(60, 1080))
 
         # Definição do layout do formulário
         formLayout = QtWidgets.QVBoxLayout()
-        formLayout.setSpacing(40)
-        #formLayout.setContentsMargins(0, 0, 0, 40)
+        formLayout.setSpacing(relHeight(40, 1080))
         formLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         self.setLayout(formLayout)
 
 
         # LOGO -----------------------------------------
-
-        self.logo = Logo(480, 200)
+        #480x200
+        self.logo = Logo(relWidth(480, 1920), relHeight(200, 1080))
         self.logo.setObjectName("logo")
-        self.logo.setMinimumHeight(200)
-        self.logo.setMaximumHeight(200)
+        self.logo.setFixedHeight(relHeight(200, 1080))
         formLayout.addWidget(self.logo)
 
 
@@ -44,25 +43,26 @@ class FormularioLogin(QtWidgets.QFrame):
         # Frame
 
         entradasFrame = QtWidgets.QFrame(self)
-        entradasFrame.setMinimumHeight(400)
+        entradasFrame.setMinimumHeight(relHeight(400, 1080))
         formLayout.addWidget(entradasFrame)
 
         entradasLayout = QtWidgets.QVBoxLayout(self)
-        entradasLayout.setContentsMargins(150, 0, 150, 0)
-        entradasLayout.setSpacing(25)
+        entradasLayout.setContentsMargins(relWidth(150, 1920), 0, relWidth(150, 1920), 0)
+        entradasLayout.setSpacing(relHeight(25, 1080))
         entradasFrame.setLayout(entradasLayout)
 
         # elementos
 
-        entradasHeight = 40
-        espacoLabelEntrada = 30
+        entradasHeight = relHeight(40, 1080)
+        espacoLabelEntrada = relHeight(30, 1080)
 
         groupUsuario = QtWidgets.QVBoxLayout()
-        groupUsuario.setSpacing(5)
+        groupUsuario.setSpacing(relHeight(5, 1080))
         entradasLayout.addLayout(groupUsuario)
 
         usuarioLabel = QtWidgets.QLabel(entradasFrame)
         usuarioLabel.setText("Usuário")
+        usuarioLabel.setStyleSheet(f"font-size: {relHeight(30, 1080)}px")
         usuarioLabel.setMaximumHeight(espacoLabelEntrada)
         usuarioLabel.setObjectName("labelCaixa")
         groupUsuario.addWidget(usuarioLabel)
@@ -70,23 +70,34 @@ class FormularioLogin(QtWidgets.QFrame):
         self.entradaUsuario = QtWidgets.QLineEdit(entradasFrame)
         self.entradaUsuario.setMinimumHeight(entradasHeight)
         self.entradaUsuario.setObjectName("caixaEntrada")
+        self.entradaUsuario.setStyleSheet(f"""
+        font-size: {relHeight(25, 1080)};
+        border-radius: {relHeight(20, 1080)}px;
+        padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
+        """)
         groupUsuario.addWidget(self.entradaUsuario)
 
         groupSenha = QtWidgets.QVBoxLayout()
-        groupSenha.setSpacing(5)
+        groupSenha.setSpacing(relHeight(5, 1080))
         entradasLayout.addLayout(groupSenha)
 
         senhaLabel = QtWidgets.QLabel(entradasFrame)
         senhaLabel.setText("Senha")
         senhaLabel.setMaximumHeight(espacoLabelEntrada)
         senhaLabel.setObjectName("labelCaixa")
+        senhaLabel.setStyleSheet(f"font-size: {relHeight(30, 1080)}px")
         groupSenha.addWidget(senhaLabel)
 
         self.entradaSenha = QtWidgets.QLineEdit(entradasFrame)
         self.entradaSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.entradaSenha.returnPressed.connect(self.logarBotaoCliclado)
         self.entradaSenha.setObjectName("caixaEntrada")
-        self.entradaSenha.setMaximumHeight(entradasHeight)
+        self.entradaSenha.setStyleSheet(f"""
+        font-size: {relHeight(25, 1080)};
+        border-radius: {relHeight(20, 1080)}px;
+        padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
+        """)
+        self.entradaSenha.setMinimumHeight(entradasHeight)
         self.entradaSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         groupSenha.addWidget(self.entradaSenha)
 
@@ -95,21 +106,29 @@ class FormularioLogin(QtWidgets.QFrame):
         # Frame
         botoesFrame = QtWidgets.QFrame(self)
         botoesFrameLayout = QtWidgets.QVBoxLayout(botoesFrame)
-        botoesFrameLayout.setContentsMargins(80, 10, 80, 10)
-        botoesFrameLayout.setSpacing(10)
+        botoesFrameLayout.setContentsMargins(relWidth(80, 1920), relHeight(10, 1080), relWidth(80, 1920), relHeight(10, 1080))
+        botoesFrameLayout.setSpacing(relHeight(10, 1080))
         botoesFrame.setLayout(botoesFrameLayout)
         entradasLayout.addWidget(botoesFrame)
 
         self.logarBotao = QtWidgets.QPushButton(botoesFrame)
         self.logarBotao.setObjectName("logarBotao")
-        self.logarBotao.setMinimumHeight(50)
+        self.logarBotao.setStyleSheet(f"""
+        border-radius: {relHeight(25, 1080)}px;
+        font-size: {relHeight(30, 1080)}px;
+        """)
+        self.logarBotao.setMinimumHeight(relHeight(50, 1080))
         self.logarBotao.setText("Logar")
         self.logarBotao.clicked.connect(self.logarBotaoCliclado)
         botoesFrameLayout.addWidget(self.logarBotao)
 
         self.registrarBotao = QtWidgets.QPushButton(botoesFrame)
-        self.registrarBotao.setObjectName("registrarBotao")
-        self.registrarBotao.setMinimumHeight(50)
+        self.registrarBotao.setObjectName(f"registrarBotao")
+        self.registrarBotao.setStyleSheet(f"""
+        border-radius: {relHeight(25, 1080)}px;
+        font-size: {relHeight(30, 1080)}px;
+        """)
+        self.registrarBotao.setMinimumHeight(relHeight(50, 1080))
         self.registrarBotao.setText("Registrar")
         self.registrarBotao.clicked.connect(self.registrarBotaoClicado)
         botoesFrameLayout.addWidget(self.registrarBotao)

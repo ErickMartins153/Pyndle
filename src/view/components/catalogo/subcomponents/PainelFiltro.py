@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtWidgets import QSizePolicy
 from PyQt6.QtCore import Qt
 from src.view.utils import widgetSearch
+from src.view.utils.imageTools import relHeight, relWidth
 
 
 class PainelFiltro(QtWidgets.QFrame):
@@ -10,9 +11,8 @@ class PainelFiltro(QtWidgets.QFrame):
 
         # Configurações
         self.setParent(parent)
-        # self.setContentsMargins(10, 10, 10, 10)
-        self.setMinimumWidth(400)
-        self.setMaximumWidth(500)
+        self.setMinimumWidth(relWidth(400, 1920))
+        self.setMaximumWidth(relWidth(500, 1920))
 
         # Definindo Layout
         painelFiltroLayout = QtWidgets.QVBoxLayout()
@@ -26,8 +26,7 @@ class PainelFiltro(QtWidgets.QFrame):
         botaoVoltar = QtWidgets.QPushButton()
         botaoVoltar.setObjectName("botaoVoltar")
         botaoVoltar.clicked.connect(self.voltarBotaoClicado)
-        botaoVoltar.setMaximumWidth(20)
-        botaoVoltar.setMaximumHeight(20)
+        botaoVoltar.setMaximumSize(relWidth(20, 1920), relHeight(20, 1080))
         conteinerBotaoVoltar.addWidget(botaoVoltar)
 
 
@@ -35,7 +34,7 @@ class PainelFiltro(QtWidgets.QFrame):
         barraPesquisa = QtWidgets.QLineEdit(self)
         barraPesquisa.setObjectName("barraPesquisa")
         barraPesquisa.setPlaceholderText("Pesquisar catálogo")
-        barraPesquisa.setMinimumHeight(35)
+        barraPesquisa.setMinimumHeight(relHeight(35, 1080))
         painelFiltroLayout.addWidget(barraPesquisa)
 
         # QFrame

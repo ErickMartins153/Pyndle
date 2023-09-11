@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 from src.view.components.catalogo.subcomponents.PainelFiltro import PainelFiltro
 from src.view.components.catalogo.subcomponents.PainelLivros import PainelLivros
+from src.view.utils.imageTools import relHeight, relWidth
 
 
 class ConteudoCatalogo(QtWidgets.QFrame):
@@ -22,8 +23,11 @@ class ConteudoCatalogo(QtWidgets.QFrame):
 
         labelCatalogo = QtWidgets.QLabel("CATÁLOGO")
         labelCatalogo.setObjectName("labelCatalogo")
+        labelCatalogo.setStyleSheet(f"""
+        font-size: {relHeight(30, 1080)}px;
+        """)
         labelCatalogo.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        labelCatalogo.setMinimumHeight(60)
+        labelCatalogo.setMinimumHeight(relHeight(60, 1080))
         conteinerLabelCatalogo.addWidget(labelCatalogo)
 
         # Definição do contêiner com os painéis
