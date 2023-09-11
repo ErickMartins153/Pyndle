@@ -6,19 +6,25 @@ sgbd = conexao.cursor()
 
 def dadosLivro(idLivro: int):
     """
-    Função que retorna todos os dados do livro em uma tupla, a partir de seu ID
+    Função que retorna todos os dados do livro em um dicionário, a partir de seu ID
     :param int idLivro: Id do livro que deseja acessar os dados
-    :return: Retorna uma **tupla** com os dados, caso o livro exista, senão retorna **None**
+    :return: Retorna um **dicionário** com os dados, caso o livro exista, senão retorna **None**
     """
     sgbd.execute("SELECT * FROM livros WHERE idLivro = ?", (idLivro,))
-
     dados = sgbd.fetchone()
 
     if dados:
-        return dados
+        # Obtém os nomes das colunas da tabela
+        colunas = [desc[0] for desc in sgbd.description]
+
+        # Cria um dicionário com coluna: valor
+        dados_dict = dict(zip(colunas, dados))
+
+        return dados_dict
     else:
         print(f"O livro com ID {idLivro} não foi encontrado.")
         return None
+
 
 def pegarAvaliacao(id_livro, id_usuario):
 
