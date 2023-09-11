@@ -131,7 +131,7 @@ class FormularioLogin(QtWidgets.QFrame):
 
                 # mainWindow para definir o usuario
                 mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
-                mainWindow.setUsuario(telaInicial.getTuplaUsuario(usuario))
+                mainWindow.setUsuario(telaInicial.dadosUsuario(usuario))
                 # Mudando para a tela principal
                 widgetSearch.getAncestrais(self)["paginas"].setCurrentIndex(1)
                 # Define o nome de usuário no "bem vindo" da tela principal
