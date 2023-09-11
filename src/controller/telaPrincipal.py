@@ -86,3 +86,16 @@ def adicionarLivroCatalogo(titulo, genero, autor, anoPublicacao, arquivoPdf):
 
     sgbd.execute("INSERT INTO livros (titulo, genero, autor, anoPublicacao, arquivoPdf) VALUES (?, ?, ?, ?, ?)",
                  (titulo, genero, autor, anoPublicacao, arquivoPdfBytes))
+
+
+def filtrarGenero(genero=None, ordemAlfabetica=False):
+
+    if ordemAlfabetica:
+        sgbd.execute("SELECT * FROM livros WHERE genero = ? ORDER BY titulo ASC", (genero,))
+    else:
+        sgbd.execute("SELECT * FROM livros WHERE genero = ?", (genero,))
+
+    resultado = sgbd.fetchall()
+
+
+    return resultado
