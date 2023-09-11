@@ -1,74 +1,60 @@
-import os
-import fitz
-from PyQt6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QLabel, QMessageBox, QApplication, QFileDialog
-from PyQt6.QtGui import QImage, QPixmap, QPainter
-from PyQt6.QtCore import Qt
+import fitz  # PyMuPDF
+from PyQt6.QtWidgets import (
+    QDialog,
+    QVBoxLayout,
+    QTextBrowser,
+    QPushButton,
+)
 
-class PDFLabel(QLabel):
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.fillRect(self.rect(), Qt.GlobalColor.white)
-        super().paintEvent(event)
 
-class LeitorPDF(QMainWindow):
-    def __init__(self, pdf_path):
+class LeitorPDF(QDialog):
+    def __init__(self, livroPdf, tituloLivro):
         super().__init__()
+        self.setWindowTitle(tituloLivro)
+        self.setGeometry(100, 100, 800, 600)
 
-        self.pdf_path = pdf_path
-        self.pdf_document = None
-        self.current_page = 0
+        self.layout = QVBoxLayout(self)
 
-        self.central_widget = QWidget()
-        self.setCentralWidget(self.central_widget)
+        self.textoBrowser = QTextBrowser(self)
+        self.layout.addWidget(self.textoBrowser)
 
-        self.layout = QVBoxLayout()
-        self.central_widget.setLayout(self.layout)
+        self.botaoProximaPagina = QPushButton("Próxima Página", self)
+        self.botaoProximaPagina.clicked.connect(self.passarPagina)
+        self.layout.addWidget(self.botaoProximaPagina)
 
-        self.label = PDFLabel()
-        self.layout.addWidget(self.label)
+        self.botaoPaginaAnterior = QPushButton("Página Anterior", self)
+        self.botaoPaginaAnterior.clicked.connect(self.voltarPagina)
+        self.layout.addWidget(self.botaoPaginaAnterior)
 
-        if self.load_pdf():
-            self.load_page()
+        self.paginaAtual = 0
+        self.documentoPdf = fitz.open(stream=livroPdf, filetype="pdf")
 
-    def load_pdf(self):
-        if not os.path.exists(self.pdf_path) or not self.pdf_path.lower().endswith(".pdf"):
-            QMessageBox.critical(None, "Erro", "Arquivo PDF não encontrado ou inválido")
-            return False
+        self.totalPaginas = len(self.documentoPdf)
+        self.mostrarPagina()
 
-        self.pdf_document = fitz.open(self.pdf_path)
-        return True
+    def mostrarPagina(self):
+        if self.documentoPdf is not None and 0 <= self.paginaAtual < len(
+            self.documentoPdf
+        ):
+            pagina = self.documentoPdf[self.paginaAtual]
+            texto = pagina.get_text()
+            self.textoBrowser.setPlainText(texto)
 
-    def load_page(self):
-        if 0 <= self.current_page < len(self.pdf_document):
-            page = self.pdf_document.load_page(self.current_page)
-            image = page.get_pixmap()
-            qimage = QImage(image.samples, image.width, image.height, image.stride, QImage.Format.FormatRGB888)
-            pixmap = QPixmap.fromImage(qimage)
+    def passarPagina(self):
+        if self.documentoPdf is not None and self.paginaAtual < self.totalPaginas - 1:
+            self.paginaAtual += 1
+            self.mostrarPagina()
 
-            self.label.setPixmap(pixmap)
+    def voltarPagina(self):
+        if self.documentoPdf is not None and self.paginaAtual > 0:
+            self.paginaAtual -= 1
+            self.mostrarPagina()
 
-    def keyPressEvent(self, event):
-        if event.key() == Qt.Key.Key_Right:
-            if self.current_page < len(self.pdf_document) - 1:
-                self.current_page += 1
-                self.load_page()
-        elif event.key() == Qt.Key.Key_Left:
-            if self.current_page > 0:
-                self.current_page -= 1
-                self.load_page()
-        elif event.key() == Qt.Key.Key_Escape:
-            self.close()
-
-if __name__ == "__main__":
-    app = QApplication([])
-
-    options = QFileDialog.Options()
-    pdf_path, _ = QFileDialog.getOpenFileName(None, "Abrir Arquivo PDF", "", "Arquivos PDF (*.pdf);;Todos os arquivos (*)", options=options)
-
-    if not pdf_path:
-        QMessageBox.critical(None, "Erro", "Nenhum arquivo PDF selecionado")
-    else:
-        leitor_pdf = LeitorPDF(pdf_path)
-        leitor_pdf.show()
-
-    app.exec()
+    def closeEvent(self, event):
+        """
+        Salvar em qual página o usuário estava \n
+        ao fechar o PDF
+        """
+        paginaAtual = self.paginaAtual
+        print(paginaAtual)
+        event.accept()

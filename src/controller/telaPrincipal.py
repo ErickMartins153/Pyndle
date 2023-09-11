@@ -27,6 +27,7 @@ def livrosPessoais(idUsuario: int):
     return resultado
 
 
+
 def uploadLivro(arquivo, idUsuario):
     """
     Função para fazer o upload do arquivo PDF
@@ -86,3 +87,54 @@ def adicionarLivroCatalogo(titulo, genero, autor, anoPublicacao, arquivoPdf):
 
     sgbd.execute("INSERT INTO livros (titulo, genero, autor, anoPublicacao, arquivoPdf) VALUES (?, ?, ?, ?, ?)",
                  (titulo, genero, autor, anoPublicacao, arquivoPdfBytes))
+
+
+def filtrarGenero(genero=None, ordemAlfabetica=False):
+
+    if ordemAlfabetica:
+        sgbd.execute("SELECT * FROM livros WHERE genero = ? ORDER BY titulo ASC", (genero,))
+    else:
+        sgbd.execute("SELECT * FROM livros WHERE genero = ?", (genero,))
+
+    resultado = sgbd.fetchall()
+
+
+    return resultado
+
+def filtrarAvaliacao(idUsuario, genero=None, avaliacao=None, ordemAlfabetica=False):
+
+    # Começa com uma consulta base que seleciona todos os campos de livros
+    consulta = "SELECT * FROM livros WHERE 1"
+
+    # Verifica se o gênero foi especificado e adiciona a cláusula correspondente
+    if genero:
+        consulta += f" AND genero = ?"
+
+    # Verifica se a avaliação foi especificada e adiciona a cláusula correspondente
+    if avaliacao is not None:
+        consulta += """
+            AND idLivro IN (
+                SELECT idLivro FROM usuariosLivros WHERE idUsuario = ? AND avaliacao = ?
+            )
+        """
+
+    # Adiciona a cláusula ORDER BY para ordenação alfabética, se necessário
+    if ordemAlfabetica:
+        consulta += " ORDER BY titulo ASC"
+
+    # Cria uma tupla de parâmetros para a consulta
+    parametros = (idUsuario,)
+
+    if genero:
+        parametros += (genero,)
+    if avaliacao:
+        parametros += (avaliacao,)
+
+    # Executa a consulta com os parâmetros apropriados
+    sgbd.execute(consulta, parametros)
+
+    # Recupera os resultados da consulta
+    resultado = sgbd.fetchall()
+
+
+    return resultado

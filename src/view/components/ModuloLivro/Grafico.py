@@ -19,7 +19,7 @@ class Grafico(QWidget):
         self.setFixedSize(200, 250)
 
         # cria o espaço em que o gráfico será plotado
-        self.figure = Figure(figsize=(4, 4), dpi=100, facecolor="none")
+        self.figure = Figure(figsize=(4, 4), dpi=100, facecolor="#F0F0F0")
         self.canvas = FigureCanvas(self.figure)
 
         # criar o layout do gráfico

@@ -7,7 +7,6 @@ from src.view.components.ModuloLivro.Popup import Popup
 from src.view.utils import widgetSearch
 from src.view.utils.imageTools import relHeight, relWidth
 
-
 class FundoDashboard(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         """
@@ -39,7 +38,6 @@ class FundoDashboard(QtWidgets.QFrame):
         self.saudacao.setText(f"Bem vindo, <usuario>!")
         self.saudacao.setMaximumHeight(relHeight(35, 1080))
         self.saudacao.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
 
         # QFrame (Grupo: Minha Biblioteca) ----------------------------------
         groupMyBiblioteca = QtWidgets.QFrame(self)
@@ -95,7 +93,6 @@ class FundoDashboard(QtWidgets.QFrame):
         botaoVerMais1.setMaximumWidth(relWidth(100, 1920))
         meusLivrosLayout.addWidget(botaoVerMais1)
 
-
         # QFrame (Grupo: Catálogo) ----------------------------------------------------
         groupCatalogo = QtWidgets.QFrame(self)
         groupCatalogo.setObjectName("groupMyBiblioteca")
@@ -125,8 +122,9 @@ class FundoDashboard(QtWidgets.QFrame):
         # Definindo livros (imageButtons)
         self.listaLivrosCatalogo = list()  # Para acessar os botões em alguma função
 
-        for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:  # Itera a lista de livros do catálogo
-
+        for tuplaLivro in telaPrincipal.livrosCatalogo()[
+            :4
+        ]:  # Itera a lista de livros do catálogo
             livroCatalogo = BotaoImagem(tuplaLivro[0], tuplaLivro[5])
             livroCatalogo.setObjectName("livroBotao")
             #livroCatalogo.resizeButton(relWidth(200, 1920),relHeight(280, 1080))  # Redimensionando imagem
@@ -148,11 +146,11 @@ class FundoDashboard(QtWidgets.QFrame):
         botaoVerMais2.setMaximumWidth(relWidth(100, 1920))
         catalogoLivrosLayout.addWidget(botaoVerMais2)
 
-
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
-        mainWindow = widgetSearch.getAncestrais(self)['mainWindow']  # mainWindow para identificar redimensionamentos
-        print(f"{mainWindow.width()}X{mainWindow.height()}")
-        
+        mainWindow = widgetSearch.getAncestrais(self)[
+            "mainWindow"
+        ]  # mainWindow para identificar redimensionamentos
+
         # Redimensionamento dos livros
         if mainWindow.width() >= relWidth(1600, 1920):  # Redimensiona de acordo com o tamanho da janela
             for livroCatalogo in self.listaLivrosCatalogo:
@@ -166,13 +164,11 @@ class FundoDashboard(QtWidgets.QFrame):
             for livroMyLivro in self.listaMeusLivros:
                 livroMyLivro.resizeButton(relWidth(200, 1920), relHeight(280, 1080))
 
-
     def setNomeUsuario(self, usuarioAtual: str):
         usuarioAtual = usuarioAtual
         self.saudacao.setText(f"Bem vindo, {usuarioAtual.capitalize()}!")
 
     def botaoApertado(self):
-        print(self.sender().getID())
         popup = Popup(self.sender().getID())
         popup.exec()
 

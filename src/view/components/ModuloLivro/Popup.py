@@ -21,13 +21,13 @@ class Popup(QDialog):
         super().__init__()
         self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
         self.dadosLivro = dadosLivro(idLivro)
-        self.titulo = self.dadosLivro[1]
-        self.genero = self.dadosLivro[2]
-        self.autor = self.dadosLivro[3]
-        self.anoPublicacao = self.dadosLivro[4]
-        self.capaLivro = self.dadosLivro[5]
-        self.arquivoPDF = self.dadosLivro[6]
-        self.pagTotal = self.dadosLivro[7]
+        self.titulo = self.dadosLivro["titulo"]
+        self.genero = self.dadosLivro["genero"]
+        self.autor = self.dadosLivro["autor"]
+        self.anoPublicacao = self.dadosLivro["anoPublicacao"]
+        self.capaLivro = self.dadosLivro["capaLivro"]
+        self.arquivoPDF = self.dadosLivro["arquivoPdf"]
+        self.qtdPaginasLabel = self.dadosLivro["pagTotal"]
         self.setWindowTitle(self.titulo)
         self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.setFixedSize(700, 700)
@@ -79,20 +79,35 @@ class Popup(QDialog):
         h1.setObjectName("h1")
         h1.setMaximumHeight(50)
 
-        tituloLabel = QLabel(f"titulo: {self.titulo}")
+        tituloLabel = QLabel(f"Titulo: {self.titulo}")
         tituloLabel.setObjectName("info")
         tituloLabel.setMaximumHeight(20)
         infosLayout.addWidget(tituloLabel)
 
-        generoLabel = QLabel(f"genero: {self.genero}")
+        generoLabel = QLabel(f"Gênero: {self.genero}")
         generoLabel.setObjectName("info")
         generoLabel.setMaximumHeight(20)
         infosLayout.addWidget(generoLabel)
 
-        autorLabel = QLabel(f"autor: {self.autor}")
+        autorLabel = QLabel(f"Autor: {self.autor}")
         autorLabel.setMaximumHeight(20)
         autorLabel.setObjectName("info")
         infosLayout.addWidget(autorLabel)
+
+        anoLabel = QLabel(f"Ano: {self.anoPublicacao}")
+        anoLabel.setMaximumHeight(20)
+        anoLabel.setObjectName("info")
+        infosLayout.addWidget(anoLabel)
+
+        qtdPaginasLabel = QLabel(f"Total de páginas: {self.qtdPaginasLabel}")
+        qtdPaginasLabel.setMaximumHeight(20)
+        qtdPaginasLabel.setObjectName("info")
+        infosLayout.addWidget(qtdPaginasLabel)
+
+        avaliacaoLabel = QLabel(f"Avaliação: Placeholder")
+        avaliacaoLabel.setMaximumHeight(20)
+        avaliacaoLabel.setObjectName("info")
+        infosLayout.addWidget(avaliacaoLabel)
 
         grafico = Grafico(50, 50, self)
         infosLayout.addWidget(grafico)
@@ -102,12 +117,10 @@ class Popup(QDialog):
         infosLayout.addWidget(button)
         self.setLayout(layout)
 
-        self.leitor_pdf = None
-
     def abrirLeitorPDF(self):
         if self.arquivoPDF:
-            # Criando e mostrando o leitor de PDF com o caminho do PDF
-            leitor_pdf = LeitorPDF(self.arquivoPDF)
+            # Criando e mostrando o leitor de PDF
+            leitor_pdf = LeitorPDF(self.arquivoPDF, self.titulo)
             leitor_pdf.exec()
         else:
-            QMessageBox.critical(None, "Erro", "Esse livro não está disponível")
+            QMessageBox.critical(self, "Erro", "Esse livro não está disponível")
