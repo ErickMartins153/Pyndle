@@ -39,25 +39,21 @@ class PainelFiltro(QtWidgets.QFrame):
         frameFiltros = QtWidgets.QFrame(self)
         frameFiltros.setStyleSheet("background-color: white; border-radius: 20px")
         frameFiltros.setObjectName("frameFiltros")
-        frameFiltros.setMinimumSize(350, 600)
-        frameFiltros.setMaximumSize(350, 600)  # temporário
+        frameFiltros.setFixedSize(relWidth(350, 1920), relHeight(600, 1080))
         layoutFrame.addWidget(frameFiltros)
 
         layoutFrameFiltros = QtWidgets.QGridLayout()
-        # layoutFrameFiltros.setRowStretch(0, 1)
-        # layoutFrameFiltros.setRowStretch(1, 2)
         frameFiltros.setLayout(layoutFrameFiltros)
 
         # QLabel ("FILTROS") -----------------------------------------------
         layoutLabelFiltros = QtWidgets.QHBoxLayout()
         layoutLabelFiltros.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layoutFrameFiltros.addLayout(layoutLabelFiltros, 0, 0, 1, 3)
-        # layoutFrameFiltros.setRowStretch(0, 1)
 
         labelFiltros = QtWidgets.QLabel("FILTRAGEM")
         labelFiltros.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-        labelFiltros.setStyleSheet("""
-        font-size: 30px;
+        labelFiltros.setStyleSheet(f"""
+        font-size: {relHeight(30, 1080)}px;
         """)
         layoutLabelFiltros.addWidget(labelFiltros)
 
@@ -67,8 +63,8 @@ class PainelFiltro(QtWidgets.QFrame):
         # Label "Ordem Alfabética"
         labelOrdemAlf = QtWidgets.QLabel("Ordem Alfabética |")
         labelOrdemAlf.setObjectName("filtroLabel")
-        labelOrdemAlf.setStyleSheet("""
-        font-size: 20px;
+        labelOrdemAlf.setStyleSheet(f"""
+        font-size: {relHeight(20, 1080)}px;
         """)
         layoutFrameFiltros.addWidget(labelOrdemAlf, 1, 0, 1, 1)
 
@@ -102,7 +98,7 @@ class PainelFiltro(QtWidgets.QFrame):
         botaoAlfLayout.addWidget(botaoAlfDown)
 
         # Spacer
-        spacer = QtWidgets.QSpacerItem(100, 0)
+        spacer = QtWidgets.QSpacerItem(relWidth(100, 1920), 0)
 
         botaoAlfLayout.addSpacerItem(spacer)
 
@@ -111,8 +107,8 @@ class PainelFiltro(QtWidgets.QFrame):
         # Label ("Gêneros")
         labelGeneros = QtWidgets.QLabel("Gêneros:")
         labelGeneros.setObjectName("filtroLabel")
-        labelGeneros.setStyleSheet("""
-        font-size: 20px;
+        labelGeneros.setStyleSheet(f"""
+        font-size: {relHeight(20, 1080)}px;
         """)
         layoutFrameFiltros.addWidget(labelGeneros, 2, 0, 1, 1)
 
@@ -146,8 +142,8 @@ class PainelFiltro(QtWidgets.QFrame):
         # (AVALIAÇÃO) -------------------------------------------
         avaliacaoLabel = QtWidgets.QLabel("Avaliação:")
         avaliacaoLabel.setObjectName("filtroLabel")
-        avaliacaoLabel.setStyleSheet("""
-        font-size: 20px;
+        avaliacaoLabel.setStyleSheet(f"""
+        font-size: {relHeight(20, 1080)}px;
         """)
         layoutFrameFiltros.addWidget(avaliacaoLabel, 8, 0, 1, 3)
 
