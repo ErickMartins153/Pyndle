@@ -72,3 +72,32 @@ class Grafico(QWidget):
             )
             labelsLegenda.append(legend_label)
         return labelsLegenda
+
+    def atualizar(self, lido: float, faltaLer: float):
+        """
+        Atualiza os valores do gráfico com novos valores de 'lido' e 'faltaLer'
+        """
+        # Limpa o gráfico atual
+        self.ax.clear()
+
+        # Dados do gráfico atualizados
+        data = [lido, faltaLer]
+        labels = ["Lido", "Falta ler"]
+        colors = ["#FF5733", "#33FF57"]
+
+        # Cria o gráfico de donut atualizado
+        self.ax.pie(
+            data,
+            labels=None,
+            startangle=90,
+            colors=colors,
+            wedgeprops=dict(width=0.4, edgecolor="none"),
+        )
+
+        # Cria uma nova legenda com os novos valores
+        labelsLegenda = self.criarLabelsLegenda(labels, colors, data)
+
+        self.legend.setText("<br>".join(labelsLegenda))
+
+        # Redesenha o gráfico
+        self.canvas.draw()

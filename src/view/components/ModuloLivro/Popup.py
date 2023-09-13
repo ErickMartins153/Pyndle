@@ -6,28 +6,34 @@ from PyQt6.QtWidgets import (
     QLabel,
     QPushButton,
     QMessageBox,
-    QSpacerItem,
-    QSizePolicy,
 )
 from PyQt6.QtGui import QImage, QPixmap
 from PyQt6.QtCore import Qt
 from src.view.components.ModuloLivro.LeitorPDF import LeitorPDF
-from src.controller.telaPreviaLivro import dadosLivro
+from src.controller.telaPreviaLivro import dadosLivro, getPagAtual
+from src.controller.telaInicial import dadosUsuario
 from src.view.components.ModuloLivro.Grafico import Grafico
 
 
 class Popup(QDialog):
-    def __init__(self, idLivro):
+    def __init__(self, nomeUsuario, idLivro):
         super().__init__()
         self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
+        self.idUsuario = dadosUsuario(nomeUsuario)["idUsuario"]
+        self.idLivro = idLivro
         self.dadosLivro = dadosLivro(idLivro)
+
         self.titulo = self.dadosLivro["titulo"]
         self.genero = self.dadosLivro["genero"]
         self.autor = self.dadosLivro["autor"]
         self.anoPublicacao = self.dadosLivro["anoPublicacao"]
         self.capaLivro = self.dadosLivro["capaLivro"]
         self.arquivoPDF = self.dadosLivro["arquivoPdf"]
-        self.qtdPaginasLabel = self.dadosLivro["pagTotal"]
+
+        self.lido = getPagAtual(self.idLivro, self.idUsuario)
+        self.qtdPaginas = self.dadosLivro["pagTotal"]
+        self.porcentagemLido = self.lido / self.qtdPaginas * 100
+
         self.setWindowTitle(self.titulo)
         self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.setFixedSize(700, 700)
@@ -99,7 +105,7 @@ class Popup(QDialog):
         anoLabel.setObjectName("info")
         infosLayout.addWidget(anoLabel)
 
-        qtdPaginasLabel = QLabel(f"Total de páginas: {self.qtdPaginasLabel}")
+        qtdPaginasLabel = QLabel(f"Total de páginas: {self.qtdPaginas}")
         qtdPaginasLabel.setMaximumHeight(20)
         qtdPaginasLabel.setObjectName("info")
         infosLayout.addWidget(qtdPaginasLabel)
@@ -109,8 +115,8 @@ class Popup(QDialog):
         avaliacaoLabel.setObjectName("info")
         infosLayout.addWidget(avaliacaoLabel)
 
-        grafico = Grafico(50, 50, self)
-        infosLayout.addWidget(grafico)
+        self.grafico = Grafico(self.porcentagemLido, 100 - self.porcentagemLido, self)
+        infosLayout.addWidget(self.grafico)
 
         button = QPushButton("Fechar", self)
         button.clicked.connect(self.accept)
@@ -120,7 +126,14 @@ class Popup(QDialog):
     def abrirLeitorPDF(self):
         if self.arquivoPDF:
             # Criando e mostrando o leitor de PDF
-            leitor_pdf = LeitorPDF(self.arquivoPDF, self.titulo)
-            leitor_pdf.exec()
+            leitorPdf = LeitorPDF(
+                self.idUsuario, self.idLivro, self.arquivoPDF, self.titulo, self
+            )
+            leitorPdf.sinalPaginaAtual.connect(self.updateGrafico)
+            leitorPdf.exec()
         else:
             QMessageBox.critical(self, "Erro", "Esse livro não está disponível")
+
+    def updateGrafico(self, paginaAtual):
+        self.porcentagemLido = paginaAtual / self.qtdPaginas * 100
+        self.grafico.atualizar(self.porcentagemLido, 100 - self.porcentagemLido)
