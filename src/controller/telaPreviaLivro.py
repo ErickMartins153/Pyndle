@@ -92,3 +92,20 @@ def pagTotal(id_livro, pag_totais):
     # Commit para salvar a alteração no banco de dados
     conexao.commit()
     print("Número de páginas inserido com sucesso")
+
+
+def salvarReview(idUsuario, idLivro, review):
+
+    sgbd.execute("""
+    INSERT INTO usuarioLivros (idUsuario, idLivro, review)
+    VALUES (?, ?, ?)""", (idUsuario, idLivro, review))
+
+    connection.commit()
+
+def salvarAvaliacao(idUsuario, idLivro, avaliacao):
+
+    sgbd.execute("""
+    INSERT INTO usuarioLivros (idUsuario, idLivro, avaliacao)
+    VALUES (?, ?, ?)""", (idUsuario, idLivro, avaliacao))
+
+    connection.commit()
