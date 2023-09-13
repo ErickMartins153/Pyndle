@@ -1,7 +1,7 @@
-from PyQt6 import QtWidgets, QtGui, QtCore
+from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from src.view.components.Logo import Logo
-from src.view.components.login.subcomponents.FotoPerfil import FotoPerfil
+from src.view.components.FotoPerfil import FotoPerfil
 from src.controller import telaInicial
 from src.view.utils import widgetSearch
 from src.view.utils.imageTools import relHeight, relWidth

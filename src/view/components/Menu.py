@@ -1,6 +1,6 @@
-from PyQt6 import QtWidgets, QtGui, QtCore
+from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
-import sys
+from src.view.components.FotoPerfil import FotoPerfil
 
 class Menu(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
@@ -58,4 +58,4 @@ class Menu(QtWidgets.QFrame):
         
         # optei por simplificar a função de logout, para termos algo eficiente e funcional 
     def deslogar(self):
-        QtWidgets.QMainWindow.close()
+        QtWidgets.QMainWindow.close(self)
