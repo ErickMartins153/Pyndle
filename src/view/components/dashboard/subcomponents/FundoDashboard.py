@@ -169,7 +169,9 @@ class FundoDashboard(QtWidgets.QFrame):
         self.saudacao.setText(f"Bem vindo, {usuarioAtual.capitalize()}!")
 
     def botaoApertado(self):
-        popup = Popup(self.sender().getID())
+        mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
+        usuarioAtual = mainWindow.getUsuario()["login"]
+        popup = Popup(usuarioAtual, self.sender().getID())
         popup.exec()
 
     def clickVerMaisCatalogo(self):

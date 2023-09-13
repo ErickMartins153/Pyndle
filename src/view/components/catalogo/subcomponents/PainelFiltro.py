@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import QSizePolicy
 from PyQt6.QtCore import Qt
 from src.view.components.catalogo.subcomponents.BotaoAvaliacao import BotaoAvaliacao
 from src.view.utils import widgetSearch
+from src.view.utils.conteiners import verticalFrame, horizontalFrame, gridFrame
 from src.view.utils.imageTools import relHeight, relWidth
 
 
