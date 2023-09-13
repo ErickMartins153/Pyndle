@@ -2,8 +2,10 @@ from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtCore import Qt
 from src.view.components.BotaoImagem import BotaoImagem
 from src.controller import telaPrincipal
+from src.controller.telaPrincipal import livrosCatalogo
+from src.view.components.ModuloLivro.Popup import Popup
 from src.view.utils import widgetSearch
-
+from src.view.utils.imageTools import relHeight, relWidth
 
 class FundoDashboard(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
@@ -19,41 +21,51 @@ class FundoDashboard(QtWidgets.QFrame):
         super().__init__()
         self.setParent(parent)
         self.setStyleSheet(open("src/view/assets/styles/dashboard/dashboard.css").read())
-        self.setContentsMargins(20, 20, 20, 0)
+        self.setContentsMargins(relWidth(0, 1920), relHeight(20, 1080), relWidth(20, 1920), 0)
 
         # Definição do Layout
         fundoLayout = QtWidgets.QVBoxLayout()
         self.setLayout(fundoLayout)
 
-        # Label (Bem vindo) -----------------------------------------------
+        # Label (Bem vindo) --------------------------------------------------
         self.saudacao = QtWidgets.QLabel(self)
         self.saudacao.setObjectName("saudacao")
+        self.saudacao.setStyleSheet(f"""
+        font-size: {relHeight(25, 1080)}px;
+        """)
         fundoLayout.addWidget(self.saudacao)
 
         self.saudacao.setText(f"Bem vindo, <usuario>!")
-        self.saudacao.setMaximumHeight(35)
+        self.saudacao.setMaximumHeight(relHeight(35, 1080))
         self.saudacao.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         # QFrame (Grupo: Minha Biblioteca) ----------------------------------
         groupMyBiblioteca = QtWidgets.QFrame(self)
         groupMyBiblioteca.setObjectName("groupMyBiblioteca")
+        groupMyBiblioteca.setMinimumHeight(relHeight(100, 1080))
         fundoLayout.addWidget(groupMyBiblioteca)
 
         myBibliotecaLayout = QtWidgets.QVBoxLayout()
-        myBibliotecaLayout.setSpacing(14)
+        myBibliotecaLayout.setSpacing(relHeight(14, 1080))
         groupMyBiblioteca.setLayout(myBibliotecaLayout)
 
         # Label (Minha Biblioteca)
         myBibliotecaLabel = QtWidgets.QLabel(groupMyBiblioteca)
         myBibliotecaLabel.setObjectName("labelFrameLivros")
-        myBibliotecaLabel.setMaximumHeight(35)
+        myBibliotecaLabel.setStyleSheet(f"""
+        font-size: {relHeight(25, 1080)}
+        """)
+        myBibliotecaLabel.setMaximumHeight(relHeight(35, 1080))
         myBibliotecaLabel.setText("Minha Biblioteca")
         myBibliotecaLayout.addWidget(myBibliotecaLabel)
 
         # QFrame (Meus Livros)
         meusLivros = QtWidgets.QFrame(groupMyBiblioteca)
-        meusLivros.setMinimumHeight(300)
+        meusLivros.setMinimumHeight(relHeight(300, 1080))
         meusLivros.setObjectName("frameLivros")
+        meusLivros.setStyleSheet(f"""
+        border-radius: {relHeight(15, 1080)}px;
+        """)
         myBibliotecaLayout.addWidget(meusLivros)
 
         meusLivrosLayout = QtWidgets.QHBoxLayout()
@@ -64,7 +76,7 @@ class FundoDashboard(QtWidgets.QFrame):
         for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:
             meuLivro = BotaoImagem(tuplaLivro[0], tuplaLivro[5])
             meuLivro.setObjectName("livroBotao")
-            meuLivro.resizeButton(200, 280)
+            #meuLivro.resizeButton(relWidth(200, 1920), relHeight(280, 1080))
 
             meuLivro.clicked.connect(self.botaoApertado)  # Conectando ação
 
@@ -74,29 +86,33 @@ class FundoDashboard(QtWidgets.QFrame):
         # Ver mais
         botaoVerMais1 = QtWidgets.QPushButton()
         botaoVerMais1.setObjectName("botaoVerMais")
-        botaoVerMais1.setMaximumWidth(100)
+        botaoVerMais1.setStyleSheet(f"""
+        width: {relWidth(150, 1920)}px;
+        height: {relHeight(150, 1080)}px;
+        """)
+        botaoVerMais1.setMaximumWidth(relWidth(100, 1920))
         meusLivrosLayout.addWidget(botaoVerMais1)
-
 
         # QFrame (Grupo: Catálogo) ----------------------------------------------------
         groupCatalogo = QtWidgets.QFrame(self)
         groupCatalogo.setObjectName("groupMyBiblioteca")
+        groupCatalogo.setMinimumHeight(relHeight(340, 1080))
         fundoLayout.addWidget(groupCatalogo)
 
         catalogoLayout = QtWidgets.QVBoxLayout()
-        catalogoLayout.setSpacing(14)
+        catalogoLayout.setSpacing(relHeight(14, 1080))
         groupCatalogo.setLayout(catalogoLayout)
 
         # Label (Catálogo)
         catalogoLabel = QtWidgets.QLabel(groupCatalogo)
-        catalogoLabel.setMaximumHeight(35)
+        catalogoLabel.setMaximumHeight(relHeight(35, 1080))
         catalogoLabel.setObjectName("labelFrameLivros")
         catalogoLabel.setText("Catálogo")
         catalogoLayout.addWidget(catalogoLabel)
 
         # QFrame (Catalogo Livros)
         catalogoLivros = QtWidgets.QFrame(groupCatalogo)
-        catalogoLivros.setMinimumHeight(300)
+        catalogoLivros.setMinimumHeight(relHeight(200, 1080))
         catalogoLivros.setObjectName("frameLivros")
         catalogoLayout.addWidget(catalogoLivros)
 
@@ -106,11 +122,12 @@ class FundoDashboard(QtWidgets.QFrame):
         # Definindo livros (imageButtons)
         self.listaLivrosCatalogo = list()  # Para acessar os botões em alguma função
 
-        for tuplaLivro in telaPrincipal.livrosCatalogo()[:4]:  # Itera a lista de livros do catálogo
-
+        for tuplaLivro in telaPrincipal.livrosCatalogo()[
+            :4
+        ]:  # Itera a lista de livros do catálogo
             livroCatalogo = BotaoImagem(tuplaLivro[0], tuplaLivro[5])
             livroCatalogo.setObjectName("livroBotao")
-            livroCatalogo.resizeButton(200, 280)  # Redimensionando imagem
+            #livroCatalogo.resizeButton(relWidth(200, 1920),relHeight(280, 1080))  # Redimensionando imagem
 
             # Ação do botão
             livroCatalogo.clicked.connect(self.botaoApertado)
@@ -121,27 +138,31 @@ class FundoDashboard(QtWidgets.QFrame):
         # Ver mais
         botaoVerMais2 = QtWidgets.QPushButton()
         botaoVerMais2.setObjectName("botaoVerMais")
+        botaoVerMais2.setStyleSheet(f"""
+        width: {relWidth(150, 1920)}px;
+        height: {relHeight(150, 1080)}px;
+        """)
         botaoVerMais2.clicked.connect(self.clickVerMaisCatalogo)
-        botaoVerMais2.setMaximumWidth(100)
+        botaoVerMais2.setMaximumWidth(relWidth(100, 1920))
         catalogoLivrosLayout.addWidget(botaoVerMais2)
 
-
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
-        mainWindow = widgetSearch.getAncestrais(self)['mainWindow']  # mainWindow para identificar redimensionamentos
-        print(f"{mainWindow.width()}X{mainWindow.height()}")
-        
+        mainWindow = widgetSearch.getAncestrais(self)[
+            "mainWindow"
+        ]  # mainWindow para identificar redimensionamentos
+
         # Redimensionamento dos livros
-        if mainWindow.width() >= 1600:  # Redimensiona de acordo com o tamanho da janela
-            print("Escalado")
+        if mainWindow.width() >= relWidth(1600, 1920):  # Redimensiona de acordo com o tamanho da janela
             for livroCatalogo in self.listaLivrosCatalogo:
-                livroCatalogo.resizeButton(240, 336)
+                livroCatalogo.resizeButton(relWidth(220, 1920), relHeight(308, 1080))
+
             for livroMyLivro in self.listaMeusLivros:
-                livroMyLivro.resizeButton(240, 336)
+                livroMyLivro.resizeButton(relWidth(220, 1920), relHeight(308, 1080))
         else:
             for livroCatalogo in self.listaLivrosCatalogo:
-                livroCatalogo.resizeButton(200, 280)
+                livroCatalogo.resizeButton(relWidth(200, 1920), relHeight(280, 1080))
             for livroMyLivro in self.listaMeusLivros:
-                livroMyLivro.resizeButton(200, 280)
+                livroMyLivro.resizeButton(relWidth(200, 1920), relHeight(280, 1080))
 
 
     def setNomeUsuario(self, usuarioAtual: str):
@@ -149,7 +170,10 @@ class FundoDashboard(QtWidgets.QFrame):
         self.saudacao.setText(f"Bem vindo, {usuarioAtual.capitalize()}!")
 
     def botaoApertado(self):
-        print(self.sender().getID())
+        mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
+        usuarioAtual = mainWindow.getUsuario()["login"]
+        popup = Popup(usuarioAtual, self.sender().getID())
+        popup.exec()
 
     def clickVerMaisCatalogo(self):
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]

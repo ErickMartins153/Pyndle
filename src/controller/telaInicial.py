@@ -39,22 +39,25 @@ def checar(nomeUsuario: str, senha: str = " "):
             return False
 
 
-def getTuplaUsuario(nomeUsuario: str):
+def dadosUsuario(nomeUsuario: str):
     """
-    Função que retorna uma tupla com todas as informações do usuário a partir de seu login
-    :param str nomeUsuario: login do usuário sobre o qual deseja obter informações
-    :return : Retorna uma **tupla** com as informações do usuário caso exista, senão retorna **None**
+    Função que retorna todos os dados do usuário em um dicionário, a partir de seu ID
+    :param nomeUsuario: Id do usuário que deseja acessar os dados
+    :return: Retorna um **dicionário** com os dados, caso o usuário exista, senão retorna **None**
     """
-    queryInfUsuario = sgbd.execute("""
-    SELECT * FROM usuarios 
-    WHERE login = ?
-    """, (nomeUsuario,))
+    sgbd.execute("SELECT * FROM usuarios WHERE login = ?", (nomeUsuario,))
+    dados = sgbd.fetchone()
 
-    InfUsuario = queryInfUsuario.fetchone()
+    if dados:
+        # Obtém os nomes das colunas da tabela
+        colunas = [desc[0] for desc in sgbd.description]
 
-    if InfUsuario:
-        return InfUsuario
+        # Cria um dicionário com coluna: valor
+        dados_dict = dict(zip(colunas, dados))
+
+        return dados_dict
     else:
+        print(f"O usuário com ID {idUsuario} não foi encontrado.")
         return None
 
 

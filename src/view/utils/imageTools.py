@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 import sys
 from PIL import Image
+import pyautogui
 import io
 
 
@@ -145,3 +146,26 @@ def getCircularPixmap(bimage: bytes, size: int):
     painter.drawPixmap(moldura.rect(), pixmap)
 
     return moldura
+
+def relWidth(numerador: int, denominador: int):
+    """
+    Retorna o comprimento da tela reajustado de acordo com uma proporção definida [numerador // denominador]\n
+    OBS: o valor retornado sempre é arredondado
+    """
+    width = pyautogui.size()[0]
+
+    rWidth = width * numerador // denominador
+
+    return rWidth
+
+
+def relHeight(numerador: int, denominador: int):
+    """
+    Retorna o altura da tela reajustado de acordo com uma proporção definida [numerador // denominador]\n
+    OBS: o valor retornado sempre é arredondado
+    """
+    height = pyautogui.size()[1]
+
+    rHeight = height * numerador // denominador
+
+    return rHeight

@@ -1,9 +1,11 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
+import pyautogui
 import sys
 from src.view.components.login.TelaLogin import TelaLogin
 from src.view.components.dashboard.Dashboard import Dashboard
 from src.view.components.catalogo.TelaCatalogo import TelaCatalogo
 from src.view.assets.styles import non_css_styles
+from src.view.utils.imageTools import relHeight, relWidth
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -25,10 +27,11 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__()
         self.setAcceptDrops(True)
         self.setObjectName("mainWindow")
+
         QtGui.QFontDatabase.addApplicationFont("src/view/assets/fonts/Baskervville.ttf")
         self.setStyleSheet(open('src/view/assets/styles/mainWindow.css').read())
-        self.setMinimumSize(1300, 900)
-        self.currentSize = {"width": self.width(), "height": self.height()}
+        self.setMinimumSize(relWidth(1300, 1920), relHeight(980, 1080))
+        #self.currentSize = {"width": self.width(), "height": self.height()}
 
 
         # Central QWidget (mainWindowSpace)
@@ -38,14 +41,16 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # mainWindowLayout
         mainWindowLayout = QtWidgets.QVBoxLayout()
-        mainWindowLayout.setContentsMargins(25, 15, 25, 15)
+        mainWindowLayout.setContentsMargins(relWidth(25, 1920), relHeight(15, 1080), relWidth(25, 1920), relHeight(15, 1080))
         mainWindowSpace.setLayout(mainWindowLayout)
 
         # QStackedWidget (paginas) ---------------------------------
         self.paginas = QtWidgets.QStackedWidget(self)
         self.paginas.setObjectName("paginas")
         mainWindowLayout.addWidget(self.paginas)
-        self.paginas.setGraphicsEffect(non_css_styles.BoxShadow(QtGui.QColor(0, 0, 0, 85), 4, 5, 4))
+        self.paginas.setGraphicsEffect(
+            non_css_styles.BoxShadow(QtGui.QColor(0, 0, 0, 85), relWidth(4, 1920), relHeight(5, 1080), 4)
+        )
 
 
         # Instância login
