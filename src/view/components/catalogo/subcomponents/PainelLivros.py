@@ -13,6 +13,7 @@ class PainelLivros(QtWidgets.QScrollArea):
         # Configurações
         self.setParent(parent)
         self.setWidgetResizable(True)
+        self.setContentsMargins(0, 0, 0, 0)
         self.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
 
         # Central widget
