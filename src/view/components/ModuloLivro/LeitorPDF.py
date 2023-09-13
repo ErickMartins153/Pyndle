@@ -1,19 +1,26 @@
-import fitz  # PyMuPDF
+import fitz as PyMuPDF
 from PyQt6.QtWidgets import (
     QDialog,
     QVBoxLayout,
     QTextBrowser,
     QPushButton,
 )
+from PyQt6.QtCore import pyqtSignal
+from src.controller.telaPreviaLivro import salvarPagAtual, pegarPagAtual
 
 
 class LeitorPDF(QDialog):
-    def __init__(self, livroPdf, tituloLivro):
-        super().__init__()
-        self.setWindowTitle(tituloLivro)
-        self.setGeometry(100, 100, 800, 600)
+    sinalPaginaAtual = pyqtSignal(int)
 
+    def __init__(self, idUsuario, idLivro, livroPdf, tituloLivro, parent):
+        super().__init__(parent)
+        self.setWindowTitle(tituloLivro)
+        self.setGeometry(100, 30, 450, 700)
         self.layout = QVBoxLayout(self)
+        self.setObjectName("LeitorPDF")
+
+        self.idUsuario = idUsuario
+        self.idLivro = idLivro
 
         self.textoBrowser = QTextBrowser(self)
         self.layout.addWidget(self.textoBrowser)
@@ -26,8 +33,8 @@ class LeitorPDF(QDialog):
         self.botaoPaginaAnterior.clicked.connect(self.voltarPagina)
         self.layout.addWidget(self.botaoPaginaAnterior)
 
-        self.paginaAtual = 0
-        self.documentoPdf = fitz.open(stream=livroPdf, filetype="pdf")
+        self.paginaAtual = pegarPagAtual(self.idLivro, self.idUsuario)
+        self.documentoPdf = PyMuPDF.open(stream=livroPdf, filetype="pdf")
 
         self.totalPaginas = len(self.documentoPdf)
         self.mostrarPagina()
@@ -56,5 +63,6 @@ class LeitorPDF(QDialog):
         ao fechar o PDF
         """
         paginaAtual = self.paginaAtual
-        print(paginaAtual)
+        salvarPagAtual(self.idUsuario, self.idLivro, paginaAtual)
+        self.sinalPaginaAtual.emit(paginaAtual)
         event.accept()
