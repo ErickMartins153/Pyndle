@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import (
     QPushButton,
 )
 from PyQt6.QtCore import pyqtSignal
-from src.controller.telaPreviaLivro import salvarPagAtual, pegarPagAtual
+from src.controller.telaPreviaLivro import setPagAtual, getPagAtual
 
 
 class LeitorPDF(QDialog):
@@ -33,7 +33,7 @@ class LeitorPDF(QDialog):
         self.botaoPaginaAnterior.clicked.connect(self.voltarPagina)
         self.layout.addWidget(self.botaoPaginaAnterior)
 
-        self.paginaAtual = pegarPagAtual(self.idLivro, self.idUsuario)
+        self.paginaAtual = getPagAtual(self.idLivro, self.idUsuario)
         self.documentoPdf = PyMuPDF.open(stream=livroPdf, filetype="pdf")
 
         self.totalPaginas = len(self.documentoPdf)
@@ -63,6 +63,6 @@ class LeitorPDF(QDialog):
         ao fechar o PDF
         """
         paginaAtual = self.paginaAtual
-        salvarPagAtual(self.idUsuario, self.idLivro, paginaAtual)
+        setPagAtual(self.idUsuario, self.idLivro, paginaAtual)
         self.sinalPaginaAtual.emit(paginaAtual)
         event.accept()

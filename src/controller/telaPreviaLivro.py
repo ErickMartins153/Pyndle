@@ -42,7 +42,7 @@ def pegarAvaliacao(id_livro, id_usuario):
         return "Livro não encontrado ou sem avaliação."
 
 
-def salvarPagAtual(id_usuario, id_livro, pag_lida):
+def setPagAtual(id_usuario, id_livro, pag_lida):
     # Verificar se já existe uma linha com o mesmo idUsuario e idLivro
     sgbd.execute(
         "SELECT COUNT(*) FROM usuariosLivros WHERE idUsuario = ? AND idLivro = ?",
@@ -67,7 +67,7 @@ def salvarPagAtual(id_usuario, id_livro, pag_lida):
     print("Pagina atualizada com sucesso.")
 
 
-def pegarPagAtual(id_livro, id_usuario):
+def getPagAtual(id_livro, id_usuario):
     sgbd.execute(
         "SELECT pagAtual FROM usuariosLivros WHERE idLivro = ? AND idUsuario = ?",
         (
