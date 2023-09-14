@@ -4,6 +4,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 from src.view.utils.imageTools import relHeight, relWidth
 
+
 class BotaoAvaliacao(QtWidgets.QHBoxLayout):
     def __init__(self):
         super().__init__()
@@ -18,41 +19,53 @@ class BotaoAvaliacao(QtWidgets.QHBoxLayout):
 
         for nota in range(5):
             botaoAvaliacao = QtWidgets.QPushButton()
-            botaoAvaliacao.setStyleSheet("""
+            botaoAvaliacao.setStyleSheet(
+                """
             image: url(src/view/assets/icons/estrelaUnfill.svg);
             background-color: transparent;
-            """)
+            border: 0px none transparent;
+            """
+            )
 
-            botaoAvaliacao.clicked.connect(lambda x="", nota=nota: self.setAvaliacao(nota+1))
+            botaoAvaliacao.clicked.connect(
+                lambda x="", nota=nota: self.setAvaliacao(nota + 1)
+            )
 
             self.listaBotoes.append(botaoAvaliacao)
             self.addWidget(botaoAvaliacao)
-
 
     def setAvaliacao(self, avaliacao: int):
         if avaliacao == self.avaliacao:
             self.avaliacao = 0
             for botao in self.listaBotoes:
-                botao.setStyleSheet("""
+                botao.setStyleSheet(
+                    """
                 image: url(src/view/assets/icons/estrelaUnfill.svg);
                 background-color: transparent;
-                """)
+                border: 0px none transparent;
+                """
+                )
 
         else:
             self.avaliacao = avaliacao
 
             for contador, botao in enumerate(self.listaBotoes):
-                if contador+1 <= avaliacao:
-                    botao.setStyleSheet("""
+                if contador + 1 <= avaliacao:
+                    botao.setStyleSheet(
+                        """
                     image: url(src/view/assets/icons/estrelaFill.svg);
                     background-color: transparent;
-                    """)
+                    border: 0px none transparent;
+                    """
+                    )
                 else:
-                    botao.setStyleSheet("""
+                    botao.setStyleSheet(
+                        """
                     image: url(src/view/assets/icons/estrelaUnfill.svg);
                     background-color: transparent;
-                    """)
-
+                    border: 0px none transparent;
+                    """
+                    )
 
     def getAvaliacao(self):
         return self.avaliacao
