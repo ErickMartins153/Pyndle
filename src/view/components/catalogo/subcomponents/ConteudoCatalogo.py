@@ -23,9 +23,11 @@ class ConteudoCatalogo(QtWidgets.QFrame):
 
         labelCatalogo = QtWidgets.QLabel("CATÁLOGO")
         labelCatalogo.setObjectName("labelCatalogo")
-        labelCatalogo.setStyleSheet(f"""
+        labelCatalogo.setStyleSheet(
+            f"""
         font-size: {relHeight(30, 1080)}px;
-        """)
+        """
+        )
         labelCatalogo.setAlignment(Qt.AlignmentFlag.AlignCenter)
         labelCatalogo.setMinimumHeight(relHeight(60, 1080))
         conteinerLabelCatalogo.addWidget(labelCatalogo)
@@ -41,9 +43,9 @@ class ConteudoCatalogo(QtWidgets.QFrame):
         groupPaineis.addWidget(painelFiltro)
 
         # Painel de livros
-        painelLivros = PainelLivros(self)
-        painelLivros.setObjectName("painelLivros")
-        groupPaineis.addWidget(painelLivros)
+        self.painelLivros = PainelLivros(self)
+        self.painelLivros.setObjectName("painelLivros")
+        groupPaineis.addWidget(self.painelLivros)
 
         groupPaineis.setStretch(0, 41)
         groupPaineis.setStretch(1, 100)

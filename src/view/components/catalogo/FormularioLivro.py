@@ -14,13 +14,14 @@ from PyQt6.QtCore import Qt
 from src.controller.telaPreviaLivro import dadosLivro
 from src.controller.telaPrincipal import uploadLivro, apagarLivro, updateGenero
 from src.view.utils.imageTools import relHeight, relWidth, getResizedImage
+from src.view.utils.widgetSearch import getAncestrais
 
 
 class FormularioLivro(QDialog):
     def __init__(self, parent):
         super().__init__()
         self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
-
+        self.parent = parent
         self.setWindowTitle("Adicionar Livro")
         self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.setFixedSize(700, 700)
@@ -212,6 +213,7 @@ class FormularioLivro(QDialog):
         if self.generoEscolhido and self.ArquivoSelecionado:
             updateGenero(self.generoEscolhido, self.idLivro)
             self.contemPDF = False
+            self.parent.conteudoCatalogo.painelLivros.atualizarLivros()
             self.accept()
 
     def keyPressEvent(self, event):

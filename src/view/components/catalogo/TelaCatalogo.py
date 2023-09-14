@@ -26,9 +26,9 @@ class TelaCatalogo(QtWidgets.QFrame):
         telaCatalogoLayout.addWidget(menu)
 
         # QFrame (ConteudoCatalogo)
-        conteudoCatalogo = ConteudoCatalogo(self)
-        conteudoCatalogo.setObjectName("conteudoCatalogo")
-        telaCatalogoLayout.addWidget(conteudoCatalogo)
+        self.conteudoCatalogo = ConteudoCatalogo(self)
+        self.conteudoCatalogo.setObjectName("conteudoCatalogo")
+        telaCatalogoLayout.addWidget(self.conteudoCatalogo)
 
         botaoAdicionarLivro = QtWidgets.QPushButton(self)
         botaoAdicionarLivro.setText("adicionar livro")
