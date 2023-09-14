@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import (
     QTextBrowser,
     QPushButton,
 )
-from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtCore import pyqtSignal, Qt
 from src.controller.telaPreviaLivro import setPagAtual, getPagAtual
 
 
@@ -57,12 +57,23 @@ class LeitorPDF(QDialog):
             self.paginaAtual -= 1
             self.mostrarPagina()
 
+    def keyPressEvent(self, event):
+        """
+        Salvar em qual página o usuário estava \n
+        ao fechar o PDF apertando esc
+        """
+        if event.key() == Qt.Key.Key_Escape:
+            return
+
     def closeEvent(self, event):
         """
         Salvar em qual página o usuário estava \n
-        ao fechar o PDF
+        ao fechar o PDF apertando o botão
         """
+        self.salvarPagina()
+        event.accept()
+
+    def salvarPagina(self):
         paginaAtual = self.paginaAtual
         setPagAtual(self.idUsuario, self.idLivro, paginaAtual)
         self.sinalPaginaAtual.emit(paginaAtual)
-        event.accept()

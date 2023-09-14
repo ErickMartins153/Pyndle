@@ -13,6 +13,8 @@ from src.view.components.ModuloLivro.LeitorPDF import LeitorPDF
 from src.controller.telaPreviaLivro import dadosLivro, getPagAtual
 from src.controller.telaInicial import dadosUsuario
 from src.view.components.ModuloLivro.Grafico import Grafico
+from src.view.components.catalogo.subcomponents.BotaoAvaliacao import BotaoAvaliacao
+from src.view.utils.imageTools import getResizedImage, relHeight, relWidth
 
 
 class Popup(QDialog):
@@ -27,7 +29,9 @@ class Popup(QDialog):
         self.genero = self.dadosLivro["genero"]
         self.autor = self.dadosLivro["autor"]
         self.anoPublicacao = self.dadosLivro["anoPublicacao"]
-        self.capaLivro = self.dadosLivro["capaLivro"]
+        self.capaLivro = getResizedImage(
+            self.dadosLivro["capaLivro"], relWidth(340, 1920), relHeight(476, 1080)
+        )
         self.arquivoPDF = self.dadosLivro["arquivoPdf"]
 
         self.lido = getPagAtual(self.idLivro, self.idUsuario)
@@ -110,17 +114,21 @@ class Popup(QDialog):
         qtdPaginasLabel.setObjectName("info")
         infosLayout.addWidget(qtdPaginasLabel)
 
-        avaliacaoLabel = QLabel(f"Avaliação: Placeholder")
+        avaliacaoLabel = QLabel(f"Avaliação:")
         avaliacaoLabel.setMaximumHeight(20)
         avaliacaoLabel.setObjectName("info")
         infosLayout.addWidget(avaliacaoLabel)
 
+        botaoAvaliacao = BotaoAvaliacao()
+        botaoAvaliacao.setObjectName("estrela")
+        infosLayout.addLayout(botaoAvaliacao)
+
         self.grafico = Grafico(self.porcentagemLido, 100 - self.porcentagemLido, self)
         infosLayout.addWidget(self.grafico)
 
-        button = QPushButton("Fechar", self)
-        button.clicked.connect(self.accept)
-        infosLayout.addWidget(button)
+        botaoFechar = QPushButton("Fechar", self)
+        botaoFechar.clicked.connect(self.accept)
+        infosLayout.addWidget(botaoFechar)
         self.setLayout(layout)
 
     def abrirLeitorPDF(self):

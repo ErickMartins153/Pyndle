@@ -13,7 +13,7 @@ from PyQt6.QtGui import QImage, QPixmap, QIntValidator
 from PyQt6.QtCore import Qt
 from src.controller.telaPreviaLivro import dadosLivro
 from src.controller.telaPrincipal import uploadLivro, apagarLivro, updateGenero
-from src.view.utils.imageTools import relHeight, relWidth
+from src.view.utils.imageTools import relHeight, relWidth, getResizedImage
 
 
 class FormularioLivro(QDialog):
@@ -182,6 +182,10 @@ class FormularioLivro(QDialog):
             extensao = ArquivoSelecionado.split(".")[-1]
             if self.contemPDF:
                 apagarLivro(self.idLivro)
+                self.entradaAutor.clear()
+                self.entradaAno.clear()
+                self.entradaGenero.clear()
+                self.entradaTitulo.clear()
                 self.contemPDF = False
 
             if extensao == "pdf" and ArquivoSelecionado and self.contemPDF is False:
@@ -198,9 +202,11 @@ class FormularioLivro(QDialog):
         if not self.entradaAno.text():
             self.entradaAno.setText(self.dadosLivro["anoPublicacao"])
         self.qtdPaginasLabel.setText(f'Total de páginas: {self.dadosLivro["pagTotal"]}')
-        imagemCapaLivro = QImage.fromData(self.dadosLivro["capaLivro"])
-        pixmap = QPixmap.fromImage(imagemCapaLivro)
-        self.capa.setPixmap(pixmap)
+
+        resizedImage = getResizedImage(
+            self.dadosLivro["capaLivro"], relWidth(340, 1920), relHeight(476, 1080)
+        )
+        self.capa.setPixmap(QPixmap.fromImage(QImage.fromData(resizedImage)))
 
     def cadastrarLivro(self, selectedFile):
         if self.generoEscolhido and self.ArquivoSelecionado:
