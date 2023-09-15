@@ -12,3 +12,20 @@
     border-radius: 12px;
     padding: 5%;
 }
+
+QPushButton#sair {
+    background: #CCB081;
+    border: 0.5px solid #3D3D3D;
+    padding: 10px;
+    border-radius: 15px;
+    font-family: 'Baskervville';
+    font-style: normal;
+    font-weight: bo;
+    font-size: 26px;
+    line-height: 41px;
+    color: #FFF9EF;  
+}
+
+QPushButton#sair:hover {
+    background-color: #a38d67;
+}

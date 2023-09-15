@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from src.view.components.FotoPerfil import FotoPerfil
 
+
 class Menu(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         """
@@ -12,7 +13,7 @@ class Menu(QtWidgets.QFrame):
 
         super().__init__()
         self.setParent(parent)
-        self.setStyleSheet(open('src/view/assets/styles/menu.css').read())
+        self.setStyleSheet(open("src/view/assets/styles/menu.css").read())
         self.setMaximumHeight(70)
 
         menuLayout = QtWidgets.QHBoxLayout()
@@ -51,11 +52,20 @@ class Menu(QtWidgets.QFrame):
         distancia2 = QtWidgets.QSpacerItem(300, 40)
         menuLayout.addSpacerItem(distancia2)
 
+        fotoPerfil = QtWidgets.QLabel()
+        fotoPerfil.setText("placeholder")
+        menuLayout.addWidget(fotoPerfil)
+
+        distancia3 = QtWidgets.QSpacerItem(50, 0)
+        menuLayout.addSpacerItem(distancia3)
+
         # botão de logout simplificado
         botao = QtWidgets.QPushButton("Sair")
+        botao.setObjectName("sair")
         menuLayout.addWidget(botao)
         botao.clicked.connect(self.deslogar)
-        
-        # optei por simplificar a função de logout, para termos algo eficiente e funcional 
+
+    # optei por simplificar a função de logout, para termos algo eficiente e funcional
+
     def deslogar(self):
-        QtWidgets.QMainWindow.close(self)
+        QtWidgets.QApplication.quit()
