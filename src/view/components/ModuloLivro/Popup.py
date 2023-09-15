@@ -14,6 +14,7 @@ from src.controller.telaPreviaLivro import dadosLivro, getPagAtual
 from src.controller.telaInicial import dadosUsuario
 from src.view.components.ModuloLivro.Grafico import Grafico
 from src.view.components.catalogo.subcomponents.BotaoAvaliacao import BotaoAvaliacao
+from src.controller.telaPreviaLivro import salvarAvaliacao, pegarAvaliacao
 from src.view.utils.imageTools import getResizedImage, relHeight, relWidth
 
 
@@ -119,7 +120,8 @@ class Popup(QDialog):
         avaliacaoLabel.setObjectName("info")
         infosLayout.addWidget(avaliacaoLabel)
 
-        botaoAvaliacao = BotaoAvaliacao()
+        botaoAvaliacao = BotaoAvaliacao(self.getAvaliacao())
+        botaoAvaliacao.mudancaAvaliacao.connect(self.armazenarAvaliacao)
         botaoAvaliacao.setObjectName("estrela")
         infosLayout.addLayout(botaoAvaliacao)
 
@@ -145,3 +147,13 @@ class Popup(QDialog):
     def updateGrafico(self, paginaAtual):
         self.porcentagemLido = paginaAtual / self.qtdPaginas * 100
         self.grafico.atualizar(self.porcentagemLido, 100 - self.porcentagemLido)
+
+    def armazenarAvaliacao(self, avaliacaoAtual):
+        self.avaliacaoAtual = avaliacaoAtual
+        salvarAvaliacao(self.idUsuario, self.idLivro, self.avaliacaoAtual)
+
+    def getAvaliacao(self):
+        avaliacao = pegarAvaliacao(self.idLivro, self.idUsuario)
+        if avaliacao:
+            return avaliacao
+        return 0

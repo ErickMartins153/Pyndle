@@ -25,7 +25,6 @@ class PainelFiltro(QtWidgets.QFrame):
         conteinerBotaoVoltar.setAlignment(Qt.AlignmentFlag.AlignLeft)
         painelFiltroLayout.addLayout(conteinerBotaoVoltar)
 
-
         botaoVoltar = QtWidgets.QPushButton()
         botaoVoltar.setObjectName("botaoVoltar")
         botaoVoltar.clicked.connect(self.voltarBotaoClicado)
@@ -53,20 +52,23 @@ class PainelFiltro(QtWidgets.QFrame):
 
         labelFiltros = QtWidgets.QLabel("FILTRAGEM")
         labelFiltros.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-        labelFiltros.setStyleSheet(f"""
+        labelFiltros.setStyleSheet(
+            f"""
         font-size: {relHeight(30, 1080)}px;
-        """)
+        """
+        )
         layoutLabelFiltros.addWidget(labelFiltros)
-
 
         # (Ordem Alfabética) ----------------------------------------------
 
         # Label "Ordem Alfabética"
         labelOrdemAlf = QtWidgets.QLabel("Ordem Alfabética |")
         labelOrdemAlf.setObjectName("filtroLabel")
-        labelOrdemAlf.setStyleSheet(f"""
+        labelOrdemAlf.setStyleSheet(
+            f"""
         font-size: {relHeight(20, 1080)}px;
-        """)
+        """
+        )
         layoutFrameFiltros.addWidget(labelOrdemAlf, 1, 0, 1, 1)
 
         # Layout para posicionar botões upArrow e downArrow
@@ -77,23 +79,27 @@ class PainelFiltro(QtWidgets.QFrame):
 
         # Botões UpArrow e DownArrow
         botaoAlfUp = QtWidgets.QPushButton()
-        botaoAlfUp.setStyleSheet(f"""
+        botaoAlfUp.setStyleSheet(
+            f"""
         image: url(src/view/assets/icons/setaCima.svg);
         width: {relWidth(10, 1920)}px;
         height: {relWidth(10, 1080)}px;
         background-color: transparent;
-        """)
+        """
+        )
         botaoAlfUp.setFixedSize(relWidth(25, 1920), relHeight(25, 1080))
         botaoAlfUp.setObjectName("botaoAlfUp")
         botaoAlfLayout.addWidget(botaoAlfUp)
 
         botaoAlfDown = QtWidgets.QPushButton()
-        botaoAlfDown.setStyleSheet(f"""
+        botaoAlfDown.setStyleSheet(
+            f"""
         image: url(src/view/assets/icons/setaBaixo.svg);
         width: {relWidth(10, 1920)}px;
         height: {relWidth(10, 1080)}px;
         background-color: transparent;
-        """)
+        """
+        )
         botaoAlfDown.setFixedSize(relWidth(25, 1920), relHeight(25, 1080))
         botaoAlfDown.setObjectName("botaoAlfDown")
         botaoAlfLayout.addWidget(botaoAlfDown)
@@ -108,9 +114,11 @@ class PainelFiltro(QtWidgets.QFrame):
         # Label ("Gêneros")
         labelGeneros = QtWidgets.QLabel("Gêneros:")
         labelGeneros.setObjectName("filtroLabel")
-        labelGeneros.setStyleSheet(f"""
+        labelGeneros.setStyleSheet(
+            f"""
         font-size: {relHeight(20, 1080)}px;
-        """)
+        """
+        )
         layoutFrameFiltros.addWidget(labelGeneros, 2, 0, 1, 1)
 
         # LayoutGeneros
@@ -123,9 +131,14 @@ class PainelFiltro(QtWidgets.QFrame):
         self.groupRadio = QtWidgets.QButtonGroup()
 
         generos = (
-            "Terror", "Fantasia", "Aventura",
-            "Romance", "Matemática", "Geografia",
-            "Linguagens", "Literatura"
+            "Terror",
+            "Fantasia",
+            "Aventura",
+            "Romance",
+            "Matemática",
+            "Geografia",
+            "Linguagens",
+            "Literatura",
         )
 
         quant_linhas, coluna, linha = 5, 0, 0
@@ -139,20 +152,18 @@ class PainelFiltro(QtWidgets.QFrame):
             layoutGeneros.addWidget(radioButton, linha, coluna)
             linha += 1
 
-
         # (AVALIAÇÃO) -------------------------------------------
         avaliacaoLabel = QtWidgets.QLabel("Avaliação:")
         avaliacaoLabel.setObjectName("filtroLabel")
-        avaliacaoLabel.setStyleSheet(f"""
+        avaliacaoLabel.setStyleSheet(
+            f"""
         font-size: {relHeight(20, 1080)}px;
-        """)
+        """
+        )
         layoutFrameFiltros.addWidget(avaliacaoLabel, 8, 0, 1, 3)
 
-        botaoAvaliacao = BotaoAvaliacao()
+        botaoAvaliacao = BotaoAvaliacao(0)
         layoutFrameFiltros.addLayout(botaoAvaliacao, 9, 0, 1, 1)
-
-
-
 
     def voltarBotaoClicado(self):
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]

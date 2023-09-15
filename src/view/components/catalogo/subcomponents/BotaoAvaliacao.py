@@ -1,15 +1,15 @@
-import copy
-
-from PyQt6 import QtWidgets, QtGui, QtCore
-from PyQt6.QtCore import Qt
-from src.view.utils.imageTools import relHeight, relWidth
+from PyQt6 import QtWidgets
+from PyQt6.QtCore import Qt, pyqtSignal
+from src.controller.telaPreviaLivro import pegarAvaliacao
 
 
 class BotaoAvaliacao(QtWidgets.QHBoxLayout):
-    def __init__(self):
+    mudancaAvaliacao = pyqtSignal(int)
+
+    def __init__(self, estrelasPreenchidas: int):
         super().__init__()
         # Atributos
-        self.avaliacao = 0
+        self.avaliacao = estrelasPreenchidas
 
         # Configurando
         self.setAlignment(Qt.AlignmentFlag.AlignLeft)
@@ -30,14 +30,22 @@ class BotaoAvaliacao(QtWidgets.QHBoxLayout):
             botaoAvaliacao.clicked.connect(
                 lambda x="", nota=nota: self.setAvaliacao(nota + 1)
             )
-
             self.listaBotoes.append(botaoAvaliacao)
             self.addWidget(botaoAvaliacao)
 
-    def setAvaliacao(self, avaliacao: int):
-        if avaliacao == self.avaliacao:
-            self.avaliacao = 0
-            for botao in self.listaBotoes:
+        self.setAvaliacao(self.avaliacao)
+
+    def setAvaliacao(self, estrelasPreenchidas: int):
+        for contador, botao in enumerate(self.listaBotoes):
+            if contador + 1 <= estrelasPreenchidas:
+                botao.setStyleSheet(
+                    """
+                image: url(src/view/assets/icons/estrelaFill.svg);
+                background-color: transparent;
+                border: 0px none transparent;
+                """
+                )
+            else:
                 botao.setStyleSheet(
                     """
                 image: url(src/view/assets/icons/estrelaUnfill.svg);
@@ -46,26 +54,8 @@ class BotaoAvaliacao(QtWidgets.QHBoxLayout):
                 """
                 )
 
-        else:
-            self.avaliacao = avaliacao
+        self.mudancaAvaliacao.emit(estrelasPreenchidas)
 
-            for contador, botao in enumerate(self.listaBotoes):
-                if contador + 1 <= avaliacao:
-                    botao.setStyleSheet(
-                        """
-                    image: url(src/view/assets/icons/estrelaFill.svg);
-                    background-color: transparent;
-                    border: 0px none transparent;
-                    """
-                    )
-                else:
-                    botao.setStyleSheet(
-                        """
-                    image: url(src/view/assets/icons/estrelaUnfill.svg);
-                    background-color: transparent;
-                    border: 0px none transparent;
-                    """
-                    )
-
-    def getAvaliacao(self):
-        return self.avaliacao
+    # def alterarAvaliacao(self):
+    #   avaliacao = self.avaliacao
+    #  self.mudancaAvaliacao.emit(avaliacao)

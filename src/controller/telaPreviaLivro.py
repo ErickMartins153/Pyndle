@@ -39,7 +39,7 @@ def pegarAvaliacao(id_livro, id_usuario):
     if resultado:
         return resultado[0]
     else:
-        return "Livro não encontrado ou sem avaliação."
+        return None
 
 
 def setPagAtual(id_usuario, id_livro, pag_lida):
@@ -64,7 +64,6 @@ def setPagAtual(id_usuario, id_livro, pag_lida):
         (pag_lida, id_usuario, id_livro),
     )
     conexao.commit()
-    print("Pagina atualizada com sucesso.")
 
 
 def getPagAtual(id_livro, id_usuario):
@@ -95,17 +94,29 @@ def pagTotal(id_livro, pag_totais):
 
 
 def salvarReview(idUsuario, idLivro, review):
-
-    sgbd.execute("""
+    sgbd.execute(
+        """
     INSERT INTO usuarioLivros (idUsuario, idLivro, review)
-    VALUES (?, ?, ?)""", (idUsuario, idLivro, review))
+    VALUES (?, ?, ?)""",
+        (idUsuario, idLivro, review),
+    )
 
-    connection.commit()
+    conexao.commit()
+
 
 def salvarAvaliacao(idUsuario, idLivro, avaliacao):
+    existente = pegarAvaliacao(idLivro, idUsuario)
 
-    sgbd.execute("""
-    INSERT INTO usuarioLivros (idUsuario, idLivro, avaliacao)
-    VALUES (?, ?, ?)""", (idUsuario, idLivro, avaliacao))
-
-    connection.commit()
+    if existente is not None:
+        sgbd.execute(
+            "UPDATE usuariosLivros SET avaliacao = ? WHERE idUsuario = ? AND idLivro = ?",
+            (avaliacao, idUsuario, idLivro),
+        )
+    else:
+        sgbd.execute(
+            """
+        INSERT INTO usuariosLivros (idUsuario, idLivro, avaliacao)
+        VALUES (?, ?, ?)""",
+            (idUsuario, idLivro, avaliacao),
+        )
+    conexao.commit()
