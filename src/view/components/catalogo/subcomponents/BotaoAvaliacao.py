@@ -56,3 +56,7 @@ class BotaoAvaliacao(QtWidgets.QHBoxLayout):
 
     def getAvaliacao(self):
         return self.avaliacao
+
+
+    def getBotoes(self):
+        return self.listaBotoes

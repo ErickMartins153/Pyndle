@@ -1,5 +1,5 @@
 from PyQt6 import QtWidgets, QtGui
-from src.controller.telaPrincipal import livrosCatalogo
+from src.controller.telaPrincipal import filtrarCatalogo
 from src.view.components.BotaoImagem import BotaoImagem
 from src.view.utils import widgetSearch
 from src.view.utils.imageTools import relHeight, relWidth
@@ -8,10 +8,13 @@ from src.view.utils.imageTools import relHeight, relWidth
 class PainelLivros(QtWidgets.QScrollArea):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
-        self.setStyleSheet(open('src/view/assets/styles/catalogo/painelLivros.css').read())
+
+        # Atributos
+        self.listaBotaoLivro = list()  # Lista para acessar os BotoesLivros em métodos
 
         # Configurações
         self.setParent(parent)
+        self.setStyleSheet(open('src/view/assets/styles/catalogo/painelLivros.css').read())
         self.setWidgetResizable(True)
         self.setContentsMargins(0, 0, 0, 0)
         self.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
@@ -28,17 +31,11 @@ class PainelLivros(QtWidgets.QScrollArea):
         self.contentWidget.setLayout(self.painelLivrosLayout)
 
         # Definindo livros
-        livrosCatalogoBD = livrosCatalogo()
-
-        self.listaBotaoLivro = list()  # Lista para acessar os BotoesLivros em métodos
-
-        for livroTupla in livrosCatalogoBD:  # Iteração das tuplas de livro do BD para criar botões e adicionar na lista
-            botaoImagem = BotaoImagem(livroTupla[0], livroTupla[5])
-            #botaoImagem.resizeButton(200, 280)
-            self.listaBotaoLivro.append(botaoImagem)
+        self.getLivrosCatalogo()
+        self.resizeEvent(None)
 
 
-    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
+    def resizeEvent(self, a0: QtGui.QResizeEvent = QtGui.QResizeEvent) -> None:
         super().resizeEvent(a0)
         mainWindow = widgetSearch.getAncestrais(self)['mainWindow']  # mainWindow para identificar redimensionamentos
         print(f"{mainWindow.width()}X{mainWindow.height()}")
@@ -69,3 +66,17 @@ class PainelLivros(QtWidgets.QScrollArea):
             if coluna == quantColunas:
                 coluna = 0
                 linha += 1
+
+
+    def getLivrosCatalogo(self, genero: str = None, ordemAlfabetica: bool = None):
+        livrosCatalogoBD = filtrarCatalogo(genero, ordemAlfabetica)
+
+        for botao in self.listaBotaoLivro:
+            botao.deleteLater()
+        self.listaBotaoLivro.clear()
+
+        if livrosCatalogoBD:
+            for livroDict in livrosCatalogoBD:  # Iteração dos dicionários de livro do BD para criar botões e adicionar na lista
+                botaoImagem = BotaoImagem(livroDict["idLivro"], livroDict["capaLivro"])
+                self.listaBotaoLivro.append(botaoImagem)
+        print(len(self.listaBotaoLivro))

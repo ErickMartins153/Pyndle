@@ -2,7 +2,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 from src.view.components.Menu import Menu
 from src.view.components.catalogo.subcomponents.ConteudoCatalogo import ConteudoCatalogo
-
+from src.view.utils.imageTools import relHeight, relWidth
 
 class TelaCatalogo(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
@@ -25,5 +25,9 @@ class TelaCatalogo(QtWidgets.QFrame):
         # QFrame (ConteudoCatalogo)
         conteudoCatalogo = ConteudoCatalogo(self)
         conteudoCatalogo.setObjectName("conteudoCatalogo")
+        conteudoCatalogo.setStyleSheet(f"""
+            border-bottom-left-radius: {relWidth(15, 1080)}px;
+            border-bottom-right-radius: {relHeight(15, 1080)}px;
+        """)
         telaCatalogoLayout.addWidget(conteudoCatalogo)
 

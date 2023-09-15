@@ -1,7 +1,8 @@
 import sqlite3
 import fitz as PyMuPDF
 
-conexao = sqlite3.connect("src/model/Pyndle.db")
+conexao = sqlite3.connect(r"C:\Users\Notebook\Desktop\Repositórios\ProjetosPython\Pyndle\src\model\Pyndle.db")
+conexao.row_factory = sqlite3.Row
 sgbd = conexao.cursor()
 
 def livrosCatalogo():
@@ -89,25 +90,43 @@ def adicionarLivroCatalogo(titulo, genero, autor, anoPublicacao, arquivoPdf):
                  (titulo, genero, autor, anoPublicacao, arquivoPdfBytes))
 
 
-def filtrarGenero(genero=None, ordemAlfabetica=False):
+def filtrarCatalogo(genero: str = None, ordemAlfabetica: bool = None):
 
-    if ordemAlfabetica:
-        sgbd.execute("SELECT * FROM livros WHERE genero = ? ORDER BY titulo ASC", (genero,))
-    else:
-        sgbd.execute("SELECT * FROM livros WHERE genero = ?", (genero,))
+    # Começa com uma consulta base que seleciona todos os campos de livros da minha biblioteca
+    consulta = "SELECT * FROM livros WHERE idLivro <= 7"
 
+    # Verifica se o gênero foi especificado e adiciona a cláusula correspondente
+    if genero is not None:
+        consulta += f" AND genero = ?"
+
+    # Adiciona a cláusula ORDER BY para ordenação alfabética, se necessário
+    if ordemAlfabetica is not None:
+        if ordemAlfabetica:
+            consulta += " ORDER BY titulo ASC"
+        else:
+            consulta += " ORDER BY titulo DESC"
+
+    # Cria uma tupla de parâmetros para a consulta
+    parametros = ()
+
+    if genero is not None:
+        parametros += (genero,)
+
+    # Executa a consulta com os parâmetros apropriados
+    sgbd.execute(consulta, parametros)
+
+    # Recupera os resultados da consulta
     resultado = sgbd.fetchall()
-
 
     return resultado
 
-def filtrarAvaliacao(idUsuario, genero=None, avaliacao=None, ordemAlfabetica=False):
+def filtrarBiblioteca(idUsuario, genero: str = None, avaliacao: int = None, ordemAlfabetica: bool = None):
 
-    # Começa com uma consulta base que seleciona todos os campos de livros
-    consulta = "SELECT * FROM livros WHERE 1"
+    # Começa com uma consulta base que seleciona todos os campos de livros do catálogo
+    consulta = "SELECT * FROM livros WHERE idLivro >= 7"
 
     # Verifica se o gênero foi especificado e adiciona a cláusula correspondente
-    if genero:
+    if genero is not None:
         consulta += f" AND genero = ?"
 
     # Verifica se a avaliação foi especificada e adiciona a cláusula correspondente
@@ -119,8 +138,11 @@ def filtrarAvaliacao(idUsuario, genero=None, avaliacao=None, ordemAlfabetica=Fal
         """
 
     # Adiciona a cláusula ORDER BY para ordenação alfabética, se necessário
-    if ordemAlfabetica:
-        consulta += " ORDER BY titulo ASC"
+    if ordemAlfabetica is not None:
+        if ordemAlfabetica:
+            consulta += " ORDER BY titulo ASC"
+        else:
+            consulta += " ORDER BY titulo DESC"
 
     # Cria uma tupla de parâmetros para a consulta
     parametros = (idUsuario,)
@@ -138,3 +160,6 @@ def filtrarAvaliacao(idUsuario, genero=None, avaliacao=None, ordemAlfabetica=Fal
 
 
     return resultado
+
+
+print(filtrarCatalogo())

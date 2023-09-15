@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 from src.view.components.catalogo.subcomponents.PainelFiltro import PainelFiltro
 from src.view.components.catalogo.subcomponents.PainelLivros import PainelLivros
+from src.view.utils.container import verticalFrame
 from src.view.utils.imageTools import relHeight, relWidth
 
 
@@ -38,12 +39,27 @@ class ConteudoCatalogo(QtWidgets.QFrame):
         # Painel de filtragem
         painelFiltro = PainelFiltro(self)
         painelFiltro.setObjectName("painelFiltro")
+        painelFiltro.setStyleSheet(f"""
+            border-bottom-left-radius: {relHeight(15, 1080)}px;
+            border-top-left-radius: {relHeight(15, 1080)}px;
+            border-bottom-right-radius: 0px;
+        """)
         groupPaineis.addWidget(painelFiltro)
 
         # Painel de livros
+        containerPainelLivros = verticalFrame(self, "containerPainelLivros")
+        containerPainelLivros.setStyleSheet(f"""
+            border-top-right-radius: {relHeight(15, 1080)}px;
+            border-top-left-radius: 0;
+            border-bottom-right-radius: {relHeight(15, 1080)}px;
+            border-bottom-left-radius: 0;
+        """)
+
         painelLivros = PainelLivros(self)
         painelLivros.setObjectName("painelLivros")
-        groupPaineis.addWidget(painelLivros)
+        containerPainelLivros.layout().addWidget(painelLivros)
+
+        groupPaineis.addWidget(containerPainelLivros)
 
         groupPaineis.setStretch(0, 41)
         groupPaineis.setStretch(1, 100)

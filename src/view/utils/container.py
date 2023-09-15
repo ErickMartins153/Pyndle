@@ -19,7 +19,7 @@ class verticalFrame(QtWidgets.QFrame):
         self.layoutVertical = QtWidgets.QVBoxLayout()
         self.setLayout(self.layoutVertical)
 
-    def layout(self):
+    def layout(self) -> QtWidgets.QVBoxLayout:
         """
         Retorna o layout do frame
         """
@@ -42,7 +42,7 @@ class horizontalFrame(QtWidgets.QFrame):
         self.layoutHorizontal = QtWidgets.QHBoxLayout()
         self.setLayout(self.layoutHorizontal)
 
-    def layout(self):
+    def layout(self) -> QtWidgets.QHBoxLayout:
         """
         Retorna o layout do frame
         """
@@ -65,7 +65,7 @@ class gridFrame(QtWidgets.QFrame):
         self.layoutGrid = QtWidgets.QGridLayout()
         self.setLayout(self.layoutGrid)
 
-    def layout(self):
+    def layout(self) -> QtWidgets.QGridLayout:
         """
         Retorna o layout do frame
         """
@@ -88,7 +88,7 @@ class verticalWidget(QtWidgets.QWidget):
         self.layoutVertical = QtWidgets.QVBoxLayout()
         self.setLayout(self.layoutVertical)
 
-    def layout(self):
+    def layout(self) -> QtWidgets.QVBoxLayout:
         """
         Retorna o layout do widget
         """
@@ -111,7 +111,7 @@ class horizontalWidget(QtWidgets.QWidget):
         self.layoutHorizontal = QtWidgets.QHBoxLayout()
         self.setLayout(self.layoutHorizontal)
 
-    def layout(self):
+    def layout(self) -> QtWidgets.QHBoxLayout:
         """
         Retorna o layout do widget
         """
@@ -134,7 +134,7 @@ class gridWidget(QtWidgets.QWidget):
         self.layoutGrid = QtWidgets.QGridLayout()
         self.setLayout(self.layoutGrid)
 
-    def layout(self):
+    def layout(self) -> QtWidgets.QGridLayout:
         """
         Retorna o layout do widget
         """

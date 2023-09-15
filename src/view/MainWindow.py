@@ -70,7 +70,7 @@ class MainWindow(QtWidgets.QMainWindow):
         catalogo.setObjectName("catalogo")
         self.paginas.addWidget(catalogo)
 
-        self.paginas.setCurrentIndex(0)
+        self.paginas.setCurrentIndex(3)
 
 
     def getUsuario(self):
