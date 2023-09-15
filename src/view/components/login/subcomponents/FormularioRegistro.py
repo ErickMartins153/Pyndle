@@ -11,6 +11,7 @@ import pyautogui
 tela = pyautogui.size()
 width, height = tela
 
+
 class FormularioRegistro(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
@@ -19,7 +20,12 @@ class FormularioRegistro(QtWidgets.QFrame):
 
         # Configurações
         self.setParent(parent)
-        self.setContentsMargins(relWidth(20, 1920), relHeight(40, 1080), relWidth(20, 1920), relHeight(60, 1080))
+        self.setContentsMargins(
+            relWidth(20, 1920),
+            relHeight(40, 1080),
+            relWidth(20, 1920),
+            relHeight(60, 1080),
+        )
         self.hide()
         self.setAcceptDrops(True)
 
@@ -30,7 +36,7 @@ class FormularioRegistro(QtWidgets.QFrame):
         # LOGO -----------------------------------------
 
         # self.logo = Logo(240, 100)
-        self.logo = Logo(relWidth(240, 1920), relHeight(100, 1080))
+        self.logo = Logo(relWidth(240, 1920), relHeight(100, 1080), relHeight(30, 1080))
         self.logo.setObjectName("logo")
         self.logo.setFixedHeight(relHeight(100, 1080))
         formLayout.addWidget(self.logo)
@@ -53,7 +59,9 @@ class FormularioRegistro(QtWidgets.QFrame):
         formLayout.addLayout(mensagemErroLayout)
 
         self.mensagemDeErroLabel = QtWidgets.QLabel(" ")
-        self.mensagemDeErroLabel.setMaximumSize(relWidth(300, 1920), relHeight(25, 1080))
+        self.mensagemDeErroLabel.setMaximumSize(
+            relWidth(300, 1920), relHeight(25, 1080)
+        )
         self.mensagemDeErroLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         mensagemErroLayout.addWidget(self.mensagemDeErroLabel)
 
@@ -63,7 +71,9 @@ class FormularioRegistro(QtWidgets.QFrame):
         formLayout.addWidget(entradasFrame)
         self.entradasLayout = QtWidgets.QVBoxLayout(self)
         self.entradasLayout.setSpacing(relHeight(10, 1080))
-        self.entradasLayout.setContentsMargins(relWidth(150, 1920), 0, relWidth(150, 1920), 0)
+        self.entradasLayout.setContentsMargins(
+            relWidth(150, 1920), 0, relWidth(150, 1920), 0
+        )
         entradasFrame.setLayout(self.entradasLayout)
 
         # elementos
@@ -84,11 +94,13 @@ class FormularioRegistro(QtWidgets.QFrame):
 
         self.entradaUsuario = QtWidgets.QLineEdit(entradasFrame)
         self.entradaUsuario.setObjectName("caixaEntrada")
-        self.entradaUsuario.setStyleSheet(f"""
+        self.entradaUsuario.setStyleSheet(
+            f"""
         font-size: {relHeight(25, 1080)};
         border-radius: {relHeight(20, 1080)}px;
         padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
-        """)
+        """
+        )
         self.entradaUsuario.setMaximumHeight(entradasHeight)
         groupUsuario.addWidget(self.entradaUsuario)
 
@@ -105,11 +117,13 @@ class FormularioRegistro(QtWidgets.QFrame):
         self.entradaSenha = QtWidgets.QLineEdit(entradasFrame)
         self.entradaSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.entradaSenha.setObjectName("caixaEntrada")
-        self.entradaSenha.setStyleSheet(f"""
+        self.entradaSenha.setStyleSheet(
+            f"""
                 font-size: {relHeight(25, 1080)};
                 border-radius: {relHeight(20, 1080)}px;
                 padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
-        """)
+        """
+        )
         self.entradaSenha.setMaximumHeight(entradasHeight)
         groupSenha.addWidget(self.entradaSenha)
 
@@ -127,11 +141,13 @@ class FormularioRegistro(QtWidgets.QFrame):
         self.entradaRepetirSenha = QtWidgets.QLineEdit(entradasFrame)
         self.entradaRepetirSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.entradaRepetirSenha.setObjectName("caixaEntrada")
-        self.entradaRepetirSenha.setStyleSheet(f"""
+        self.entradaRepetirSenha.setStyleSheet(
+            f"""
                 font-size: {relHeight(25, 1080)};
                 border-radius: {relHeight(20, 1080)}px;
                 padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
-        """)
+        """
+        )
         self.entradaRepetirSenha.setMaximumHeight(entradasHeight)
         groupRepetirSenha.addWidget(self.entradaRepetirSenha)
 
@@ -142,16 +158,20 @@ class FormularioRegistro(QtWidgets.QFrame):
 
         botoesFrameLayout = QtWidgets.QVBoxLayout(botoesFrame)
         botoesFrameLayout.setContentsMargins(80, 0, 80, 0)
-        botoesFrameLayout.setContentsMargins(relWidth(80, 1920), 0, relWidth(80, 1920), 0)
+        botoesFrameLayout.setContentsMargins(
+            relWidth(80, 1920), 0, relWidth(80, 1920), 0
+        )
         botoesFrameLayout.setSpacing(relHeight(10, 1080))
         botoesFrame.setLayout(botoesFrameLayout)
 
         self.registrarBotao = QtWidgets.QPushButton(botoesFrame)
         self.registrarBotao.setObjectName("registrarBotao")
-        self.registrarBotao.setStyleSheet(f"""
+        self.registrarBotao.setStyleSheet(
+            f"""
         border-radius: {relHeight(25, 1080)}px;
         font-size: {relHeight(30, 1080)}px;
-        """)
+        """
+        )
         self.registrarBotao.setMinimumHeight(relHeight(50, 1080))
         self.registrarBotao.setText("Registrar")
         self.registrarBotao.clicked.connect(self.checarRegistro)
@@ -159,10 +179,12 @@ class FormularioRegistro(QtWidgets.QFrame):
 
         self.telaLoginBotao = QtWidgets.QPushButton(botoesFrame)
         self.telaLoginBotao.setObjectName("logarBotao")
-        self.telaLoginBotao.setStyleSheet(f"""
+        self.telaLoginBotao.setStyleSheet(
+            f"""
         border-radius: {relHeight(25, 1080)}px;
         font-size: {relHeight(30, 1080)}px;
-        """)
+        """
+        )
         self.telaLoginBotao.setMinimumHeight(relHeight(50, 1080))
         self.telaLoginBotao.setText("Tela de Login")
         self.telaLoginBotao.clicked.connect(self.voltarTelaLogin)
@@ -210,7 +232,9 @@ class FormularioRegistro(QtWidgets.QFrame):
         """
         if self.mensagemDeErroLabel.text().isspace():
             self.mensagemDeErroLabel.setObjectName("mensagemDeErro")
-            self.setStyleSheet(open("src/view/assets/styles/login/telaLogin.css").read())
+            self.setStyleSheet(
+                open("src/view/assets/styles/login/telaLogin.css").read()
+            )
 
         self.mensagemDeErroLabel.setText(mensagem)
 
@@ -225,12 +249,14 @@ class FormularioRegistro(QtWidgets.QFrame):
         """
         self.foto.removePhoto()
         self.binaryFoto = b""
-        self.foto.setStyleSheet("""
+        self.foto.setStyleSheet(
+            """
         image: url("src/view/assets/icons/FotoNaoDefinida.svg");
         width: 100px;
         height: 100px;
         background-color: transparent;
-        """)
+        """
+        )
 
     # Eventos ----------------------------------------------------------
 
@@ -257,10 +283,12 @@ class FormularioRegistro(QtWidgets.QFrame):
             # Define o atributo binaryFoto com o diretório da foto recebida
             self.binaryFoto = newBimage
 
-            self.foto.setStyleSheet("""
+            self.foto.setStyleSheet(
+                """
             background-color: transparent;
-            """)
-            self.foto.changePhoto(newBimage)
+            """
+            )
+            self.foto.changePhoto(newBimage, 100)
             event.accept()
 
         else:

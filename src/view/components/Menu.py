@@ -1,18 +1,11 @@
-import sys
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from src.view.components.FotoPerfil import FotoPerfil
-from PyQt6.QtWidgets import QApplication, QMainWindow
+from src.controller.telaInicial import dadosUsuario
+from src.view.utils.widgetSearch import getAncestrais, getDescendentes
+from src.view.utils.imageTools import relHeight, relWidth
+from src.view.components.Logo import Logo
 
-def main():
-    app = QApplication(sys.argv)
-    window = QMainWindow()
-    menu = Menu(window)
-    window.show()
-    sys.exit(app.exec())
-
-if __name__ == "__main__":
-    main()
 
 class Menu(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
@@ -24,14 +17,19 @@ class Menu(QtWidgets.QFrame):
 
         super().__init__()
         self.setParent(parent)
-        self.setStyleSheet(open('src/view/assets/styles/menu.css').read())
+        self.setStyleSheet(open("src/view/assets/styles/menu.css").read())
         self.setMaximumHeight(70)
 
         menuLayout = QtWidgets.QHBoxLayout()
-        menuLayout.setContentsMargins(20, 15, 20, 15)
+        # menuLayout.setContentsMargins(20, 15, 20, 15)
         self.setLayout(menuLayout)
 
         # Logo -------------------------------
+        self.logo = Logo(relWidth(120, 1920), relHeight(50, 1080), relHeight(10, 1080))
+        self.logo.setObjectName("logo")
+        self.logo.setFixedHeight(relHeight(50, 1080))
+        menuLayout.addWidget(self.logo)
+        """
         fundoLogo = QtWidgets.QFrame(self)
         fundoLogo.setObjectName("fundoLogo")
         menuLayout.addWidget(fundoLogo)
@@ -45,7 +43,7 @@ class Menu(QtWidgets.QFrame):
         pyndleLogo.setObjectName("pyndleLogo")
         pyndleLogo.setText("Pyndle")
         fundoLogoLayout.addWidget(pyndleLogo)
-
+"""
         # Distancia1 ----------------------------
         distancia1 = QtWidgets.QSpacerItem(40, 40)
         menuLayout.addSpacerItem(distancia1)
@@ -59,7 +57,6 @@ class Menu(QtWidgets.QFrame):
         pesquisa.setMaximumHeight(37)
         pesquisa.setPlaceholderText("Pesquisar")
 
-
         botaoPesquisa = QtWidgets.QPushButton()
         botaoPesquisa.setText("🔍")
         botaoPesquisa.setObjectName("botaoPesquisa")
@@ -69,13 +66,34 @@ class Menu(QtWidgets.QFrame):
         distancia2 = QtWidgets.QSpacerItem(300, 40)
         menuLayout.addSpacerItem(distancia2)
 
+        # foto de perfil
+        fotoPerfilLayout = QtWidgets.QVBoxLayout()
+        fotoPerfilLayout.setAlignment(Qt.AlignmentFlag.AlignAbsolute)
+        menuLayout.addLayout(fotoPerfilLayout)
+
+        self.fotoPerfil = FotoPerfil()
+        self.fotoPerfil.setObjectName("fotoPerfil")
+        fotoPerfilLayout.addWidget(self.fotoPerfil)
+
+        mainWindow = getAncestrais(self)["mainWindow"]
+        self.usuarioAtual = mainWindow.getUsuario()
+        formularioLogin = getDescendentes(mainWindow)["formularioLogin"]
+        formularioLogin.AtualizacaoUsuario.connect(self.getFotoPerfil)
+
+        # Distancia3 ----------------------------
+        distancia3 = QtWidgets.QSpacerItem(25, 0)
+        menuLayout.addSpacerItem(distancia3)
+
         # botão de logout simplificado
         botao = QtWidgets.QPushButton()
         botao.setText("Sair")
         botao.setObjectName("sair")
         menuLayout.addWidget(botao)
         botao.clicked.connect(self.deslogar)
-        
 
     def deslogar(self):
         QtWidgets.QApplication.quit()
+
+    def getFotoPerfil(self, nomeUsuario):
+        imagemUsuario = dadosUsuario(nomeUsuario)["fotoPerfil"]
+        self.fotoPerfil.changePhoto(imagemUsuario, 50)

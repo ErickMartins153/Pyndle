@@ -30,7 +30,7 @@
 QPushButton#sair {
     background: #CCB081;
     border: 0.5px solid #3D3D3D;
-    padding: 10px;
+    padding: 2px;
     border-radius: 15px;
     font-family: 'Baskervville';
     font-style: normal;
@@ -42,4 +42,10 @@ QPushButton#sair {
 
 QPushButton#sair:hover {
     background-color: #a38d67;
+}
+
+#fotoPerfil {
+    border-radius: 100px;
+    height: 3px;
+    width: 1px;
 }
