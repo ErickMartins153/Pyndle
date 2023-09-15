@@ -2,7 +2,17 @@ import sys
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from src.view.components.FotoPerfil import FotoPerfil
+from PyQt6.QtWidgets import QApplication, QMainWindow
 
+def main():
+    app = QApplication(sys.argv)
+    window = QMainWindow()
+    menu = Menu(window)
+    window.show()
+    sys.exit(app.exec())
+
+if __name__ == "__main__":
+    main()
 
 class Menu(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
@@ -14,7 +24,7 @@ class Menu(QtWidgets.QFrame):
 
         super().__init__()
         self.setParent(parent)
-        self.setStyleSheet(open("src/view/assets/styles/menu.css").read())
+        self.setStyleSheet(open('src/view/assets/styles/menu.css').read())
         self.setMaximumHeight(70)
 
         menuLayout = QtWidgets.QHBoxLayout()
@@ -49,6 +59,7 @@ class Menu(QtWidgets.QFrame):
         pesquisa.setMaximumHeight(37)
         pesquisa.setPlaceholderText("Pesquisar")
 
+
         botaoPesquisa = QtWidgets.QPushButton()
         botaoPesquisa.setText("🔍")
         botaoPesquisa.setObjectName("botaoPesquisa")
@@ -58,18 +69,13 @@ class Menu(QtWidgets.QFrame):
         distancia2 = QtWidgets.QSpacerItem(300, 40)
         menuLayout.addSpacerItem(distancia2)
 
-        fotoPerfil = QtWidgets.QLabel()
-        fotoPerfil.setText("placeholder")
-        menuLayout.addWidget(fotoPerfil)
-
-        distancia3 = QtWidgets.QSpacerItem(50, 0)
-        menuLayout.addSpacerItem(distancia3)
-
         # botão de logout simplificado
-        botao = QtWidgets.QPushButton("Sair")
+        botao = QtWidgets.QPushButton()
+        botao.setText("Sair")
         botao.setObjectName("sair")
         menuLayout.addWidget(botao)
         botao.clicked.connect(self.deslogar)
+        
 
     def deslogar(self):
         QtWidgets.QApplication.quit()
