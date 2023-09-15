@@ -38,9 +38,7 @@ class BotaoAvaliacao(QtWidgets.QHBoxLayout):
         self.setAvaliacao(self.avaliacao)
 
     def setAvaliacao(self, estrelasPreenchidas: int):
-        print("antes", self.inicializacao)
         if estrelasPreenchidas == self.avaliacao and not self.inicializacao:
-            print("dento", self.inicializacao)
             self.avaliacao = 0
             for botao in self.listaBotoes:
                 botao.setStyleSheet(
