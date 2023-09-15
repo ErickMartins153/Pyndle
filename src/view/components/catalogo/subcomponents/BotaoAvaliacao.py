@@ -11,6 +11,8 @@ class BotaoAvaliacao(QtWidgets.QHBoxLayout):
         # Atributos
         self.avaliacao = estrelasPreenchidas
 
+        self.inicializacao = True
+
         # Configurando
         self.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
@@ -36,6 +38,17 @@ class BotaoAvaliacao(QtWidgets.QHBoxLayout):
         self.setAvaliacao(self.avaliacao)
 
     def setAvaliacao(self, estrelasPreenchidas: int):
+        if estrelasPreenchidas == self.avaliacao and not self.inicializacao:
+            self.avaliacao = 0
+            for botao in self.listaBotoes:
+                botao.setStyleSheet(
+                    """
+                image: url(src/view/assets/icons/estrelaUnfill.svg);
+                background-color: transparent;
+                border: 0px none transparent;
+                """
+                )
+            return
         for contador, botao in enumerate(self.listaBotoes):
             if contador + 1 <= estrelasPreenchidas:
                 botao.setStyleSheet(
@@ -53,9 +66,6 @@ class BotaoAvaliacao(QtWidgets.QHBoxLayout):
                 border: 0px none transparent;
                 """
                 )
-
+        self.avaliacao = estrelasPreenchidas
         self.mudancaAvaliacao.emit(estrelasPreenchidas)
-
-    # def alterarAvaliacao(self):
-    #   avaliacao = self.avaliacao
-    #  self.mudancaAvaliacao.emit(avaliacao)
+        self.inicializacao = False
