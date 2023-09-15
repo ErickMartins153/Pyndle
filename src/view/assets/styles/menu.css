@@ -11,4 +11,30 @@
     background-color: #F8F3EF;
     border-radius: 12px;
     padding: 5%;
+    font: 16px;
+}
+
+#botaoPesquisa {
+    background-color: #000;
+    border-radius: 12px;
+    width: 30px;
+    height: 30px;
+    outline: none;
+    padding: 15px;
+}
+
+#botaoPesquisa:hover {
+    background-color: #565656;
+}
+
+
+#sair {
+    background-color: #000;
+    color: #FFF;
+    padding: 10px;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    width: 88px;
+    font-size: 17px;
 }
