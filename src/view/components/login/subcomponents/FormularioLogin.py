@@ -161,7 +161,7 @@ class FormularioLogin(QtWidgets.QFrame):
             else:
                 pass
         except IndexError:
-            print("Usuário não encontrado")
+            pass
 
     def registrarBotaoClicado(self):
         self.entradaSenha.clear()

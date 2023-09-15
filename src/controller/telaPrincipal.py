@@ -160,6 +160,3 @@ def filtrarBiblioteca(idUsuario, genero: str = None, avaliacao: int = None, orde
 
 
     return resultado
-
-
-print(filtrarCatalogo())

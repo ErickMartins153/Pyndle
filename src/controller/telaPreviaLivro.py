@@ -22,7 +22,6 @@ def dadosLivro(idLivro: int):
 
         return dados_dict
     else:
-        print(f"O livro com ID {idLivro} não foi encontrado.")
         return None
 
 
@@ -64,7 +63,6 @@ def setPagAtual(id_usuario, id_livro, pag_lida):
         (pag_lida, id_usuario, id_livro),
     )
     conexao.commit()
-    print("Pagina atualizada com sucesso.")
 
 
 def getPagAtual(id_livro, id_usuario):
@@ -91,4 +89,3 @@ def pagTotal(id_livro, pag_totais):
 
     # Commit para salvar a alteração no banco de dados
     conexao.commit()
-    print("Número de páginas inserido com sucesso")

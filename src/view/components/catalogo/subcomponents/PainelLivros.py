@@ -38,13 +38,10 @@ class PainelLivros(QtWidgets.QScrollArea):
     def resizeEvent(self, a0: QtGui.QResizeEvent = QtGui.QResizeEvent) -> None:
         super().resizeEvent(a0)
         mainWindow = widgetSearch.getAncestrais(self)['mainWindow']  # mainWindow para identificar redimensionamentos
-        print(f"{mainWindow.width()}X{mainWindow.height()}")
 
 
         # Redimensionamento dos livros
         if mainWindow.width() >= relWidth(1640, 1920):  # Redimensiona de acordo com o tamanho da janela
-            print("Escalado")
-
             self.displayBotoesLivros(4, relWidth(240, 1920), relHeight(336, 1080))
         else:
             self.displayBotoesLivros(3, relWidth(200, 1920), relHeight(280, 1080))
@@ -79,4 +76,3 @@ class PainelLivros(QtWidgets.QScrollArea):
             for livroDict in livrosCatalogoBD:  # Iteração dos dicionários de livro do BD para criar botões e adicionar na lista
                 botaoImagem = BotaoImagem(livroDict["idLivro"], livroDict["capaLivro"])
                 self.listaBotaoLivro.append(botaoImagem)
-        print(len(self.listaBotaoLivro))

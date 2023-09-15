@@ -235,6 +235,5 @@ class PainelFiltro(QtWidgets.QFrame):
 
 
     def botaoFiltrarClicado(self):
-        print(self.ordemAlf)
         widgetSearch.getIrmaos(self)["painelLivrosCatalogo"].getLivrosCatalogo(self.generoMarcado, self.ordemAlf)
         widgetSearch.getIrmaos(self)["painelLivrosCatalogo"].resizeEvent(None)

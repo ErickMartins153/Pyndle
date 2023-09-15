@@ -252,7 +252,10 @@ class PainelFiltro(QtWidgets.QFrame):
 
 
     def botaoAvaliacaoClicado(self):
-        self.avaliacao = self.botaoAvaliacao.getAvaliacao()
+        if self.botaoAvaliacao.getAvaliacao() != 0:
+            self.avaliacao = self.botaoAvaliacao.getAvaliacao()
+        else:
+            self.avaliacao = None
 
 
     def botaoFiltrarClicado(self):

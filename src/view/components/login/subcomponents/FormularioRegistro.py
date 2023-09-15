@@ -183,8 +183,6 @@ class FormularioRegistro(QtWidgets.QFrame):
             if telaInicial.registrarUsuario(usuario, senha, self.binaryFoto) is True:
                 self.limparLabelMensagemDeErro()
                 self.voltarTelaLogin()
-            else:
-                self.printarMensagemDeErro("Usuário Já Cadastrado")
         else:
             self.printarMensagemDeErro("As senhas são diferentes")
             return

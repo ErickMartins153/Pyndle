@@ -8,4 +8,3 @@ def registroLivro(capaLivro, autor, arquivoPdf):
                  (capaLivro, autor, arquivoPdfBytes))
 
     sgbd.commit()
-    print('Dados do livro e PDF inseridos com sucesso!')

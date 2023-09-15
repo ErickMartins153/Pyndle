@@ -57,7 +57,6 @@ def dadosUsuario(nomeUsuario: str):
 
         return dados_dict
     else:
-        print(f"O usuário com ID {idUsuario} não foi encontrado.")
         return None
 
 

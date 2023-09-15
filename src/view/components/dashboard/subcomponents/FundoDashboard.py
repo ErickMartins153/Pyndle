@@ -132,7 +132,7 @@ class FundoDashboard(QtWidgets.QFrame):
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]  # mainWindow para identificar redimensionamentos
-        print(mainWindow.width())
+
 
         # Redimensionamento dos livros
         if mainWindow.width() >= relWidth(1600, 1920):  # Redimensiona de acordo com o tamanho da janela

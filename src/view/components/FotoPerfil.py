@@ -22,7 +22,7 @@ class FotoPerfil(QtWidgets.QPushButton):
         resizedBimage = imageTools.getResizedImage(self.bimage, width, height)
         self.changePhoto(resizedBimage)
 
-    def changePhoto(self, newBimage: bytes):
+    def changePhoto(self, newBimage: bytes, ):
         self.bimage = newBimage
 
         if b"<?xml" in newBimage or b"<!DOCTYPE svg" in newBimage or b"<svg" in newBimage:
