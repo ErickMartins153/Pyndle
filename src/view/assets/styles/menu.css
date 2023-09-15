@@ -11,4 +11,41 @@
     background-color: #F8F3EF;
     border-radius: 12px;
     padding: 5%;
+    font-size: 17px;
+}
+
+#botaoPesquisa {
+    background-color: #CCB081;
+    border-radius: 15px;
+    border: 0.5px solid #3D3D3D;
+    width: 35px;
+    height: 35px;
+    outline: none;
+    padding: 0;
+}
+#botaoPesquisa:hover{
+    background-color: #a38d67;
+}
+
+QPushButton#sair {
+    background: #CCB081;
+    border: 0.5px solid #3D3D3D;
+    padding: 2px;
+    border-radius: 15px;
+    font-family: 'Baskervville';
+    font-style: normal;
+    font-weight: bo;
+    font-size: 20px;
+    line-height: 41px;
+    color: #FFF9EF;  
+}
+
+QPushButton#sair:hover {
+    background-color: #a38d67;
+}
+
+#fotoPerfil {
+    border-radius: 100px;
+    height: 3px;
+    width: 1px;
 }

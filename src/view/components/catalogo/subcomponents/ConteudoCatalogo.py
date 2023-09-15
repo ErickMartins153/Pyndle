@@ -47,6 +47,7 @@ class ConteudoCatalogo(QtWidgets.QFrame):
         groupPaineis.addWidget(painelFiltro)
 
         # Painel de livros
+
         containerPainelLivros = verticalFrame(self, "containerPainelLivros")
         containerPainelLivros.setStyleSheet(f"""
             border-top-right-radius: {relHeight(15, 1080)}px;

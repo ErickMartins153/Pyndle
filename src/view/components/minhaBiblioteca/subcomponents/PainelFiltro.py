@@ -1,8 +1,9 @@
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from src.view.components.BotaoAvaliacao import BotaoAvaliacao
+from src.view.components.minhaBiblioteca.FormularioLivro import FormularioLivro
 from src.view.utils import widgetSearch
-from src.view.utils.container import verticalFrame, gridFrame
+from src.view.utils.container import verticalFrame, horizontalFrame, gridFrame
 from src.view.utils.imageTools import relHeight, relWidth
 
 
@@ -22,23 +23,25 @@ class PainelFiltro(QtWidgets.QFrame):
 
         # Definindo Layout
         painelFiltroLayout = QtWidgets.QVBoxLayout()
+        painelFiltroLayout.setSpacing(0)
         self.setLayout(painelFiltroLayout)
 
-        # QPushButton (Botão de voltar)
-        conteinerBotaoVoltar = QtWidgets.QHBoxLayout()
-        conteinerBotaoVoltar.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        painelFiltroLayout.addLayout(conteinerBotaoVoltar)
-
+        # QPushButton (Botão de voltar) -----------------------------------
+        conteinerBotaoVoltar = horizontalFrame(self)
+        conteinerBotaoVoltar.setMaximumHeight(relHeight(50, 1080))
+        conteinerBotaoVoltar.layout().setAlignment(Qt.AlignmentFlag.AlignLeft)
+        painelFiltroLayout.addWidget(conteinerBotaoVoltar)
 
         botaoVoltar = QtWidgets.QPushButton()
         botaoVoltar.setObjectName("botaoVoltar")
         botaoVoltar.setStyleSheet(f"""
-        width: {relWidth(20, 1920)}px;
-        height: {relHeight(20, 1080)}px;
+            width: {relWidth(20, 1920)}px;
+            height: {relHeight(20, 1080)}px;
         """)
         botaoVoltar.clicked.connect(self.voltarBotaoClicado)
         botaoVoltar.setMinimumSize(relWidth(40, 1920), relHeight(40, 1080))
-        conteinerBotaoVoltar.addWidget(botaoVoltar)
+        conteinerBotaoVoltar.layout().addWidget(botaoVoltar)
+
 
         # QFrame -----------------------------------------------------
         layoutFrame = QtWidgets.QVBoxLayout()
@@ -180,7 +183,7 @@ class PainelFiltro(QtWidgets.QFrame):
 
         # Botões de avaliação
 
-        self.botaoAvaliacao = BotaoAvaliacao()
+        self.botaoAvaliacao = BotaoAvaliacao(0)
         for botao in self.botaoAvaliacao.getBotoes():
             botao.clicked.connect(self.botaoAvaliacaoClicado)
         layoutFrameFiltros.addLayout(self.botaoAvaliacao, 81, 0, 1, 1)
@@ -200,6 +203,23 @@ class PainelFiltro(QtWidgets.QFrame):
         layoutFrameFiltros.addWidget(botaoFiltrar, 90, 0, 1, 3, Qt.AlignmentFlag.AlignCenter)
 
 
+        # (BOTÃO ADICIONAR) -----------------------------------------
+        containerBotaoAdicionar = verticalFrame(self)
+        containerBotaoAdicionar.setMaximumHeight(100)
+        containerBotaoAdicionar.layout().setAlignment(Qt.AlignmentFlag.AlignCenter)
+        painelFiltroLayout.addWidget(containerBotaoAdicionar)
+
+        botaoAdicionar = QtWidgets.QPushButton("")
+        botaoAdicionar.setObjectName("botaoAdicionar")
+        botaoAdicionar.setStyleSheet(f"""
+            width: {relWidth(20, 1920)}px;
+            height: {relHeight(20, 1080)}px;
+        """)
+        botaoAdicionar.clicked.connect(self.adicionarBotaoCliclado)
+        botaoAdicionar.setMinimumSize(relWidth(40, 1920), relHeight(40, 1080))
+        containerBotaoAdicionar.layout().addWidget(botaoAdicionar)
+
+
 
     def voltarBotaoClicado(self):
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
@@ -216,6 +236,11 @@ class PainelFiltro(QtWidgets.QFrame):
         self.botaoAlfDown.setChecked(False)
         self.botaoAlfUp.setChecked(False)
         self.botaoAvaliacao.setAvaliacao(0)
+
+
+    def adicionarBotaoCliclado(self):
+        popup = FormularioLivro(self)
+        popup.exec()
 
 
     def radioButtonClicado(self):

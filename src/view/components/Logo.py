@@ -1,8 +1,9 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 from src.view.utils import imageTools
 
+
 class Logo(QtWidgets.QLabel):
-    def __init__(self, width: int, height: int):
+    def __init__(self, width: int, height: int, vhRound: int):
         """
         Logo do pyndle
 
@@ -16,10 +17,12 @@ class Logo(QtWidgets.QLabel):
         # Carregando imagem -----------------------------------------------------------
         with open("src/view/assets/images/Logo.jpg", "rb") as arquivo:
             self.imagemLogo = arquivo.read()
-            resizedImagemLogo = imageTools.getResizedImage(self.imagemLogo, width, height)
+            resizedImagemLogo = imageTools.getResizedImage(
+                self.imagemLogo, width, height
+            )
 
         # Gerando pixmap com bordas arredondadas ---------------------------------------
-        roundedLogo = imageTools.getRoundedPixmap(resizedImagemLogo, 30, 30)
+        roundedLogo = imageTools.getRoundedPixmap(resizedImagemLogo, vhRound, vhRound)
 
         # Definindo logo --------------------------------------------------------------
         self.setPixmap(roundedLogo)

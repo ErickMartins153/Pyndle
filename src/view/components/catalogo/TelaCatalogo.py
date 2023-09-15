@@ -1,5 +1,4 @@
-from PyQt6 import QtWidgets, QtGui, QtCore
-from PyQt6.QtCore import Qt
+from PyQt6 import QtWidgets
 from src.view.components.Menu import Menu
 from src.view.components.catalogo.subcomponents.ConteudoCatalogo import ConteudoCatalogo
 from src.view.utils.imageTools import relHeight, relWidth
@@ -11,6 +10,7 @@ class TelaCatalogo(QtWidgets.QFrame):
         # Configurações
         self.setParent(parent)
         self.setStyleSheet(open("src/view/assets/styles/catalagoEMinhaBiblioteca/telaCatalogoBiblioteca.css").read())
+
 
         # Definição do layout
         telaCatalogoLayout = QtWidgets.QVBoxLayout()
@@ -30,4 +30,3 @@ class TelaCatalogo(QtWidgets.QFrame):
             border-bottom-right-radius: {relHeight(15, 1080)}px;
         """)
         telaCatalogoLayout.addWidget(conteudoCatalogo)
-

@@ -12,6 +12,14 @@
     image: url("src/view/assets/icons/botaoVoltarSelecionado.svg");
 }
 
+#botaoAdicionar{
+    image: url(src/view/assets/icons/adicionar.svg)
+}
+
+#botaoAdicionar:hover{
+    image: url(src/view/assets/icons/adicionarSelecionado.svg)
+}
+
 #containerPainelLivros{
     background-color: #F0D097;
 }

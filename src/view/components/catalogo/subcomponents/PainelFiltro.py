@@ -28,7 +28,6 @@ class PainelFiltro(QtWidgets.QFrame):
         conteinerBotaoVoltar.setAlignment(Qt.AlignmentFlag.AlignLeft)
         painelFiltroLayout.addLayout(conteinerBotaoVoltar)
 
-
         botaoVoltar = QtWidgets.QPushButton()
         botaoVoltar.setObjectName("botaoVoltar")
         botaoVoltar.setStyleSheet(f"""
@@ -68,7 +67,6 @@ class PainelFiltro(QtWidgets.QFrame):
         """)
         layoutLabelFiltros.addWidget(labelFiltros)
 
-
         # (Ordem Alfabética) ----------------------------------------------
 
         # Label "Ordem Alfabética"
@@ -79,6 +77,7 @@ class PainelFiltro(QtWidgets.QFrame):
         font-size: {relHeight(20, 1080)}px;
         """)
         layoutFrameFiltros.addWidget(labelOrdemAlf, 40, 0, 1, 1)
+
 
         # Layout para posicionar botões upArrow e downArrow
         botaoAlfLayout = QtWidgets.QHBoxLayout()
@@ -109,9 +108,9 @@ class PainelFiltro(QtWidgets.QFrame):
         self.botaoAlfDown.clicked.connect(self.botaoOrdAlfClicado)
         botaoAlfLayout.addWidget(self.botaoAlfDown)
 
+
         # Spacer
         spacer = QtWidgets.QSpacerItem(relWidth(40, 1920), 0)
-
         botaoAlfLayout.addSpacerItem(spacer)
 
         # (Gêneros) ---------------------------------------------------
@@ -126,8 +125,10 @@ class PainelFiltro(QtWidgets.QFrame):
         labelGeneros = QtWidgets.QLabel("Gêneros:")
         labelGeneros.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         labelGeneros.setObjectName("filtroLabel")
-        labelGeneros.setStyleSheet(f"""
+        labelGeneros.setStyleSheet(
+            f"""
         font-size: {relHeight(20, 1080)}px;
+
         background-color: transparent;
         """)
         conteinerGenero.layout().addWidget(labelGeneros)
@@ -166,6 +167,7 @@ class PainelFiltro(QtWidgets.QFrame):
             groupGeneros.layout().addWidget(radioButton, linha, coluna)
             linha += 1
 
+
         # (BOTÃO FILTRAR) ----------------------------------------
         botaoFiltrar = QtWidgets.QPushButton()
         botaoFiltrar.setObjectName("botaoFiltrar")
@@ -179,7 +181,6 @@ class PainelFiltro(QtWidgets.QFrame):
         botaoFiltrar.clicked.connect(self.botaoFiltrarClicado)
         botaoFiltrar.setFixedSize(relWidth(100, 1920), relHeight(50, 1080))
         layoutFrameFiltros.addWidget(botaoFiltrar, 90, 0, 1, 3, Qt.AlignmentFlag.AlignCenter)
-
 
 
     def voltarBotaoClicado(self):
@@ -228,10 +229,6 @@ class PainelFiltro(QtWidgets.QFrame):
         else:
             self.ordemAlf = None
             self.sender().setChecked(False)
-
-
-    def botaoAvaliacaoClicado(self):
-        self.avaliacao = self.botaoAvaliacao.getAvaliacao()
 
 
     def botaoFiltrarClicado(self):

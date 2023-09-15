@@ -6,9 +6,9 @@ from src.view.utils.imageTools import relHeight, relWidth
 
 
 class PainelLivros(QtWidgets.QScrollArea):
+    # noinspection PyTypeChecker
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
-
         # Atributos
         self.listaBotaoLivro = list()  # Lista para acessar os BotoesLivros em métodos
 
@@ -42,9 +42,11 @@ class PainelLivros(QtWidgets.QScrollArea):
 
         # Redimensionamento dos livros
         if mainWindow.width() >= relWidth(1640, 1920):  # Redimensiona de acordo com o tamanho da janela
+
             self.displayBotoesLivros(4, relWidth(240, 1920), relHeight(336, 1080))
         else:
             self.displayBotoesLivros(3, relWidth(200, 1920), relHeight(280, 1080))
+
 
     def displayBotoesLivros(self, quantColunas: int, width: int, height: int):
         """
@@ -53,6 +55,8 @@ class PainelLivros(QtWidgets.QScrollArea):
         :param width: define a largura dos botões
         :param height: define a altura dos botões
         """
+        # Limpar o layout atual
+
         linha, coluna = 0, 0
         for botaoImagem in self.listaBotaoLivro:
             botaoImagem.resizeButton(width, height)

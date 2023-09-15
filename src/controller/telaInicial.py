@@ -4,7 +4,7 @@ conexao = sqlite3.connect("src/model/Pyndle.db")
 sgbd = conexao.cursor()
 
 
-def checar(nomeUsuario: str, senha: str = " "):
+def checar(nomeUsuario: str, senha: str = None):
     """
     Função para checar se o usuário existe no banco de dados\n
     Caso não seja passada uma senha, apenas verifica se existe um usuário com aquele nome
@@ -12,28 +12,29 @@ def checar(nomeUsuario: str, senha: str = " "):
     :param str senha: Senha do usuário que deseja verificar
     :return bool: retorna False, caso não exista, ou True, caso exista
     """
-    if not senha.isspace():
+    if senha is None:
         quantidadeUsuario = sgbd.execute("""
-        SELECT COUNT(login) FROM usuarios 
+        SELECT login FROM usuarios 
         WHERE login = ?
         """, (nomeUsuario,))
 
-        count = quantidadeUsuario.fetchone()[0]
+        resultado = quantidadeUsuario.fetchone()
 
-        if count != 0 and len(nomeUsuario) > 0 and len(senha) > 0:
+        if resultado:
             return True
         else:
             return False
 
+
     else:
         quantidadeUsuario = sgbd.execute("""
-        SELECT COUNT(login) FROM usuarios 
-        WHERE login = ?
-        """, (nomeUsuario,))
+        SELECT login, senha FROM usuarios 
+        WHERE login = ? AND senha = ?
+        """, (nomeUsuario, senha))
 
-        count = quantidadeUsuario.fetchone()[0]
+        resultado = quantidadeUsuario.fetchone()
 
-        if count != 0 and len(nomeUsuario) > 0:
+        if resultado:
             return True
         else:
             return False
