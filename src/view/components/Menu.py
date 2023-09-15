@@ -1,3 +1,4 @@
+import sys
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from src.view.components.FotoPerfil import FotoPerfil
@@ -44,9 +45,14 @@ class Menu(QtWidgets.QFrame):
         menuLayout.addWidget(pesquisa)
 
         pesquisa.setObjectName("pesquisa")
-        pesquisa.setMinimumSize(300, 25)
-        pesquisa.setMaximumHeight(25)
+        pesquisa.setMinimumSize(200, 37)
+        pesquisa.setMaximumHeight(37)
         pesquisa.setPlaceholderText("Pesquisar")
+
+        botaoPesquisa = QtWidgets.QPushButton()
+        botaoPesquisa.setText("🔍")
+        botaoPesquisa.setObjectName("botaoPesquisa")
+        menuLayout.addWidget(botaoPesquisa)
 
         # Distancia2 ----------------------------
         distancia2 = QtWidgets.QSpacerItem(300, 40)
@@ -64,8 +70,6 @@ class Menu(QtWidgets.QFrame):
         botao.setObjectName("sair")
         menuLayout.addWidget(botao)
         botao.clicked.connect(self.deslogar)
-
-    # optei por simplificar a função de logout, para termos algo eficiente e funcional
 
     def deslogar(self):
         QtWidgets.QApplication.quit()

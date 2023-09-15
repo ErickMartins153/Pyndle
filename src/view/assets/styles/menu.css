@@ -13,6 +13,19 @@
     padding: 5%;
 }
 
+#botaoPesquisa {
+    background-color: #CCB081;
+    border-radius: 15px;
+    border: 0.5px solid #3D3D3D;
+    width: 30px;
+    height: 30px;
+    outline: none;
+    padding: 0;
+}
+#botaoPesquisa:hover{
+    background-color: #a38d67;
+}
+
 QPushButton#sair {
     background: #CCB081;
     border: 0.5px solid #3D3D3D;
