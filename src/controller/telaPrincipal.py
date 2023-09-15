@@ -3,7 +3,7 @@ import fitz as PyMuPDF
 import io
 from PIL import Image
 
-conexao = sqlite3.connect(r"C:\Users\Notebook\Desktop\Repositórios\ProjetosPython\Pyndle\src\model\Pyndle.db")
+conexao = sqlite3.connect("src\model\Pyndle.db")
 conexao.row_factory = sqlite3.Row
 sgbd = conexao.cursor()
 
@@ -90,13 +90,14 @@ def uploadLivro(arquivo, idUsuario: str):
         ultimoLivroId = sgbd.lastrowid
 
         # Criando relação entre usuário atual e livro adicionado
-        sgbd.execute("""
+        sgbd.execute(
+            """
         INSERT INTO usuariosLivros(idUsuario, idLivro, pagAtual, avaliacao) 
         VALUES (?, ?, ?, ?)
-        """,(idUsuario, ultimoLivroId, 0, 0)
-                     )
+        """,
+            (idUsuario, ultimoLivroId, 0, 0),
+        )
         conexao.commit()
-
 
         return ultimoLivroId
 
@@ -114,15 +115,21 @@ def apagarLivro(idLivro: int, idUsuario: int):
     conexao.commit()
 
     if resultado[0] == idLivro:
-        sgbd.execute("""
+        sgbd.execute(
+            """
         DELETE FROM livros 
         WHERE idLivro = ?
-        """, (idLivro,))
+        """,
+            (idLivro,),
+        )
         conexao.commit()
 
-        sgbd.execute("""DELETE FROM usuariosLivros 
+        sgbd.execute(
+            """DELETE FROM usuariosLivros 
         WHERE idLivro = ? AND idUsuario = ?
-        """, (idLivro, idUsuario))
+        """,
+            (idLivro, idUsuario),
+        )
         conexao.commit()
 
 
@@ -167,7 +174,6 @@ def adicionarLivroCatalogo(titulo, genero, autor, anoPublicacao, arquivoPdf):
 
 
 def filtrarCatalogo(genero: str = None, ordemAlfabetica: bool = None):
-
     # Começa com uma consulta base que seleciona todos os campos de livros da minha biblioteca
     consulta = "SELECT * FROM livros WHERE idLivro <= 7"
 
@@ -197,8 +203,9 @@ def filtrarCatalogo(genero: str = None, ordemAlfabetica: bool = None):
     return resultado
 
 
-def filtrarBiblioteca(idUsuario, genero: str = None, avaliacao: int = None, ordemAlfabetica: bool = None):
-
+def filtrarBiblioteca(
+    idUsuario, genero: str = None, avaliacao: int = None, ordemAlfabetica: bool = None
+):
     # Começa com uma consulta base que seleciona todos os campos de livros do catálogo
     consulta = "SELECT * FROM livros WHERE idLivro IN (SELECT idLivro FROM usuariosLivros WHERE idUsuario = ?)"
 
@@ -227,7 +234,10 @@ def filtrarBiblioteca(idUsuario, genero: str = None, avaliacao: int = None, orde
     if genero:
         parametros += (genero,)
     if avaliacao:
-        parametros += (idUsuario, avaliacao,)
+        parametros += (
+            idUsuario,
+            avaliacao,
+        )
 
     # Executa a consulta com os parâmetros apropriados
     sgbd.execute(consulta, parametros)

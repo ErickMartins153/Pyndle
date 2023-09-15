@@ -23,7 +23,9 @@ class FormularioLivro(QDialog):
         super().__init__()
         # Atributos
         self.parent = parent
-        self.idUsuario = getAncestrais(self.parent)["mainWindow"].getUsuario()["idUsuario"]
+        self.idUsuario = getAncestrais(self.parent)["mainWindow"].getUsuario()[
+            "idUsuario"
+        ]
         self.generoEscolhido = None
         self.ArquivoSelecionado = None
         self.idLivro = None
@@ -34,7 +36,6 @@ class FormularioLivro(QDialog):
         self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.setFixedSize(700, 700)
         self.setWindowFlag(Qt.WindowType.Window, False)
-
 
         entradasHeight = relHeight(40, 1080)
 
@@ -189,12 +190,14 @@ class FormularioLivro(QDialog):
                 apagarLivro(self.idLivro, self.idUsuario)
                 self.entradaAutor.clear()
                 self.entradaAno.clear()
-                self.entradaGenero.clear()
+                self.entradaGenero.setCurrentIndex(0)
                 self.entradaTitulo.clear()
                 self.contemPDF = False
 
             if extensao == "pdf" and ArquivoSelecionado and self.contemPDF is False:
-                self.idUsuario = getAncestrais(self.parent)["mainWindow"].getUsuario()["idUsuario"]
+                self.idUsuario = getAncestrais(self.parent)["mainWindow"].getUsuario()[
+                    "idUsuario"
+                ]
 
                 self.idLivro = uploadLivro(ArquivoSelecionado, self.idUsuario)
                 self.atualizarDados(self.idLivro)
@@ -228,12 +231,12 @@ class FormularioLivro(QDialog):
         if event.key() != Qt.Key.Key_Escape:
             return
         if event.key() == Qt.Key.Key_Escape and self.idLivro:
-            apagarLivro(self.idLivro)
+            apagarLivro(self.idLivro, self.idUsuario)
         self.accept()
 
     def closeEvent(self, event):
         """Checa se algum arquivo pdf foi upado \n
         sem finalizar o cadastro apertando o X"""
         if self.idLivro:
-            apagarLivro(self.idLivro, self.usu)
+            apagarLivro(self.idLivro, self.idUsuario)
         event.accept()

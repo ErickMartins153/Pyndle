@@ -9,10 +9,10 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtGui import QImage, QPixmap
 from PyQt6.QtCore import Qt
-from src.view.components.moduloLivro.LeitorPDF import LeitorPDF
+from src.view.components.ModuloLivro.LeitorPDF import LeitorPDF
 from src.controller.telaPreviaLivro import dadosLivro, getPagAtual
 from src.controller.telaInicial import dadosUsuario
-from src.view.components.moduloLivro.Grafico import Grafico
+from src.view.components.ModuloLivro.Grafico import Grafico
 from src.view.components.BotaoAvaliacao import BotaoAvaliacao
 from src.controller.telaPreviaLivro import salvarAvaliacao, pegarAvaliacao
 from src.view.utils.imageTools import getResizedImage, relHeight, relWidth
