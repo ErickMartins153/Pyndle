@@ -1,5 +1,5 @@
 from PyQt6 import QtWidgets, QtGui
-from src.controller.telaPrincipal import filtrarCatalogo
+from src.controller.telaPrincipal import filtrarBiblioteca
 from src.view.components.BotaoImagem import BotaoImagem
 from src.view.utils import widgetSearch
 from src.view.utils.imageTools import relHeight, relWidth
@@ -31,11 +31,14 @@ class PainelLivros(QtWidgets.QScrollArea):
         self.contentWidget.setLayout(self.painelLivrosLayout)
 
         # Definindo livros
-        self.getLivrosCatalogo()
-        self.resizeEvent(None)
+        self.getLivrosMinhaBiblioteca()
 
 
     def resizeEvent(self, a0: QtGui.QResizeEvent = QtGui.QResizeEvent) -> None:
+        """
+        Evento de redimensionamento de tela que define o tamanho dos botoesLivros e como serão dispostos,
+        de acordo com a resolução da tela
+        """
         super().resizeEvent(a0)
         mainWindow = widgetSearch.getAncestrais(self)['mainWindow']  # mainWindow para identificar redimensionamentos
         print(f"{mainWindow.width()}X{mainWindow.height()}")
@@ -68,15 +71,30 @@ class PainelLivros(QtWidgets.QScrollArea):
                 linha += 1
 
 
-    def getLivrosCatalogo(self, genero: str = None, ordemAlfabetica: bool = None):
-        livrosCatalogoBD = filtrarCatalogo(genero, ordemAlfabetica)
+    def getLivrosMinhaBiblioteca(self, genero: str = None, avaliacao: int = None, ordemAlfabetica: bool = None):
+        """
+        Obtém os livros da "Minha Biblioteca" com base no usuário atual da MainWindow\n
+        Após isso, os livros são dispostos no display do painel de livros de "Minha Biblioteca"
+        :param genero: define o gênero dos livros a serem dispostos
+        :param avaliacao: define a avaliação dos livros a serem dispostos
+        :param ordemAlfabetica: define a ordem na qual os livros serão dispostos
+        """
 
-        for botao in self.listaBotaoLivro:
-            botao.deleteLater()
-        self.listaBotaoLivro.clear()
+        # Obtém o usuário atual a partir da MainWindow
+        usuarioAtual = widgetSearch.getAncestrais(self)["mainWindow"].getUsuario()
+        print(usuarioAtual)
 
-        if livrosCatalogoBD:
-            for livroDict in livrosCatalogoBD:  # Iteração dos dicionários de livro do BD para criar botões e adicionar na lista
-                botaoImagem = BotaoImagem(livroDict["idLivro"], livroDict["capaLivro"])
-                self.listaBotaoLivro.append(botaoImagem)
-        print(len(self.listaBotaoLivro))
+
+        if usuarioAtual:  # Verifica se o usuário já foi definido
+            livrosCatalogoBD = filtrarBiblioteca(usuarioAtual["idUsuario"], genero, avaliacao, ordemAlfabetica)
+
+            for botao in self.listaBotaoLivro:
+                botao.deleteLater()  # Deleta os botoesLivros que já existem
+            self.listaBotaoLivro.clear()
+
+            if livrosCatalogoBD:
+                for livroDict in livrosCatalogoBD:  # Iteração dos dicionários de livro do BD para criar botões e adicionar na lista
+                    botaoImagem = BotaoImagem(livroDict["idLivro"], livroDict["capaLivro"])
+                    self.listaBotaoLivro.append(botaoImagem)
+
+            self.resizeEvent(None)  # resizeEvent para dispor os livros de acordo com a resolução da janela

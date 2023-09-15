@@ -13,6 +13,7 @@ class PainelFiltro(QtWidgets.QFrame):
         # Atributos
         self.generoMarcado = None
         self.ordemAlf = None
+        self.avaliacao = None
 
         # Configurações
         self.setParent(parent)
@@ -166,6 +167,24 @@ class PainelFiltro(QtWidgets.QFrame):
             groupGeneros.layout().addWidget(radioButton, linha, coluna)
             linha += 1
 
+
+        # (AVALIAÇÃO) -------------------------------------------
+
+        # QLabel ("Avaliação")
+        avaliacaoLabel = QtWidgets.QLabel("Avaliação:")
+        avaliacaoLabel.setObjectName("filtroLabel")
+        avaliacaoLabel.setStyleSheet(f"""
+        font-size: {relHeight(20, 1080)}px;
+        """)
+        layoutFrameFiltros.addWidget(avaliacaoLabel, 80, 0, 1, 3)
+
+        # Botões de avaliação
+
+        self.botaoAvaliacao = BotaoAvaliacao()
+        for botao in self.botaoAvaliacao.getBotoes():
+            botao.clicked.connect(self.botaoAvaliacaoClicado)
+        layoutFrameFiltros.addLayout(self.botaoAvaliacao, 81, 0, 1, 1)
+
         # (BOTÃO FILTRAR) ----------------------------------------
         botaoFiltrar = QtWidgets.QPushButton()
         botaoFiltrar.setObjectName("botaoFiltrar")
@@ -190,11 +209,13 @@ class PainelFiltro(QtWidgets.QFrame):
         # Resetando filtro
         self.ordemAlf = None
         self.generoMarcado = None
+        self.avaliacao = None
 
         for botao in self.groupRadio.buttons():
             botao.setChecked(False)
         self.botaoAlfDown.setChecked(False)
         self.botaoAlfUp.setChecked(False)
+        self.botaoAvaliacao.setAvaliacao(0)
 
 
     def radioButtonClicado(self):
@@ -235,6 +256,9 @@ class PainelFiltro(QtWidgets.QFrame):
 
 
     def botaoFiltrarClicado(self):
-        print(self.ordemAlf)
-        widgetSearch.getIrmaos(self)["painelLivrosCatalogo"].getLivrosCatalogo(self.generoMarcado, self.ordemAlf)
-        widgetSearch.getIrmaos(self)["painelLivrosCatalogo"].resizeEvent(None)
+        widgetSearch.getIrmaos(self)["painelLivrosBiblioteca"].getLivrosMinhaBiblioteca(
+            self.generoMarcado,
+            self.avaliacao,
+            self.ordemAlf
+        )
+        widgetSearch.getIrmaos(self)["painelLivrosBiblioteca"].resizeEvent(None)

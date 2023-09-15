@@ -3,6 +3,7 @@ import pyautogui
 import sys
 from src.view.components.login.TelaLogin import TelaLogin
 from src.view.components.dashboard.Dashboard import Dashboard
+from src.view.components.minhaBiblioteca.TelaMinhaBiblioteca import TelaMinhaBiblioteca
 from src.view.components.catalogo.TelaCatalogo import TelaCatalogo
 from src.view.assets.styles import non_css_styles
 from src.view.utils.imageTools import relHeight, relWidth
@@ -62,15 +63,15 @@ class MainWindow(QtWidgets.QMainWindow):
         dashboard.setObjectName("dashboard")
         self.paginas.addWidget(dashboard)
         # Instância biblioteca (pagina)
-        biblioteca = QtWidgets.QWidget(self.paginas)
+        biblioteca = TelaMinhaBiblioteca(self.paginas)
         biblioteca.setObjectName("biblioteca")
         self.paginas.addWidget(biblioteca)
-        # Instância catalogo (pagina)
+        # Instância catalagoEMinhaBiblioteca (pagina)
         catalogo = TelaCatalogo(self.paginas)
-        catalogo.setObjectName("catalogo")
+        catalogo.setObjectName("catalago")
         self.paginas.addWidget(catalogo)
 
-        self.paginas.setCurrentIndex(3)
+        self.paginas.setCurrentIndex(0)
 
 
     def getUsuario(self):

@@ -155,6 +155,8 @@ class FormularioLogin(QtWidgets.QFrame):
                 widgetSearch.getAncestrais(self)["paginas"].setCurrentIndex(1)
                 # Define o nome de usuário no "bem vindo" da tela principal
                 widgetSearch.getDescendentes(mainWindow)["fundoDashboard"].setNomeUsuario(usuario)
+                # Dispões livros de "Minha Biblioteca"
+                widgetSearch.getDescendentes(mainWindow)["fundoDashboard"].resizeEvent(None)
 
             else:
                 pass

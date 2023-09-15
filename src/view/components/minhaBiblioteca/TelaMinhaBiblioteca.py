@@ -1,10 +1,10 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
 from src.view.components.Menu import Menu
-from src.view.components.catalogo.subcomponents.ConteudoCatalogo import ConteudoCatalogo
+from src.view.components.minhaBiblioteca.subcomponents.ConteudoMinhaBiblioteca import ConteudoMinhaBiblioteca
 from src.view.utils.imageTools import relHeight, relWidth
 
-class TelaCatalogo(QtWidgets.QFrame):
+class TelaMinhaBiblioteca(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
 
@@ -23,11 +23,11 @@ class TelaCatalogo(QtWidgets.QFrame):
         telaCatalogoLayout.addWidget(menu)
 
         # QFrame (ConteudoCatalogo)
-        conteudoCatalogo = ConteudoCatalogo(self)
-        conteudoCatalogo.setObjectName("conteudoFrame")
-        conteudoCatalogo.setStyleSheet(f"""
+        conteudoMinhaBiblioteca = ConteudoMinhaBiblioteca(self)
+        conteudoMinhaBiblioteca.setObjectName("conteudoFrame")
+        conteudoMinhaBiblioteca.setStyleSheet(f"""
             border-bottom-left-radius: {relWidth(15, 1080)}px;
             border-bottom-right-radius: {relHeight(15, 1080)}px;
         """)
-        telaCatalogoLayout.addWidget(conteudoCatalogo)
+        telaCatalogoLayout.addWidget(conteudoMinhaBiblioteca)
 

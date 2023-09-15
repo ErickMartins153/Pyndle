@@ -7,7 +7,7 @@ sgbd = conexao.cursor()
 
 def livrosCatalogo():
     """
-    Função que dá todas as colunas dos nossos 7 livros do catalogo
+    Função que dá todas as colunas dos nossos 7 livros do catalagoEMinhaBiblioteca
     """
     sgbd.execute("""
     SELECT * FROM livros
@@ -123,7 +123,7 @@ def filtrarCatalogo(genero: str = None, ordemAlfabetica: bool = None):
 def filtrarBiblioteca(idUsuario, genero: str = None, avaliacao: int = None, ordemAlfabetica: bool = None):
 
     # Começa com uma consulta base que seleciona todos os campos de livros do catálogo
-    consulta = "SELECT * FROM livros WHERE idLivro >= 7"
+    consulta = "SELECT * FROM livros WHERE idLivro IN (SELECT idLivro FROM usuariosLivros WHERE idUsuario = ?)"
 
     # Verifica se o gênero foi especificado e adiciona a cláusula correspondente
     if genero is not None:
@@ -150,7 +150,7 @@ def filtrarBiblioteca(idUsuario, genero: str = None, avaliacao: int = None, orde
     if genero:
         parametros += (genero,)
     if avaliacao:
-        parametros += (avaliacao,)
+        parametros += (idUsuario, avaliacao,)
 
     # Executa a consulta com os parâmetros apropriados
     sgbd.execute(consulta, parametros)

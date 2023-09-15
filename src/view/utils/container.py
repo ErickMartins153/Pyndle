@@ -27,7 +27,7 @@ class verticalFrame(QtWidgets.QFrame):
 
 
 class horizontalFrame(QtWidgets.QFrame):
-    def __init__(self, parent: QtWidgets.QFrame | QtWidgets.QWidget, objectName: str):
+    def __init__(self, parent: QtWidgets.QFrame | QtWidgets.QWidget, objectName: str = ""):
         """
         Frame com layout horizontal embutido
         :param parent: parente do frame, objeto no qual estará inserido

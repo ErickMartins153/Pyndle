@@ -1,5 +1,5 @@
-/* ConteudoCatalogo.py */
-#conteudoCatalogo{
+/* ConteudoCatalogo.py e ConteudoMinhaBiblioteca.py */
+#conteudoFrame{
     background-color: #FFF9EF;
 }
 
@@ -20,7 +20,7 @@
 
 
 /* PainelFiltro.py */
-#painelFiltro{
+#painelFiltroBiblioteca, #painelFiltroCatalogo{
     background-color: #F0D097;
 }
 
