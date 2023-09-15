@@ -1,7 +1,8 @@
+import sys
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from src.view.components.FotoPerfil import FotoPerfil
-
+from PyQt6.QtWidgets import QApplication, QMainWindow
 
 def main():
     app = QApplication(sys.argv)
