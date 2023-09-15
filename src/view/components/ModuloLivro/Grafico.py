@@ -46,6 +46,7 @@ class Grafico(QWidget):
             colors=colors,
             # se width fosse 1 seria um gráfico de pizza padrão, a largura do espaço vazio é de 40%
             wedgeprops=dict(width=0.4, edgecolor="none"),
+            counterclock=False,
         )
 
         # Crie uma legenda com as porcentagens e cores
@@ -92,6 +93,7 @@ class Grafico(QWidget):
             startangle=90,
             colors=colors,
             wedgeprops=dict(width=0.4, edgecolor="none"),
+            counterclock=False,
         )
 
         # Cria uma nova legenda com os novos valores
