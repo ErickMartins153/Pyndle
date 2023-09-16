@@ -133,8 +133,13 @@ def apagarLivro(idLivro: int, idUsuario: int):
         conexao.commit()
 
 
-def updateGenero(genero, idLivro):
-    sgbd.execute("UPDATE livros SET genero = ? WHERE idLivro = ?", (genero, idLivro))
+def updateDados(dados: dict, idLivro: int):
+    sgbd.execute(
+        """
+        UPDATE livros SET titulo = ?, genero = ?, autor = ?, anoPublicacao = ? WHERE idLivro = ?
+        """,
+        (dados["titulo"], dados["genero"], dados["autor"], dados["ano"], idLivro),
+    )
     conexao.commit()
 
 
@@ -246,3 +251,16 @@ def filtrarBiblioteca(
     resultado = sgbd.fetchall()
 
     return resultado
+
+
+def getGeneros():
+    return (
+        "Terror",
+        "Fantasia",
+        "Aventura",
+        "Romance",
+        "Matemática",
+        "Geografia",
+        "Linguagens",
+        "Literatura",
+    )
