@@ -1,8 +1,11 @@
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
-from src.view.components.login.subcomponents.FormularioRegistro import FormularioRegistro
+from src.view.components.login.subcomponents.FormularioRegistro import (
+    FormularioRegistro,
+)
 from src.view.components.login.subcomponents.FormularioLogin import FormularioLogin
 from src.view.utils.imageTools import relWidth, relHeight
+
 
 class TelaLogin(QtWidgets.QWidget):
     def __init__(self, parent: QtWidgets.QWidget):
@@ -26,7 +29,12 @@ class TelaLogin(QtWidgets.QWidget):
         loginLayout.addWidget(fundo)
 
         fundoLayout = QtWidgets.QVBoxLayout()
-        fundoLayout.setContentsMargins(relWidth(30, 1920), relHeight(40, 1080), relWidth(30, 1920), relHeight(40, 1080))
+        fundoLayout.setContentsMargins(
+            relWidth(30, 1920),
+            relHeight(40, 1080),
+            relWidth(30, 1920),
+            relHeight(40, 1080),
+        )
         fundoLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         fundo.setLayout(fundoLayout)
 
@@ -38,7 +46,12 @@ class TelaLogin(QtWidgets.QWidget):
 
         fundoFormularioLayout = QtWidgets.QVBoxLayout()
         fundoFormularioLayout.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-        fundoFormularioLayout.setContentsMargins(relWidth(30, 1920), relHeight(20, 1080), relWidth(30, 1920), relHeight(20, 1080))
+        fundoFormularioLayout.setContentsMargins(
+            relWidth(30, 1920),
+            relHeight(20, 1080),
+            relWidth(30, 1920),
+            relHeight(20, 1080),
+        )
         fundoFormulario.setLayout(fundoFormularioLayout)
 
         # QFrame (formularioLogin)

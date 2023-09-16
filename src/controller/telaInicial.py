@@ -13,10 +13,13 @@ def checar(nomeUsuario: str, senha: str = None):
     :return bool: retorna False, caso não exista, ou True, caso exista
     """
     if senha is None:
-        quantidadeUsuario = sgbd.execute("""
+        quantidadeUsuario = sgbd.execute(
+            """
         SELECT login FROM usuarios 
         WHERE login = ?
-        """, (nomeUsuario,))
+        """,
+            (nomeUsuario,),
+        )
 
         resultado = quantidadeUsuario.fetchone()
 
@@ -25,12 +28,14 @@ def checar(nomeUsuario: str, senha: str = None):
         else:
             return False
 
-
     else:
-        quantidadeUsuario = sgbd.execute("""
+        quantidadeUsuario = sgbd.execute(
+            """
         SELECT login, senha FROM usuarios 
         WHERE login = ? AND senha = ?
-        """, (nomeUsuario, senha))
+        """,
+            (nomeUsuario, senha),
+        )
 
         resultado = quantidadeUsuario.fetchone()
 
@@ -70,10 +75,17 @@ def registrarUsuario(nomeUsuario: str, senha: str, fotoPerfil: bytes):
     :param fotoPerfil: foto de perfil do usuário em bytes
     """
     if checar(nomeUsuario) is False:
-        sgbd.execute("""
+        sgbd.execute(
+            """
         INSERT INTO usuarios(login, senha, fotoPerfil) 
         VALUES (?, ?, ?)
-        """, (nomeUsuario, senha, fotoPerfil,))
+        """,
+            (
+                nomeUsuario,
+                senha,
+                fotoPerfil,
+            ),
+        )
 
         conexao.commit()  # Registrando no arquivo pyndle.db
 
@@ -90,12 +102,17 @@ def logarUsuario(nomeUsuario: str, senha: str):
     :return bool: Retorna verdadeira, caso a senha correspondam, ou falso, caso o usuário não exista ou a senha não corresponda
     """
     if checar(nomeUsuario, senha):
-        sgbd.execute("""
+        sgbd.execute(
+            """
         SELECT senha FROM usuarios
         WHERE login = (?)
-        """, (nomeUsuario,))
+        """,
+            (nomeUsuario,),
+        )
 
-        resultadoSenha = (sgbd.fetchone())  # O fetchall retorna uma lista com tuplas dos registros
+        resultadoSenha = (
+            sgbd.fetchone()
+        )  # O fetchall retorna uma lista com tuplas dos registros
 
         if len(senha) != 0 and resultadoSenha[0] == senha:
             return True

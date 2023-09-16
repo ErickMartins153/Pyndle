@@ -30,10 +30,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setObjectName("mainWindow")
 
         QtGui.QFontDatabase.addApplicationFont("src/view/assets/fonts/Baskervville.ttf")
-        self.setStyleSheet(open('src/view/assets/styles/mainWindow.css').read())
+        self.setStyleSheet(open("src/view/assets/styles/mainWindow.css").read())
         self.setMinimumSize(relWidth(1300, 1920), relHeight(980, 1080))
-        #self.currentSize = {"width": self.width(), "height": self.height()}
-
+        # self.currentSize = {"width": self.width(), "height": self.height()}
 
         # Central QWidget (mainWindowSpace)
         mainWindowSpace = QtWidgets.QWidget(self)
@@ -42,7 +41,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # mainWindowLayout
         mainWindowLayout = QtWidgets.QVBoxLayout()
-        mainWindowLayout.setContentsMargins(relWidth(25, 1920), relHeight(15, 1080), relWidth(25, 1920), relHeight(15, 1080))
+        mainWindowLayout.setContentsMargins(
+            relWidth(25, 1920),
+            relHeight(15, 1080),
+            relWidth(25, 1920),
+            relHeight(15, 1080),
+        )
         mainWindowSpace.setLayout(mainWindowLayout)
 
         # QStackedWidget (paginas) ---------------------------------
@@ -50,9 +54,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.paginas.setObjectName("paginas")
         mainWindowLayout.addWidget(self.paginas)
         self.paginas.setGraphicsEffect(
-            non_css_styles.BoxShadow(QtGui.QColor(0, 0, 0, 85), relWidth(4, 1920), relHeight(5, 1080), 4)
+            non_css_styles.BoxShadow(
+                QtGui.QColor(0, 0, 0, 85), relWidth(4, 1920), relHeight(5, 1080), 4
+            )
         )
-
 
         # Instância login
         telaLogin = TelaLogin(self.paginas)
@@ -72,7 +77,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.paginas.addWidget(catalogo)
 
         self.paginas.setCurrentIndex(0)
-
 
     def getUsuario(self):
         return self.usuarioAtual
