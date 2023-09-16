@@ -24,16 +24,16 @@ def livrosCatalogo():
     return resultado
 
 
-def livrosPessoais(idUsuario: int):
+def livrosPessoais(idUsuario: int, idLivro):
+    # Criando relação entre usuário atual e livro adicionado
     sgbd.execute(
         """
-                 SELECT livros.* FROM livros 
-                 JOIN usuariosLivros ON livros.idLivro = usuariosLivros.idLivro
-                 WHERE usuariosLivros.idUsuario = (?)""",
-        (idUsuario,),
+        INSERT INTO usuariosLivros(idUsuario, idLivro, pagAtual, avaliacao) 
+        VALUES (?, ?, ?, ?)
+        """,
+        (idUsuario, idLivro, 0, 0),
     )
-    resultado = sgbd.fetchall()
-    return resultado
+    conexao.commit()
 
 
 def uploadLivro(arquivo, idUsuario: str):
@@ -88,16 +88,7 @@ def uploadLivro(arquivo, idUsuario: str):
         conexao.commit()
 
         ultimoLivroId = sgbd.lastrowid
-
-        # Criando relação entre usuário atual e livro adicionado
-        sgbd.execute(
-            """
-        INSERT INTO usuariosLivros(idUsuario, idLivro, pagAtual, avaliacao) 
-        VALUES (?, ?, ?, ?)
-        """,
-            (idUsuario, ultimoLivroId, 0, 0),
-        )
-        conexao.commit()
+        livrosPessoais(idUsuario, ultimoLivroId)
 
         return ultimoLivroId
 
