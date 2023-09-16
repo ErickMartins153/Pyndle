@@ -1,7 +1,7 @@
 
 from PyQt6 import QtWidgets, QtCore
 import sys
-from src.view.MainWindow import MainWindow
+from src.view.widgets.MainWindow import MainWindow
 
 if __name__ == "__main__":
     application = QtWidgets.QApplication(sys.argv)
