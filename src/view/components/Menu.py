@@ -91,9 +91,16 @@ class Menu(QtWidgets.QFrame):
         menuLayout.addWidget(botao)
         botao.clicked.connect(self.deslogar)
 
+
     def deslogar(self):
         QtWidgets.QApplication.quit()
 
     def getFotoPerfil(self, nomeUsuario):
         imagemUsuario = dadosUsuario(nomeUsuario)["fotoPerfil"]
-        self.fotoPerfil.changePhoto(imagemUsuario, 50)
+
+        if(imagemUsuario is None):
+            with open('src/view/assets/icons/default_user.jpg', 'rb') as img_file:
+                imagemUsuario = img_file.read()
+            self.fotoPerfil.changePhoto(imagemUsuario, 50)
+        else:
+            self.fotoPerfil.changePhoto(imagemUsuario, 50)

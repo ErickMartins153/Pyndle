@@ -25,6 +25,9 @@ class FotoPerfil(QtWidgets.QPushButton):
 
     def changePhoto(self, newBimage: bytes, diametro: int):
         self.bimage = newBimage
+        if newBimage is None:
+            print("newBimage is None")
+            return
 
         if (
             b"<?xml" in newBimage
