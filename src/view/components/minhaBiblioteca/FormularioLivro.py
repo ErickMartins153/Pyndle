@@ -12,7 +12,12 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QImage, QPixmap, QIntValidator
 from PyQt6.QtCore import Qt
 from src.controller.telaPreviaLivro import dadosLivro
-from src.controller.telaPrincipal import uploadLivro, apagarLivro, updateGenero
+from src.controller.telaPrincipal import (
+    uploadLivro,
+    apagarLivro,
+    updateDados,
+    getGeneros,
+)
 from src.view.utils.imageTools import relHeight, relWidth, getResizedImage
 from src.view.utils.widgetSearch import getAncestrais
 
@@ -30,6 +35,7 @@ class FormularioLivro(QDialog):
         self.ArquivoSelecionado = None
         self.idLivro = None
         self.contemPDF = False
+        self.generos = getGeneros()
 
         self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
         self.setWindowTitle("Adicionar Livro")
@@ -121,8 +127,9 @@ class FormularioLivro(QDialog):
         self.entradaGenero.setCurrentIndex(0)
         self.entradaGenero.view().setRowHidden(0, True)
 
-        self.entradaGenero.addItem("Drama")
-        self.entradaGenero.addItem("Hentai")
+        for genero in self.generos:
+            self.entradaGenero.addItem(genero)
+
         self.entradaGenero.activated.connect(self.handleEscolha)
         infosLayout.addWidget(self.entradaGenero)
 
@@ -220,7 +227,13 @@ class FormularioLivro(QDialog):
 
     def cadastrarLivro(self):
         if self.generoEscolhido and self.ArquivoSelecionado:
-            updateGenero(self.generoEscolhido, self.idLivro)
+            self.dadosAtualizados = {
+                "titulo": self.entradaTitulo.text(),
+                "genero": self.entradaGenero.currentText(),
+                "autor": self.entradaAutor.text(),
+                "ano": self.entradaAno.text(),
+            }
+            updateDados(self.dadosAtualizados, self.idLivro)
             self.contemPDF = False
             self.accept()
             self.parent.botaoFiltrarClicado()
