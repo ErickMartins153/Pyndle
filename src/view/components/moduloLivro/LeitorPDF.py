@@ -55,9 +55,9 @@ class LeitorPDF(QDialog):
         self.setFocus()
 
     def mostrarPagina(self):
-        if self.documentoPdf is not None and 0 <= self.paginaAtual < len(
-            self.documentoPdf
-        ):
+        if self.paginaAtual == self.totalPaginas:
+            self.paginaAtual -= 1
+        if self.documentoPdf is not None and 0 <= self.paginaAtual < self.totalPaginas:
             pagina = self.documentoPdf[self.paginaAtual]
 
             if pagina.get_images(full=True):
@@ -101,9 +101,11 @@ class LeitorPDF(QDialog):
         """
         if event.key() == Qt.Key.Key_Escape:
             return
-        elif event.key() == Qt.Key.Key_Right:  # Seta para a direita
+        elif event.key() == Qt.Key.Key_Right or event.key() == 68:
+            # Seta para a direita
             self.passarPagina()
-        elif event.key() == Qt.Key.Key_Left:  # Seta para a esquerda
+        elif event.key() == Qt.Key.Key_Left or event.key() == 65:
+            # Seta para a esquerda
             self.voltarPagina()
 
     def closeEvent(self, event):
@@ -115,5 +117,7 @@ class LeitorPDF(QDialog):
 
     def salvarPagina(self):
         paginaAtual = self.paginaAtual
+        if paginaAtual + 1 == self.totalPaginas:
+            paginaAtual = self.totalPaginas
         setPagAtual(self.idUsuario, self.idLivro, paginaAtual)
         self.sinalPaginaAtual.emit(paginaAtual)
