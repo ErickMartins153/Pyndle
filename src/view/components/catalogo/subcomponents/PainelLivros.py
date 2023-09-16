@@ -14,7 +14,11 @@ class PainelLivros(QtWidgets.QScrollArea):
 
         # Configurações
         self.setParent(parent)
-        self.setStyleSheet(open('src/view/assets/styles/catalagoEMinhaBiblioteca/painelLivros.css').read())
+        self.setStyleSheet(
+            open(
+                "src/view/assets/styles/catalagoEMinhaBiblioteca/painelLivros.css"
+            ).read()
+        )
         self.setWidgetResizable(True)
         self.setContentsMargins(0, 0, 0, 0)
         self.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
@@ -34,19 +38,19 @@ class PainelLivros(QtWidgets.QScrollArea):
         self.getLivrosCatalogo()
         self.resizeEvent(None)
 
-
     def resizeEvent(self, a0: QtGui.QResizeEvent = QtGui.QResizeEvent) -> None:
         super().resizeEvent(a0)
-        mainWindow = widgetSearch.getAncestrais(self)['mainWindow']  # mainWindow para identificar redimensionamentos
-
+        mainWindow = widgetSearch.getAncestrais(self)[
+            "mainWindow"
+        ]  # mainWindow para identificar redimensionamentos
 
         # Redimensionamento dos livros
-        if mainWindow.width() >= relWidth(1640, 1920):  # Redimensiona de acordo com o tamanho da janela
-
+        if mainWindow.width() >= relWidth(
+            1640, 1920
+        ):  # Redimensiona de acordo com o tamanho da janela
             self.displayBotoesLivros(4, relWidth(240, 1920), relHeight(336, 1080))
         else:
             self.displayBotoesLivros(3, relWidth(200, 1920), relHeight(280, 1080))
-
 
     def displayBotoesLivros(self, quantColunas: int, width: int, height: int):
         """
@@ -68,7 +72,6 @@ class PainelLivros(QtWidgets.QScrollArea):
                 coluna = 0
                 linha += 1
 
-
     def getLivrosCatalogo(self, genero: str = None, ordemAlfabetica: bool = None):
         livrosCatalogoBD = filtrarCatalogo(genero, ordemAlfabetica)
 
@@ -77,6 +80,7 @@ class PainelLivros(QtWidgets.QScrollArea):
         self.listaBotaoLivro.clear()
 
         if livrosCatalogoBD:
-            for livroDict in livrosCatalogoBD:  # Iteração dos dicionários de livro do BD para criar botões e adicionar na lista
+            for livroDict in livrosCatalogoBD:
+                # Iteração dos dicionários de livro do BD para criar botões e adicionar na lista
                 botaoImagem = BotaoImagem(livroDict["idLivro"], livroDict["capaLivro"])
                 self.listaBotaoLivro.append(botaoImagem)
