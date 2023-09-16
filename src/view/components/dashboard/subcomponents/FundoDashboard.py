@@ -236,7 +236,7 @@ class FundoDashboard(QtWidgets.QFrame):
     def botaoApertado(self):
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
         usuarioAtual = mainWindow.getUsuario()["login"]
-        popup = Popup(usuarioAtual, self.sender().getID())
+        popup = Popup(usuarioAtual, self.sender().getID(), self)
         popup.exec()
 
     def clickVerMaisMinhaBiblioteca(self):

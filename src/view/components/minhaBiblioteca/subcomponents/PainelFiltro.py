@@ -34,14 +34,15 @@ class PainelFiltro(QtWidgets.QFrame):
 
         botaoVoltar = QtWidgets.QPushButton()
         botaoVoltar.setObjectName("botaoVoltar")
-        botaoVoltar.setStyleSheet(f"""
+        botaoVoltar.setStyleSheet(
+            f"""
             width: {relWidth(20, 1920)}px;
             height: {relHeight(20, 1080)}px;
-        """)
+        """
+        )
         botaoVoltar.clicked.connect(self.voltarBotaoClicado)
         botaoVoltar.setMinimumSize(relWidth(40, 1920), relHeight(40, 1080))
         conteinerBotaoVoltar.layout().addWidget(botaoVoltar)
-
 
         # QFrame -----------------------------------------------------
         layoutFrame = QtWidgets.QVBoxLayout()
@@ -49,15 +50,22 @@ class PainelFiltro(QtWidgets.QFrame):
         painelFiltroLayout.addLayout(layoutFrame)
 
         frameFiltros = QtWidgets.QFrame(self)
-        frameFiltros.setStyleSheet(f"""
+        frameFiltros.setStyleSheet(
+            f"""
         border-radius: {relHeight(20, 1080)}px
-        """)
+        """
+        )
         frameFiltros.setObjectName("frameFiltros")
         frameFiltros.setFixedSize(relWidth(350, 1920), relHeight(550, 1080))
         layoutFrame.addWidget(frameFiltros)
 
         layoutFrameFiltros = QtWidgets.QGridLayout()
-        layoutFrameFiltros.setContentsMargins(relWidth(20, 1920), relHeight(20, 1080), relWidth(20, 1920), relHeight(20, 1080))
+        layoutFrameFiltros.setContentsMargins(
+            relWidth(20, 1920),
+            relHeight(20, 1080),
+            relWidth(20, 1920),
+            relHeight(20, 1080),
+        )
         frameFiltros.setLayout(layoutFrameFiltros)
 
         # QLabel ("FILTROS") -----------------------------------------------
@@ -67,11 +75,12 @@ class PainelFiltro(QtWidgets.QFrame):
 
         labelFiltros = QtWidgets.QLabel("FILTRAGEM")
         labelFiltros.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-        labelFiltros.setStyleSheet(f"""
+        labelFiltros.setStyleSheet(
+            f"""
         font-size: {relHeight(30, 1080)}px;
-        """)
+        """
+        )
         layoutLabelFiltros.addWidget(labelFiltros)
-
 
         # (Ordem Alfabética) ----------------------------------------------
 
@@ -79,9 +88,11 @@ class PainelFiltro(QtWidgets.QFrame):
         labelOrdemAlf = QtWidgets.QLabel("Ordem Alfabética |")
         labelOrdemAlf.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         labelOrdemAlf.setObjectName("filtroLabel")
-        labelOrdemAlf.setStyleSheet(f"""
+        labelOrdemAlf.setStyleSheet(
+            f"""
         font-size: {relHeight(20, 1080)}px;
-        """)
+        """
+        )
         layoutFrameFiltros.addWidget(labelOrdemAlf, 40, 0, 1, 1)
 
         # Layout para posicionar botões upArrow e downArrow
@@ -92,10 +103,12 @@ class PainelFiltro(QtWidgets.QFrame):
 
         # Botões UpArrow e DownArrow
         self.botaoAlfUp = QtWidgets.QPushButton()
-        self.botaoAlfUp.setStyleSheet(f"""
+        self.botaoAlfUp.setStyleSheet(
+            f"""
         width: {relWidth(10, 1920)}px;
         height: {relWidth(10, 1080)}px;
-        """)
+        """
+        )
         self.botaoAlfUp.setFixedSize(relWidth(25, 1920), relHeight(25, 1080))
         self.botaoAlfUp.setCheckable(True)
         self.botaoAlfUp.setObjectName("botaoAlfUp")
@@ -103,10 +116,12 @@ class PainelFiltro(QtWidgets.QFrame):
         botaoAlfLayout.addWidget(self.botaoAlfUp)
 
         self.botaoAlfDown = QtWidgets.QPushButton()
-        self.botaoAlfDown.setStyleSheet(f"""
+        self.botaoAlfDown.setStyleSheet(
+            f"""
         width: {relWidth(10, 1920)}px;
         height: {relWidth(10, 1080)}px;
-        """)
+        """
+        )
         self.botaoAlfDown.setFixedSize(relWidth(25, 1920), relHeight(25, 1080))
         self.botaoAlfDown.setCheckable(True)
         self.botaoAlfDown.setObjectName("botaoAlfDown")
@@ -130,10 +145,12 @@ class PainelFiltro(QtWidgets.QFrame):
         labelGeneros = QtWidgets.QLabel("Gêneros:")
         labelGeneros.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         labelGeneros.setObjectName("filtroLabel")
-        labelGeneros.setStyleSheet(f"""
+        labelGeneros.setStyleSheet(
+            f"""
         font-size: {relHeight(20, 1080)}px;
         background-color: transparent;
-        """)
+        """
+        )
         conteinerGenero.layout().addWidget(labelGeneros)
 
         # LayoutGeneros
@@ -149,9 +166,14 @@ class PainelFiltro(QtWidgets.QFrame):
         self.groupRadio.setExclusive(False)
 
         generos = (
-            "Terror", "Fantasia", "Aventura",
-            "Romance", "Matemática", "Geografia",
-            "Linguagens", "Literatura"
+            "Terror",
+            "Fantasia",
+            "Aventura",
+            "Romance",
+            "Matemática",
+            "Geografia",
+            "Linguagens",
+            "Literatura",
         )
 
         quant_linhas, coluna, linha = 5, 0, 0
@@ -163,22 +185,25 @@ class PainelFiltro(QtWidgets.QFrame):
             radioButton = QtWidgets.QCheckBox(genero)
             radioButton.clicked.connect(self.radioButtonClicado)
             radioButton.setObjectName("radioButton")
-            radioButton.setStyleSheet(f"""
+            radioButton.setStyleSheet(
+                f"""
                 font-size: {relHeight(15, 1080)}px;
-            """)
+            """
+            )
             self.groupRadio.addButton(radioButton)
             groupGeneros.layout().addWidget(radioButton, linha, coluna)
             linha += 1
-
 
         # (AVALIAÇÃO) -------------------------------------------
 
         # QLabel ("Avaliação")
         avaliacaoLabel = QtWidgets.QLabel("Avaliação:")
         avaliacaoLabel.setObjectName("filtroLabel")
-        avaliacaoLabel.setStyleSheet(f"""
+        avaliacaoLabel.setStyleSheet(
+            f"""
         font-size: {relHeight(20, 1080)}px;
-        """)
+        """
+        )
         layoutFrameFiltros.addWidget(avaliacaoLabel, 80, 0, 1, 3)
 
         # Botões de avaliação
@@ -191,17 +216,20 @@ class PainelFiltro(QtWidgets.QFrame):
         # (BOTÃO FILTRAR) ----------------------------------------
         botaoFiltrar = QtWidgets.QPushButton()
         botaoFiltrar.setObjectName("botaoFiltrar")
-        botaoVoltar.setStyleSheet(f"""
+        botaoVoltar.setStyleSheet(
+            f"""
             #botaoFiltrar {{
                 width: {relWidth(1, 1920)}px;
                 height: {relHeight(1, 1080)}px;
                 border-radius: 20px;
             }}
-                """)
+                """
+        )
         botaoFiltrar.clicked.connect(self.botaoFiltrarClicado)
         botaoFiltrar.setFixedSize(relWidth(100, 1920), relHeight(50, 1080))
-        layoutFrameFiltros.addWidget(botaoFiltrar, 90, 0, 1, 3, Qt.AlignmentFlag.AlignCenter)
-
+        layoutFrameFiltros.addWidget(
+            botaoFiltrar, 90, 0, 1, 3, Qt.AlignmentFlag.AlignCenter
+        )
 
         # (BOTÃO ADICIONAR) -----------------------------------------
         containerBotaoAdicionar = verticalFrame(self)
@@ -211,15 +239,15 @@ class PainelFiltro(QtWidgets.QFrame):
 
         botaoAdicionar = QtWidgets.QPushButton("")
         botaoAdicionar.setObjectName("botaoAdicionar")
-        botaoAdicionar.setStyleSheet(f"""
+        botaoAdicionar.setStyleSheet(
+            f"""
             width: {relWidth(20, 1920)}px;
             height: {relHeight(20, 1080)}px;
-        """)
+        """
+        )
         botaoAdicionar.clicked.connect(self.adicionarBotaoCliclado)
         botaoAdicionar.setMinimumSize(relWidth(40, 1920), relHeight(40, 1080))
         containerBotaoAdicionar.layout().addWidget(botaoAdicionar)
-
-
 
     def voltarBotaoClicado(self):
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
@@ -237,11 +265,9 @@ class PainelFiltro(QtWidgets.QFrame):
         self.botaoAlfUp.setChecked(False)
         self.botaoAvaliacao.setAvaliacao(0)
 
-
     def adicionarBotaoCliclado(self):
         popup = FormularioLivro(self)
         popup.exec()
-
 
     def radioButtonClicado(self):
         if self.sender().text() != self.generoMarcado:
@@ -253,17 +279,16 @@ class PainelFiltro(QtWidgets.QFrame):
             self.generoMarcado = None
             self.sender().setChecked(False)
 
-        '''if self.generoMarcado:
+        """if self.generoMarcado:
             for botao in self.groupRadio.buttons():
                 if self.sender() == botao and botao.isChecked():
-                    botao.setChecked(False)'''
+                    botao.setChecked(False)"""
 
     def botaoOrdAlfClicado(self):
         if self.sender().objectName() == "botaoAlfUp":
             ordem = True
         else:
             ordem = False
-
 
         if ordem != self.ordemAlf:
             self.ordemAlf = ordem
@@ -275,18 +300,14 @@ class PainelFiltro(QtWidgets.QFrame):
             self.ordemAlf = None
             self.sender().setChecked(False)
 
-
     def botaoAvaliacaoClicado(self):
         if self.botaoAvaliacao.getAvaliacao() != 0:
             self.avaliacao = self.botaoAvaliacao.getAvaliacao()
         else:
             self.avaliacao = None
 
-
     def botaoFiltrarClicado(self):
         widgetSearch.getIrmaos(self)["painelLivrosBiblioteca"].getLivrosMinhaBiblioteca(
-            self.generoMarcado,
-            self.avaliacao,
-            self.ordemAlf
+            self.generoMarcado, self.avaliacao, self.ordemAlf
         )
         widgetSearch.getIrmaos(self)["painelLivrosBiblioteca"].resizeEvent(None)

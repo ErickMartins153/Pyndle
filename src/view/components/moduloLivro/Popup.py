@@ -16,16 +16,19 @@ from src.view.components.ModuloLivro.Grafico import Grafico
 from src.view.components.BotaoAvaliacao import BotaoAvaliacao
 from src.controller.telaPreviaLivro import salvarAvaliacao, pegarAvaliacao
 from src.view.utils.imageTools import getResizedImage, relHeight, relWidth
+from src.controller.telaPrincipal import apagarLivro
+from src.view.utils.widgetSearch import getAncestrais, getIrmaos, getDescendentes
 
 
 class Popup(QDialog):
-    def __init__(self, nomeUsuario, idLivro):
+    def __init__(self, nomeUsuario, idLivro, parent):
         super().__init__()
-        self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
+        # atributos ----------------
         self.idUsuario = dadosUsuario(nomeUsuario)["idUsuario"]
         self.idLivro = idLivro
+        self.parent = parent
+        self.atualizarLivrosPainel()
         self.dadosLivro = dadosLivro(idLivro)
-
         self.titulo = self.dadosLivro["titulo"]
         self.genero = self.dadosLivro["genero"]
         self.autor = self.dadosLivro["autor"]
@@ -34,11 +37,11 @@ class Popup(QDialog):
             self.dadosLivro["capaLivro"], relWidth(340, 1920), relHeight(476, 1080)
         )
         self.arquivoPDF = self.dadosLivro["arquivoPdf"]
-
         self.lido = getPagAtual(self.idLivro, self.idUsuario)
         self.qtdPaginas = self.dadosLivro["pagTotal"]
         self.porcentagemLido = self.lido / self.qtdPaginas * 100
 
+        self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
         self.setWindowTitle(self.titulo)
         self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.setFixedSize(700, 700)
@@ -76,6 +79,12 @@ class Popup(QDialog):
 
         # Conectando o botão "Ler Livro" à função para abrir o leitor de PDF
         lerLivroBotao.clicked.connect(self.abrirLeitorPDF)
+
+        apagarLivroBotao = QPushButton(groupImagemBotao)
+        apagarLivroBotao.setObjectName("apagarLivroBotao")
+        apagarLivroBotao.setText("Apagar Livro")
+        apagarLivroBotao.clicked.connect(self.deletarLivro)
+        ImagemBotaoLayout.addWidget(apagarLivroBotao)
 
         groupInfos = QFrame(self)
         groupInfos.setObjectName("groupTexto")
@@ -157,3 +166,40 @@ class Popup(QDialog):
         if avaliacao:
             return avaliacao
         return 0
+
+    def deletarLivro(self):
+        caixaConfirmacao = QMessageBox(self)
+        caixaConfirmacao.setIcon(QMessageBox.Icon.Question)
+        caixaConfirmacao.setText(
+            f"Você tem certeza que deseja apagar o livro '{self.titulo}'?"
+        )
+        botaoSim = caixaConfirmacao.addButton(
+            "Sim, continuar", QMessageBox.ButtonRole.YesRole
+        )
+        botaoSim.setStyleSheet(
+            """
+            QPushButton{
+                background-color: rgb(252, 16, 16);
+            }
+            QPushButton:hover{  
+            background-color: rgb(182, 1, 1);
+            font-weight: bolder;}
+            """
+        )
+        caixaConfirmacao.addButton("Não, cancelar", QMessageBox.ButtonRole.NoRole)
+        caixaConfirmacao.exec()
+
+        if caixaConfirmacao.clickedButton() == botaoSim:
+            # apagarLivro(self.idLivro, self.idUsuario)
+            self.atualizarLivrosPainel()
+
+            # self.accept()
+
+        else:
+            print("nao deletou")
+
+    def atualizarLivrosPainel(self):
+        fundoDashboard = getIrmaos(self.parent)["fundoDashboard"]
+        mainWindow = getAncestrais(fundoDashboard)["mainWindow"]
+        painelLivrosCatalogo = getDescendentes(mainWindow)["painelLivrosCatalogo"]
+        painelLivrosCatalogo.resizeEvent(None)

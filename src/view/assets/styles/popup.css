@@ -9,45 +9,54 @@ QPushButton {
   font-size: 24px;
   line-height: 41px;
   color: #FFF9EF;
-  }
-  QPushButton:hover {
-    background-color: #a38d67;
-  }
-  
-  #info {
-  font-family: 'Baskervville';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 23px;
-  color: #000000;
-  }
-  
-  #h1 {
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 41px;
-  color: #000000;
-  }
-  
-  QLineEdit, QComboBox {    
-    border-radius: 8px;
-    border: 1px solid #3D3D3D;
-    padding: 2px 5px;
-  }
-
-  QComboBox::drop-down {
-    image: url(src/view/assets/icons/setaQComboBox.svg);
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 16px;
-    height: 16px;
-    padding: 3px 10px;
-    border-left: 1px none gray;
 }
-  
-  #groupImagemBotao {
-    background-color: #F8E7C7;
-    border: 1px solid #3D3D3D;
-    border-radius: 15px;
-  }
+QPushButton:hover {
+  background-color: #a38d67;
+}
+
+#info {
+font-family: 'Baskervville';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 23px;
+color: #000000;
+}
+
+#h1 {
+font-weight: 400;
+font-size: 32px;
+line-height: 41px;
+color: #000000;
+}
+
+QLineEdit, QComboBox {    
+  border-radius: 8px;
+  border: 1px solid #3D3D3D;
+  padding: 2px 5px;
+}
+
+QComboBox::drop-down {
+  image: url(src/view/assets/icons/setaQComboBox.svg);
+  subcontrol-origin: padding;
+  subcontrol-position: top right;
+  width: 16px;
+  height: 16px;
+  padding: 3px 10px;
+  border-left: 1px none gray;
+}
+
+#groupImagemBotao {
+  background-color: #F8E7C7;
+  border: 1px solid #3D3D3D;
+  border-radius: 15px;
+}
+
+#apagarLivroBotao {
+  background-color: rgb(252, 16, 16);
+
+}
+#apagarLivroBotao:hover {
+  background-color: rgb(182, 1, 1);
+  font-weight: bolder;
+}
