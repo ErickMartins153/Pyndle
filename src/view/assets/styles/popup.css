@@ -30,13 +30,24 @@ QPushButton {
   color: #000000;
   }
   
-  QLineEdit {    
+  QLineEdit, QComboBox {    
     border-radius: 8px;
     border: 1px solid #3D3D3D;
     padding: 2px 5px;
   }
+
+  QComboBox::drop-down {
+    image: url(src/view/assets/icons/setaQComboBox.svg);
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 16px;
+    height: 16px;
+    padding: 3px 10px;
+    border-left: 1px none gray;
+}
   
   #groupImagemBotao {
     background-color: #F8E7C7;
     border: 1px solid #3D3D3D;
+    border-radius: 15px;
   }
