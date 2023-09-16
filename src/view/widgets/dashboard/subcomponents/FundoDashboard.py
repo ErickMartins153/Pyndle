@@ -3,6 +3,7 @@ from PyQt6.QtCore import Qt
 from src.view.components.BotaoImagem import BotaoImagem
 from src.controller import telaPrincipal
 from src.view.widgets.moduloLivro.Popup import Popup
+from src.view.widgets.catalogo.subcomponents.popupCatalogo import PopupCatalogo
 from src.view.utils import widgetSearch
 from src.view.utils.container import verticalFrame, horizontalFrame
 from src.view.utils.imageTools import relHeight, relWidth
@@ -160,17 +161,16 @@ class FundoDashboard(QtWidgets.QFrame):
         catalogoFrame.layout().addWidget(botaoVerMais2)
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
+        self.resizeAndDisplayLivros()
+
+    def resizeAndDisplayLivros(self):
         mainWindow = widgetSearch.getAncestrais(self)[
             "mainWindow"
         ]  # mainWindow para identificar redimensionamentos
 
         # Redimensionamento dos livros
-        if mainWindow.width() >= relWidth(
-            1600, 1920
-        ):  # Redimensiona de acordo com o tamanho da janela
-            if (
-                self.livrosDispostos != 5 and mainWindow.getUsuario()
-            ):  # Também verifica se o usuário logou
+        if mainWindow.width() >= relWidth(1600, 1920):  # Redimensiona de acordo com o tamanho da janela
+            if self.livrosDispostos != 5 and mainWindow.getUsuario():  # Também verifica se o usuário logou
                 self.getLivrosDashboard(5)  # Dispõe 5 livros
 
             for livroCatalogo in self.listaLivrosCatalogo:
@@ -179,14 +179,13 @@ class FundoDashboard(QtWidgets.QFrame):
             for livroMyLivro in self.listaMeusLivros:
                 livroMyLivro.resizeButton(relWidth(220, 1920), relHeight(308, 1080))
         else:
-            if (
-                self.livrosDispostos != 4 and mainWindow.getUsuario()
-            ):  # Também verifica se o usuário logou
+            if self.livrosDispostos != 4 and mainWindow.getUsuario():  # Também verifica se o usuário logou
                 self.getLivrosDashboard(4)  # Dispõe 4 livros
             for livroCatalogo in self.listaLivrosCatalogo:
                 livroCatalogo.resizeButton(relWidth(200, 1920), relHeight(280, 1080))
             for livroMyLivro in self.listaMeusLivros:
                 livroMyLivro.resizeButton(relWidth(200, 1920), relHeight(280, 1080))
+
 
     def setNomeUsuario(self, usuarioAtual: str):
         usuarioAtual = usuarioAtual
@@ -198,34 +197,32 @@ class FundoDashboard(QtWidgets.QFrame):
 
         # Deleta os botões existentes e limpa a lista de botões
         for livroCatalogo in self.listaLivrosCatalogo:
+            livroCatalogo.hide()
             livroCatalogo.deleteLater()
         for livroBiblioteca in self.listaMeusLivros:
+            livroBiblioteca.hide()
             livroBiblioteca.deleteLater()
         self.listaLivrosCatalogo.clear()
         self.listaMeusLivros.clear()
 
         # Definindo Catálogo
-        for dictLivro in telaPrincipal.filtrarCatalogo()[
-            :qntLivros
-        ]:  # Itera a lista de livros do catálogo
+        for dictLivro in telaPrincipal.filtrarCatalogo()[:qntLivros]:  # Itera a lista de livros do catálogo
             livroCatalogo = BotaoImagem(dictLivro["idLivro"], dictLivro["capaLivro"])
             livroCatalogo.setObjectName("livroBotao")
 
             # Ação do botão
-            livroCatalogo.clicked.connect(self.botaoApertado)
+            livroCatalogo.clicked.connect(self.livroCatalogoSelecionado)
 
             self.listaLivrosCatalogo.append(livroCatalogo)
             self.groupCatalogoLivros.layout().addWidget(livroCatalogo)
 
         # Definindo "Minha Biblioteca"
         if usuarioAtual:
-            for tuplaLivro in telaPrincipal.filtrarBiblioteca(
-                usuarioAtual["idUsuario"]
-            )[:qntLivros]:
-                meuLivro = BotaoImagem(tuplaLivro["idLivro"], tuplaLivro["capaLivro"])
+            for dictLivro in telaPrincipal.filtrarBiblioteca(usuarioAtual["idUsuario"])[:qntLivros]:
+                meuLivro = BotaoImagem(dictLivro["idLivro"], dictLivro["capaLivro"])
                 meuLivro.setObjectName("livroBotao")
 
-                meuLivro.clicked.connect(self.botaoApertado)  # Conectando ação
+                meuLivro.clicked.connect(self.livroBibliotecaSelecionado)  # Conectando ação
 
                 self.listaMeusLivros.append(meuLivro)
                 self.groupMeusLivros.layout().addWidget(meuLivro)
@@ -233,27 +230,41 @@ class FundoDashboard(QtWidgets.QFrame):
         # Informa quantidade de livros dispostos após operação
         self.livrosDispostos = qntLivros
 
-    def botaoApertado(self):
+    def livroBibliotecaSelecionado(self):
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
         usuarioAtual = mainWindow.getUsuario()["login"]
-        popup = Popup(usuarioAtual, self.sender().getID(), self)
-        popup.exec()
+        popupBiblioteca = Popup(usuarioAtual, self.sender().getID(), self)
+        popupBiblioteca.exec()
+
+    def livroCatalogoSelecionado(self):
+        mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
+        usuarioAtual = mainWindow.getUsuario()
+
+        if telaPrincipal.checarRelacaoUsuarioLivro(usuarioAtual["idUsuario"], self.sender().getID()):
+            popupBiblioteca = Popup(usuarioAtual["login"], self.sender().getID(), self)
+            popupBiblioteca.exec()
+        else:
+            popupCatalogo = PopupCatalogo(usuarioAtual["login"], self.sender().getID(), self)
+            popupCatalogo.sinalLivroAdicionado.connect(self.livroCatalogoAdicionado)
+            popupCatalogo.exec()
+
+    def livroCatalogoAdicionado(self):
+        self.livrosDispostos = 0
+        self.resizeAndDisplayLivros()
 
     def clickVerMaisMinhaBiblioteca(self):
+        self.livrosDispostos = 0
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
-        painelLivrosBiblioteca = widgetSearch.getDescendentes(mainWindow)[
-            "painelLivrosBiblioteca"
-        ]
+        painelLivrosBiblioteca = widgetSearch.getDescendentes(mainWindow)["painelLivrosBiblioteca"]
 
         painelLivrosBiblioteca.getLivrosMinhaBiblioteca()
         painelLivrosBiblioteca.resizeEvent(None)
         widgetSearch.getDescendentes(mainWindow)["paginas"].setCurrentIndex(2)
 
     def clickVerMaisCatalogo(self):
+        self.livrosDispostos = 0
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
-        painelLivrosCatalogo = widgetSearch.getDescendentes(mainWindow)[
-            "painelLivrosCatalogo"
-        ]
+        painelLivrosCatalogo = widgetSearch.getDescendentes(mainWindow)["painelLivrosCatalogo"]
 
         painelLivrosCatalogo.getLivrosCatalogo()
         painelLivrosCatalogo.resizeEvent(None)

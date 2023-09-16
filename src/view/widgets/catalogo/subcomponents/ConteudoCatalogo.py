@@ -1,7 +1,7 @@
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
-from src.view.widgets.catalogo.subcomponents.PainelFiltro import PainelFiltro
-from src.view.widgets.catalogo.subcomponents.PainelLivros import PainelLivros
+from src.view.widgets.catalogo.subcomponents.PainelFiltroCatalogo import PainelFiltroCatalogo
+from src.view.widgets.catalogo.subcomponents.PainelLivrosCatalogo import PainelLivrosCatalogo
 from src.view.utils.container import verticalFrame
 from src.view.utils.imageTools import relHeight
 
@@ -37,7 +37,7 @@ class ConteudoCatalogo(QtWidgets.QFrame):
         conteudoCatalogoLayout.addLayout(groupPaineis)
 
         # Painel de filtragem
-        painelFiltro = PainelFiltro(self)
+        painelFiltro = PainelFiltroCatalogo(self)
         painelFiltro.setObjectName("painelFiltroCatalogo")
         painelFiltro.setStyleSheet(f"""
             border-bottom-left-radius: {relHeight(15, 1080)}px;
@@ -56,7 +56,7 @@ class ConteudoCatalogo(QtWidgets.QFrame):
             border-bottom-left-radius: 0;
         """)
 
-        painelLivros = PainelLivros(self)
+        painelLivros = PainelLivrosCatalogo(self)
         painelLivros.setObjectName("painelLivrosCatalogo")
         containerPainelLivros.layout().addWidget(painelLivros)
 

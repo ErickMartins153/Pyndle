@@ -236,7 +236,7 @@ class FormularioLivro(QDialog):
             updateDados(self.dadosAtualizados, self.idLivro)
             self.contemPDF = False
             self.accept()
-            self.parent.botaoFiltrarClicado()
+            self.parent.botaoFiltrarClicado()  # Atualiza o livros de "Minha Biblioteca"
 
     def keyPressEvent(self, event):
         """Checa se algum arquivo pdf foi upado sem\n

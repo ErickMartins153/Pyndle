@@ -1,7 +1,7 @@
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
-from src.view.widgets.minhaBiblioteca.subcomponents.PainelFiltro import PainelFiltro
-from src.view.widgets.minhaBiblioteca.subcomponents.PainelLivros import PainelLivros
+from src.view.widgets.minhaBiblioteca.subcomponents.PainelFiltroBiblioteca import PainelFiltroBiblioteca
+from src.view.widgets.minhaBiblioteca.subcomponents.PainelLivrosBiblioteca import PainelLivrosBiblioteca
 from src.view.utils.container import verticalFrame
 from src.view.utils.imageTools import relHeight
 
@@ -37,7 +37,7 @@ class ConteudoMinhaBiblioteca(QtWidgets.QFrame):
         conteudoCatalogoLayout.addLayout(groupPaineis)
 
         # Painel de filtragem
-        painelFiltro = PainelFiltro(self)
+        painelFiltro = PainelFiltroBiblioteca(self)
         painelFiltro.setObjectName("painelFiltroBiblioteca")
         painelFiltro.setStyleSheet(f"""
             border-bottom-left-radius: {relHeight(15, 1080)}px;
@@ -55,9 +55,9 @@ class ConteudoMinhaBiblioteca(QtWidgets.QFrame):
             border-bottom-left-radius: 0;
         """)
 
-        painelLivros = PainelLivros(self)
-        painelLivros.setObjectName("painelLivrosBiblioteca")
-        containerPainelLivros.layout().addWidget(painelLivros)
+        painelLivrosBiblioteca = PainelLivrosBiblioteca(self)
+        painelLivrosBiblioteca.setObjectName("painelLivrosBiblioteca")
+        containerPainelLivros.layout().addWidget(painelLivrosBiblioteca)
 
         groupPaineis.addWidget(containerPainelLivros)
 

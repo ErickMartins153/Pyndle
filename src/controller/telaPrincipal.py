@@ -3,32 +3,16 @@ import fitz as PyMuPDF
 import io
 from PIL import Image
 
-conexao = sqlite3.connect("src\model\Pyndle.db")
+conexao = sqlite3.connect(r"src\model\Pyndle.db")
 conexao.row_factory = sqlite3.Row
 sgbd = conexao.cursor()
 
 
-def livrosCatalogo():
-    """
-    Função que dá todas as colunas dos nossos 7 livros do catalagoEMinhaBiblioteca
-    """
-    sgbd.execute(
-        """
-    SELECT * FROM livros
-     WHERE idLivro IN (1, 2, 3, 4, 5, 6, 7)
-     """
-    )
-
-    resultado = sgbd.fetchall()
-
-    return resultado
-
-
-def livrosPessoais(idUsuario: int, idLivro):
+def adicionarlivrosPessoais(idUsuario: int, idLivro: int):
     # Criando relação entre usuário atual e livro adicionado
     sgbd.execute(
         """
-        INSERT INTO usuariosLivros(idUsuario, idLivro, pagAtual, avaliacao) 
+        INSERT OR IGNORE INTO usuariosLivros(idUsuario, idLivro, pagAtual, avaliacao) 
         VALUES (?, ?, ?, ?)
         """,
         (idUsuario, idLivro, 0, 0),
@@ -36,7 +20,7 @@ def livrosPessoais(idUsuario: int, idLivro):
     conexao.commit()
 
 
-def uploadLivro(arquivo, idUsuario: str):
+def uploadLivro(arquivo, idUsuario: int):
     try:
         # Abre o arquivo PDF
         livro = PyMuPDF.open(arquivo)
@@ -88,7 +72,7 @@ def uploadLivro(arquivo, idUsuario: str):
         conexao.commit()
 
         ultimoLivroId = sgbd.lastrowid
-        livrosPessoais(idUsuario, ultimoLivroId)
+        adicionarlivrosPessoais(idUsuario, ultimoLivroId)
 
         return ultimoLivroId
 
@@ -97,9 +81,28 @@ def uploadLivro(arquivo, idUsuario: str):
         print(f"Ocorreu um erro ao processar o arquivo PDF: {e}")
 
 
+def checarRelacaoUsuarioLivro(idUsuario: int, idLivro: int):
+    """
+    Verifica se a relação entre aquele usuário e o livro já existe na tabela UsuariosLivros
+    """
+    sgbd.execute(f"""
+    SELECT * FROM usuariosLivros 
+    WHERE idUsuario = ? AND idLivro = ?
+    """, (idUsuario, idLivro))
+
+    resultado = sgbd.fetchall()
+
+    if resultado:
+        return True
+    else:
+        return False
+
+
 def apagarLivro(idLivro: int, idUsuario: int):
     """
     Deleta o livro caso o usuário cancele o registro antes de finalizá-lo
+    :param idLivro: id do livro
+    :param idUsuario: id do usuário
     """
     sgbd.execute("SELECT idLivro FROM livros WHERE idLivro = ?", (idLivro,))
     resultado = sgbd.fetchone()

@@ -173,7 +173,7 @@ class FormularioLogin(QtWidgets.QFrame):
                 # Define o nome de usuário no "bem vindo" da tela principal
                 widgetSearch.getDescendentes(mainWindow)["fundoDashboard"].setNomeUsuario(usuario)
                 # Dispões livros de "Minha Biblioteca"
-                widgetSearch.getDescendentes(mainWindow)["fundoDashboard"].resizeEvent(None)
+                widgetSearch.getDescendentes(mainWindow)["fundoDashboard"].resizeAndDisplayLivros()
                 # Sinal emitido ao logar que é utilizado para definir a foto de perfil do menu
                 self.AtualizacaoUsuario.emit(usuario)
 

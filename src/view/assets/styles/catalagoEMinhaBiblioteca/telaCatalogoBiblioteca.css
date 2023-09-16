@@ -27,7 +27,7 @@
 /*-------------------------------*/
 
 
-/* PainelFiltro.py */
+/* PainelFiltroBiblioteca.py */
 #painelFiltroBiblioteca, #painelFiltroCatalogo{
     background-color: #F0D097;
 }
@@ -53,7 +53,7 @@
 /*-------------------------------*/
 
 
-/* PainelLivros.py */
+/* PainelLivrosBiblioteca.py */
 #contentWidget{
     background-color: #F0D097;
 }

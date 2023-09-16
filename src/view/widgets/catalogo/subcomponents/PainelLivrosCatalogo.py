@@ -1,15 +1,16 @@
 from PyQt6 import QtWidgets, QtGui
-from src.controller.telaPrincipal import filtrarBiblioteca
+from src.controller.telaPrincipal import filtrarCatalogo, checarRelacaoUsuarioLivro
 from src.view.components.BotaoImagem import BotaoImagem
 from src.view.utils import widgetSearch
 from src.view.utils.imageTools import relHeight, relWidth
 from src.view.widgets.moduloLivro.Popup import Popup
+from src.view.widgets.catalogo.subcomponents.popupCatalogo import PopupCatalogo
 
 
-class PainelLivros(QtWidgets.QScrollArea):
+class PainelLivrosCatalogo(QtWidgets.QScrollArea):
+    # noinspection PyTypeChecker
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
-
         # Atributos
         self.listaBotaoLivro = list()  # Lista para acessar os BotoesLivros em métodos
 
@@ -36,13 +37,10 @@ class PainelLivros(QtWidgets.QScrollArea):
         self.contentWidget.setLayout(self.painelLivrosLayout)
 
         # Definindo livros
-        self.getLivrosMinhaBiblioteca()
+        self.getLivrosCatalogo()
+        self.resizeEvent(None)
 
     def resizeEvent(self, a0: QtGui.QResizeEvent = QtGui.QResizeEvent) -> None:
-        """
-        Evento de redimensionamento de tela que define o tamanho dos botoesLivros e como serão dispostos,
-        de acordo com a resolução da tela
-        """
         super().resizeEvent(a0)
         mainWindow = widgetSearch.getAncestrais(self)[
             "mainWindow"
@@ -57,12 +55,15 @@ class PainelLivros(QtWidgets.QScrollArea):
             self.displayBotoesLivros(3, relWidth(200, 1920), relHeight(280, 1080))
 
     def displayBotoesLivros(self, quantColunas: int, width: int, height: int):
+        print("DisplayBotaoLivro")
         """
         Adiciona os livros ao Painel de Livros
         :param quantColunas: Define a quantidade de colunas em que serão dispostos
         :param width: define a largura dos botões
         :param height: define a altura dos botões
         """
+        # Limpar o layout atual
+
         linha, coluna = 0, 0
         for botaoImagem in self.listaBotaoLivro:
             botaoImagem.resizeButton(width, height)
@@ -74,43 +75,29 @@ class PainelLivros(QtWidgets.QScrollArea):
                 coluna = 0
                 linha += 1
 
-    def getLivrosMinhaBiblioteca(
-        self, genero: str = None, avaliacao: int = None, ordemAlfabetica: bool = None
-    ):
-        """
-        Obtém os livros da "Minha Biblioteca" com base no usuário atual da MainWindow\n
-        Após isso, os livros são dispostos no display do painel de livros de "Minha Biblioteca"
-        :param genero: define o gênero dos livros a serem dispostos
-        :param avaliacao: define a avaliação dos livros a serem dispostos
-        :param ordemAlfabetica: define a ordem na qual os livros serão dispostos
-        """
+    def getLivrosCatalogo(self, genero: str = None, ordemAlfabetica: bool = None):
+        print("getLivro")
+        livrosCatalogoBD = filtrarCatalogo(genero, ordemAlfabetica)
 
-        # Obtém o usuário atual a partir da MainWindow
-        usuarioAtual = widgetSearch.getAncestrais(self)["mainWindow"].getUsuario()
+        for botao in self.listaBotaoLivro:
+            botao.hide()
+            botao.deleteLater()
+        self.listaBotaoLivro.clear()
 
-        if usuarioAtual:  # Verifica se o usuário já foi definido
-            livrosCatalogoBD = filtrarBiblioteca(
-                usuarioAtual["idUsuario"], genero, avaliacao, ordemAlfabetica
-            )
-
-            for botao in self.listaBotaoLivro:
-                botao.deleteLater()  # Deleta os botoesLivros que já existem
-            self.listaBotaoLivro.clear()
-
-            if livrosCatalogoBD:
-                for livroDict in livrosCatalogoBD:
-                    # Iteração dos dicionários de livro do BD para criar botões e adicionar na lista
-                    botaoImagem = BotaoImagem(
-                        livroDict["idLivro"], livroDict["capaLivro"]
-                    )
-                    botaoImagem.clicked.connect(self.botaoApertado)
-                    self.listaBotaoLivro.append(botaoImagem)
-
-            self.resizeEvent(None)
-            # resizeEvent para dispor os livros de acordo com a resolução da janela
+        if livrosCatalogoBD:
+            for livroDict in livrosCatalogoBD:
+                # Iteração dos dicionários de livro do BD para criar botões e adicionar na lista
+                botaoImagem = BotaoImagem(livroDict["idLivro"], livroDict["capaLivro"])
+                botaoImagem.clicked.connect(self.botaoApertado)
+                self.listaBotaoLivro.append(botaoImagem)
 
     def botaoApertado(self):
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
-        usuarioAtual = mainWindow.getUsuario()["login"]
-        popup = Popup(usuarioAtual, self.sender().getID(), self)
-        popup.exec()
+        usuarioAtual = mainWindow.getUsuario()
+
+        if checarRelacaoUsuarioLivro(usuarioAtual["idUsuario"], self.sender().getID()):
+            popupBiblioteca = Popup(usuarioAtual["login"], self.sender().getID(), self)
+            popupBiblioteca.exec()
+        else:
+            popupCatalogo = PopupCatalogo(usuarioAtual["login"], self.sender().getID(), self)
+            popupCatalogo.exec()

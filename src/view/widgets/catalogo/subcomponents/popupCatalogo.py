@@ -7,19 +7,22 @@ from PyQt6.QtWidgets import (
     QPushButton,
 )
 from PyQt6.QtGui import QImage, QPixmap
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
+from src.view.widgets.moduloLivro.Popup import Popup
 from src.controller.telaPreviaLivro import dadosLivro
 from src.controller.telaInicial import dadosUsuario
-from src.controller.telaPrincipal import livrosPessoais
+from src.controller.telaPrincipal import adicionarlivrosPessoais
 from src.view.utils.imageTools import getResizedImage, relHeight, relWidth
 
-
 class PopupCatalogo(QDialog):
-    def __init__(self, idLivro, nomeUsuario, parent):
-        super().__init__()
+    # Sinais
+    sinalLivroAdicionado = pyqtSignal()
 
-        # atributos ----------------
+    def __init__(self, nomeUsuario: str, idLivro: int, parent):
+        super().__init__()
+        # atributos ----------------------------------------------
         self.idLivro = idLivro
+        self.nomeUsuario = nomeUsuario
         self.idUsuario = dadosUsuario(nomeUsuario)["idUsuario"]
         self.parent = parent
         self.dadosLivro = dadosLivro(idLivro)
@@ -33,6 +36,8 @@ class PopupCatalogo(QDialog):
         self.arquivoPDF = self.dadosLivro["arquivoPdf"]
         self.qtdPaginas = self.dadosLivro["pagTotal"]
 
+        # Configurações-------------------------------------------
+
         self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
         self.setWindowTitle(self.titulo)
         self.setWindowModality(Qt.WindowModality.ApplicationModal)
@@ -40,6 +45,8 @@ class PopupCatalogo(QDialog):
         self.setWindowFlag(Qt.WindowType.Window, False)
         self.setWindowFlag(Qt.WindowType.WindowCloseButtonHint, False)
 
+
+        # ---------------------------------------------------------
         layout = QHBoxLayout()
         layout.setObjectName("fundo")
         self.setLayout(layout)
@@ -119,5 +126,12 @@ class PopupCatalogo(QDialog):
         infosLayout.addLayout(layoutBotaoFechar)
         self.setLayout(layout)
 
+
     def adicionarBiblioteca(self):
-        livrosPessoais(self.idUsuario, self.idLivro)
+        adicionarlivrosPessoais(self.idUsuario, self.idLivro)
+        self.hide()
+
+        popUpBiblioteca = Popup(self.nomeUsuario, self.idLivro, self)
+        self.sinalLivroAdicionado.emit()
+        popUpBiblioteca.exec()
+        self.close()

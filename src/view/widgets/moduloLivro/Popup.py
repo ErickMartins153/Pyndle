@@ -19,7 +19,7 @@ from src.view.utils.imageTools import getResizedImage, relHeight, relWidth
 
 
 class Popup(QDialog):
-    def __init__(self, nomeUsuario, idLivro, parent):
+    def __init__(self, nomeUsuario: str, idLivro: int, parent):
         super().__init__()
         # atributos ----------------
         self.idUsuario = dadosUsuario(nomeUsuario)["idUsuario"]

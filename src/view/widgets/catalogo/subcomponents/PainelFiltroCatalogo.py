@@ -1,20 +1,18 @@
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from src.view.components.BotaoAvaliacao import BotaoAvaliacao
-from src.view.widgets.minhaBiblioteca.subcomponents.FormularioLivro import FormularioLivro
 from src.view.utils import widgetSearch
-from src.view.utils.container import verticalFrame, horizontalFrame, gridFrame
+from src.view.utils.container import verticalFrame, gridFrame
 from src.view.utils.imageTools import relHeight, relWidth
 
 
-class PainelFiltro(QtWidgets.QFrame):
+class PainelFiltroCatalogo(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
 
         # Atributos
         self.generoMarcado = None
         self.ordemAlf = None
-        self.avaliacao = None
 
         # Configurações
         self.setParent(parent)
@@ -23,26 +21,24 @@ class PainelFiltro(QtWidgets.QFrame):
 
         # Definindo Layout
         painelFiltroLayout = QtWidgets.QVBoxLayout()
-        painelFiltroLayout.setSpacing(0)
         self.setLayout(painelFiltroLayout)
 
-        # QPushButton (Botão de voltar) -----------------------------------
-        conteinerBotaoVoltar = horizontalFrame(self)
-        conteinerBotaoVoltar.setMaximumHeight(relHeight(50, 1080))
-        conteinerBotaoVoltar.layout().setAlignment(Qt.AlignmentFlag.AlignLeft)
-        painelFiltroLayout.addWidget(conteinerBotaoVoltar)
+        # QPushButton (Botão de voltar)
+        conteinerBotaoVoltar = QtWidgets.QHBoxLayout()
+        conteinerBotaoVoltar.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        painelFiltroLayout.addLayout(conteinerBotaoVoltar)
 
         botaoVoltar = QtWidgets.QPushButton()
         botaoVoltar.setObjectName("botaoVoltar")
         botaoVoltar.setStyleSheet(
             f"""
-            width: {relWidth(20, 1920)}px;
-            height: {relHeight(20, 1080)}px;
+        width: {relWidth(20, 1920)}px;
+        height: {relHeight(20, 1080)}px;
         """
         )
         botaoVoltar.clicked.connect(self.voltarBotaoClicado)
         botaoVoltar.setMinimumSize(relWidth(40, 1920), relHeight(40, 1080))
-        conteinerBotaoVoltar.layout().addWidget(botaoVoltar)
+        conteinerBotaoVoltar.addWidget(botaoVoltar)
 
         # QFrame -----------------------------------------------------
         layoutFrame = QtWidgets.QVBoxLayout()
@@ -130,7 +126,6 @@ class PainelFiltro(QtWidgets.QFrame):
 
         # Spacer
         spacer = QtWidgets.QSpacerItem(relWidth(40, 1920), 0)
-
         botaoAlfLayout.addSpacerItem(spacer)
 
         # (Gêneros) ---------------------------------------------------
@@ -148,6 +143,7 @@ class PainelFiltro(QtWidgets.QFrame):
         labelGeneros.setStyleSheet(
             f"""
         font-size: {relHeight(20, 1080)}px;
+
         background-color: transparent;
         """
         )
@@ -194,25 +190,6 @@ class PainelFiltro(QtWidgets.QFrame):
             groupGeneros.layout().addWidget(radioButton, linha, coluna)
             linha += 1
 
-        # (AVALIAÇÃO) -------------------------------------------
-
-        # QLabel ("Avaliação")
-        avaliacaoLabel = QtWidgets.QLabel("Avaliação:")
-        avaliacaoLabel.setObjectName("filtroLabel")
-        avaliacaoLabel.setStyleSheet(
-            f"""
-        font-size: {relHeight(20, 1080)}px;
-        """
-        )
-        layoutFrameFiltros.addWidget(avaliacaoLabel, 80, 0, 1, 3)
-
-        # Botões de avaliação
-
-        self.botaoAvaliacao = BotaoAvaliacao(0)
-        for botao in self.botaoAvaliacao.getBotoes():
-            botao.clicked.connect(self.botaoAvaliacaoClicado)
-        layoutFrameFiltros.addLayout(self.botaoAvaliacao, 81, 0, 1, 1)
-
         # (BOTÃO FILTRAR) ----------------------------------------
         botaoFiltrar = QtWidgets.QPushButton()
         botaoFiltrar.setObjectName("botaoFiltrar")
@@ -231,43 +208,19 @@ class PainelFiltro(QtWidgets.QFrame):
             botaoFiltrar, 90, 0, 1, 3, Qt.AlignmentFlag.AlignCenter
         )
 
-        # (BOTÃO ADICIONAR) -----------------------------------------
-        containerBotaoAdicionar = verticalFrame(self)
-        containerBotaoAdicionar.setMaximumHeight(100)
-        containerBotaoAdicionar.layout().setAlignment(Qt.AlignmentFlag.AlignCenter)
-        painelFiltroLayout.addWidget(containerBotaoAdicionar)
-
-        botaoAdicionar = QtWidgets.QPushButton("")
-        botaoAdicionar.setObjectName("botaoAdicionar")
-        botaoAdicionar.setStyleSheet(
-            f"""
-            width: {relWidth(20, 1920)}px;
-            height: {relHeight(20, 1080)}px;
-        """
-        )
-        botaoAdicionar.clicked.connect(self.adicionarBotaoCliclado)
-        botaoAdicionar.setMinimumSize(relWidth(40, 1920), relHeight(40, 1080))
-        containerBotaoAdicionar.layout().addWidget(botaoAdicionar)
-
     def voltarBotaoClicado(self):
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
         widgetSearch.getDescendentes(mainWindow)["paginas"].setCurrentIndex(1)
-        widgetSearch.getDescendentes(mainWindow)["fundoDashboard"].resizeEvent(None)
+        widgetSearch.getDescendentes(mainWindow)["fundoDashboard"].resizeAndDisplayLivros()
 
         # Resetando filtro
         self.ordemAlf = None
         self.generoMarcado = None
-        self.avaliacao = None
 
         for botao in self.groupRadio.buttons():
             botao.setChecked(False)
         self.botaoAlfDown.setChecked(False)
         self.botaoAlfUp.setChecked(False)
-        self.botaoAvaliacao.setAvaliacao(0)
-
-    def adicionarBotaoCliclado(self):
-        popup = FormularioLivro(self)
-        popup.exec()
 
     def radioButtonClicado(self):
         if self.sender().text() != self.generoMarcado:
@@ -300,14 +253,8 @@ class PainelFiltro(QtWidgets.QFrame):
             self.ordemAlf = None
             self.sender().setChecked(False)
 
-    def botaoAvaliacaoClicado(self):
-        if self.botaoAvaliacao.getAvaliacao() != 0:
-            self.avaliacao = self.botaoAvaliacao.getAvaliacao()
-        else:
-            self.avaliacao = None
-
     def botaoFiltrarClicado(self):
-        widgetSearch.getIrmaos(self)["painelLivrosBiblioteca"].getLivrosMinhaBiblioteca(
-            self.generoMarcado, self.avaliacao, self.ordemAlf
+        widgetSearch.getIrmaos(self)["painelLivrosCatalogo"].getLivrosCatalogo(
+            self.generoMarcado, self.ordemAlf
         )
-        widgetSearch.getIrmaos(self)["painelLivrosBiblioteca"].resizeEvent(None)
+        widgetSearch.getIrmaos(self)["painelLivrosCatalogo"].resizeEvent(None)
