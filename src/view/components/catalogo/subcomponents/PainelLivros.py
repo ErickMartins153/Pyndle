@@ -3,6 +3,7 @@ from src.controller.telaPrincipal import filtrarCatalogo
 from src.view.components.BotaoImagem import BotaoImagem
 from src.view.utils import widgetSearch
 from src.view.utils.imageTools import relHeight, relWidth
+from src.view.components.catalogo.subcomponents.popupCatalogo import PopupCatalogo
 
 
 class PainelLivros(QtWidgets.QScrollArea):
@@ -83,4 +84,11 @@ class PainelLivros(QtWidgets.QScrollArea):
             for livroDict in livrosCatalogoBD:
                 # Iteração dos dicionários de livro do BD para criar botões e adicionar na lista
                 botaoImagem = BotaoImagem(livroDict["idLivro"], livroDict["capaLivro"])
+                botaoImagem.clicked.connect(self.botaoApertado)
                 self.listaBotaoLivro.append(botaoImagem)
+
+    def botaoApertado(self):
+        mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
+        usuarioAtual = mainWindow.getUsuario()["login"]
+        popup = PopupCatalogo(self.sender().getID(), usuarioAtual, self)
+        popup.exec()
