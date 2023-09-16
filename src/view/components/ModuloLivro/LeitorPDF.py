@@ -60,26 +60,22 @@ class LeitorPDF(QDialog):
         ):
             pagina = self.documentoPdf[self.paginaAtual]
 
-            if pagina.get_images(full=True):
-                imagem_pymupdf = pagina.get_pixmap()
-                imagem_qt = QImage(
-                    imagem_pymupdf.samples,
-                    imagem_pymupdf.width,
-                    imagem_pymupdf.height,
-                    imagem_pymupdf.stride,
-                    QImage.Format.Format_RGB888,
-                )
-                pixmap = QPixmap.fromImage(imagem_qt)
+            
+            imagem_pymupdf = pagina.get_pixmap()
+            imagem_qt = QImage(
+            imagem_pymupdf.samples,
+            imagem_pymupdf.width,
+            imagem_pymupdf.height,
+            imagem_pymupdf.stride,
+            QImage.Format.Format_RGB888,
+            )
+            pixmap = QPixmap.fromImage(imagem_qt)
 
-                # Configurando o QLabel para exibir a imagem
-                self.labelConteudo.setPixmap(pixmap)
-                self.labelConteudo.setScaledContents(True)
-                self.labelConteudo.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            else:
-                # Exiba o texto da página
-                texto = pagina.get_text()
-                self.labelConteudo.setText(texto)
-
+            # Configurando o QLabel para exibir a imagem
+            self.labelConteudo.setPixmap(pixmap)
+            self.labelConteudo.setScaledContents(True)
+            self.labelConteudo.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
             # Atualize a visibilidade dos botões com base na página atual
 
             # self.botaoPaginaAnterior.setEnabled(self.paginaAtual > 0)

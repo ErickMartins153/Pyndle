@@ -62,6 +62,11 @@ def dadosUsuario(nomeUsuario: str):
 
 
 def registrarUsuario(nomeUsuario: str, senha: str, fotoPerfil: bytes):
+
+    if(fotoPerfil == b''):
+        with open('src/view/assets/icons/default_user.jpg', 'rb') as img_file:
+                    fotoPerfil = img_file.read()
+                    
     """
     **Função para registrar o usuário**\n
     Primeiro checa se o usuário não existe para então registrar no banco de dados
