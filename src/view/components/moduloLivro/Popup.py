@@ -51,7 +51,7 @@ class Popup(QDialog):
 
         groupImagemBotao = QFrame(self)
         groupImagemBotao.setObjectName("groupImagemBotao")
-        groupImagemBotao.setFixedSize(300, 610)
+        groupImagemBotao.setFixedSize(300, 660)
         layout.addWidget(groupImagemBotao)
 
         ImagemBotaoLayout = QVBoxLayout()
