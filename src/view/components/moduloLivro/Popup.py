@@ -193,13 +193,12 @@ class Popup(QDialog):
             # apagarLivro(self.idLivro, self.idUsuario)
             self.atualizarLivrosPainel()
 
-            # self.accept()
+            self.accept()
 
         else:
             print("nao deletou")
 
     def atualizarLivrosPainel(self):
-        fundoDashboard = getIrmaos(self.parent)["fundoDashboard"]
-        mainWindow = getAncestrais(fundoDashboard)["mainWindow"]
-        painelLivrosCatalogo = getDescendentes(mainWindow)["painelLivrosCatalogo"]
-        painelLivrosCatalogo.resizeEvent(None)
+        pass
+        # fundoDashboard = getIrmaos(self.parent)["fundoDashboard"]
+        # fundoDashboard.resizeEvent(None)
