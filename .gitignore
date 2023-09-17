@@ -7,7 +7,7 @@ myfiles/
 __pycache__
 __pycache__/Grafico.cpython-311.pyc
 src/view/utils/__pycache__/widgetSearch.cpython-311.pyc
-src/view/components/login/__pycache__/TelaRegistro.cpython-311.pyc
+src/view/widgets/login/__pycache__/TelaRegistro.cpython-311.pyc
 src/view/components/__pycache__/Menu.cpython-311.pyc
 src/view/components/__pycache__/BotaoImagem.cpython-311.pyc
 src/view/assets/styles/fundo_dashboard.css
@@ -16,4 +16,17 @@ src/controller/__pycache__/telaPrincipal.cpython-311.pyc
 src/controller/__pycache__/telaPreviaLivro.cpython-311.pyc
 src/controller/__pycache__/telaInicial.cpython-311.pyc
 __pycache__/Popup.cpython-311.pyc
-__pycache__/Grafico.cpython-311.pyc
+src/view/assets/styles/__pycache__/non_css_styles.cpython-311.pyc
+src/view/widgets/catalogo/__pycache__/TelaCatalogo.cpython-311.pyc
+src/view/widgets/catalogo/subcomponents/__pycache__/ConteudoCatalogo.cpython-311.pyc
+src/view/widgets/catalogo/subcomponents/__pycache__/PainelFiltro.cpython-311.pyc
+src/view/widgets/catalogo/subcomponents/__pycache__/PainelLivros.cpython-311.pyc
+src/view/widgets/dashboard/__pycache__/Dashboard.cpython-311.pyc
+src/view/widgets/dashboard/subcomponents/__pycache__/FundoDashboard.cpython-311.pyc
+src/view/widgets/login/__pycache__/TelaLogin.cpython-311.pyc
+src/view/widgets/login/subcomponents/__pycache__/FormularioLogin.cpython-311.pyc
+src/view/components/ModuloLivro/__pycache__/Grafico.cpython-311.pyc
+src/view/components/ModuloLivro/__pycache__/LeitorPDF.cpython-311.pyc
+src/view/components/ModuloLivro/__pycache__/Popup.cpython-311.pyc
+src/view/utils/__pycache__/imageTools.cpython-311.pyc
+

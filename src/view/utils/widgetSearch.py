@@ -43,7 +43,7 @@ def getIrmaos(objeto: QtWidgets.QWidget):
     """
     irmaos = list()
 
-    for irmao in objeto.parent().findChildren(QObject):
+    for irmao in objeto.parent().findChildren((QObject, QtWidgets.QWidget, QtWidgets.QFrame)):
         # Filtra apenas os Widgets/Contêiners
         if (isinstance(irmao, QtWidgets.QWidget) or isinstance(irmao, QtWidgets.QFrame) or isinstance(irmao, QtWidgets.QStackedWidget) and irmao !=
                 objeto):

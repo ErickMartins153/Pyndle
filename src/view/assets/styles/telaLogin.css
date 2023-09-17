@@ -22,7 +22,15 @@
     color: #F8F3EF;
 
 }
-
+#repetirSenhaLabel {
+    font-size: 20px;
+    text-align: center;
+    border-radius: 15px;
+    width: min-content;
+    background-color: #A9A9A9;
+    border-radius: 15px;
+    color: #ff3535;
+}
 #caixaEntrada {
     border-radius: 8px;
     font-size: 15px;

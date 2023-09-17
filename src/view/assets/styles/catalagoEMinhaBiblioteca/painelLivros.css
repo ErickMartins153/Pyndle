@@ -1,0 +1,38 @@
+#contentWidget {
+    border-radius: 0;
+}
+
+/* SCROOL BAR VERTICAL */
+QScrollBar:vertical{
+    border: none;
+    width: 20px;
+    margin: 0 0;
+    background-color: #F0D097;
+}
+
+/* BARRA VERTICAL */
+QScrollBar::handle:vertical{
+    background-color: #775f46;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+QScrollBar::handle:vertical:hover{
+    background-color: #4E3D2C;
+}
+
+/* BOTÃO CIMA | SCROLL BAR */
+QScrollBar::sub-line:vertical{
+    background-color: transparent;
+}
+
+/* BOTÃO BAIXO | SCROLL BAR */
+QScrollBar::add-line:vertical {
+    background-color: transparent;
+}
+
+/* ARROW */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical{
+    background: none;
+}
+
+

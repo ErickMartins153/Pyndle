@@ -6,7 +6,7 @@ from src.view.utils import imageTools
 class BotaoImagem(QtWidgets.QPushButton):
     def __init__(self, id: int, bimage: bytes):
         """
-        - Botão para a disposição dos livros na "dashboard", "minhabiblioteca" e "catalogo"\n
+        - Botão para a disposição dos livros na "dashboard", "minhabiblioteca" e "catalagoEMinhaBiblioteca"\n
         - Guarda o id do livro para que suas informações possam ser acessadas
         - O botão assume o tamanho da imagem
 
