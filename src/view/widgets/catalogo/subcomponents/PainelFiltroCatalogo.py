@@ -31,6 +31,7 @@ class PainelFiltroCatalogo(QtWidgets.QFrame):
         # CONTAINER PRINCIPAL ------------------------------------------
 
         painelFiltroLayout = QtWidgets.QVBoxLayout()
+        painelFiltroLayout.setSpacing(0)
         self.setLayout(painelFiltroLayout)
 
 
@@ -52,6 +53,12 @@ class PainelFiltroCatalogo(QtWidgets.QFrame):
         botaoVoltar.setMinimumSize(relWidth(40, 1920), relHeight(40, 1080))
         conteinerBotaoVoltar.addWidget(botaoVoltar)
 
+        # LAYOUT COM O FRAME/CONTAINER DE FILTROS ----------------------------------------------
+
+        layoutFrame = QtWidgets.QVBoxLayout()
+        layoutFrame.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        painelFiltroLayout.addLayout(layoutFrame)
+
 
         # CONTAINER (Frame com os filtros) -----------------------------------------------------
 
@@ -62,9 +69,8 @@ class PainelFiltroCatalogo(QtWidgets.QFrame):
         """)
 
         # Definindo configurações do layout do grid
-        frameFiltros.layout().setAlignment(Qt.AlignmentFlag.AlignCenter)
         frameFiltros.setFixedSize(relWidth(350, 1920), relHeight(550, 1080))
-        layoutFrame.addWidget(frameFiltros)
+        painelFiltroLayout.addWidget(frameFiltros)
 
         frameFiltros.layout().setContentsMargins(
             relWidth(20, 1920),
@@ -74,7 +80,7 @@ class PainelFiltroCatalogo(QtWidgets.QFrame):
         )
 
         # Adicionando Grid
-        painelFiltroLayout.addWidget(frameFiltros)
+        layoutFrame.addWidget(frameFiltros)
 
 
         # LABEL (FILTRAGEM) -----------------------------------------------------

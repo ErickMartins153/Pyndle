@@ -23,12 +23,12 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
 
         # Definindo Layout
         painelFiltroLayout = QtWidgets.QVBoxLayout()
-        painelFiltroLayout.setSpacing(0)
+        painelFiltroLayout.setSpacing(relHeight(50, 1080))
         self.setLayout(painelFiltroLayout)
 
         # QPushButton (Botão de voltar) -----------------------------------
         conteinerBotaoVoltar = horizontalFrame(self)
-        conteinerBotaoVoltar.setMaximumHeight(relHeight(50, 1080))
+        conteinerBotaoVoltar.setMaximumHeight(relHeight(60, 1080))
         conteinerBotaoVoltar.layout().setAlignment(Qt.AlignmentFlag.AlignLeft)
         painelFiltroLayout.addWidget(conteinerBotaoVoltar)
 

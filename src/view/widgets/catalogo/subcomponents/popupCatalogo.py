@@ -31,7 +31,7 @@ class PopupCatalogo(QDialog):
         self.autor = self.dadosLivro["autor"]
         self.anoPublicacao = self.dadosLivro["anoPublicacao"]
         self.capaLivro = getResizedImage(
-            self.dadosLivro["capaLivro"], relWidth(340, 1920), relHeight(476, 1080)
+            self.dadosLivro["capaLivro"], relWidth(240, 1920), relHeight(336, 1080)
         )
         self.arquivoPDF = self.dadosLivro["arquivoPdf"]
         self.qtdPaginas = self.dadosLivro["pagTotal"]

@@ -63,7 +63,7 @@ class FundoDashboard(QtWidgets.QFrame):
         myBibliotecaLabel.setStyleSheet(f"""
             font-size: {relHeight(25, 1080)}
         """)
-        myBibliotecaLabel.setMaximumHeight(relHeight(35, 1080))
+        myBibliotecaLabel.setMaximumHeight(relHeight(45, 1080))
         myBibliotecaLabel.setText("Minha Biblioteca")
         ContainerMinhaBiblioteca.layout().addWidget(myBibliotecaLabel)
 
@@ -116,7 +116,7 @@ class FundoDashboard(QtWidgets.QFrame):
         catalogoLabel.setStyleSheet(f"""
             font-size: {relHeight(25, 1080)}
         """)
-        catalogoLabel.setMaximumHeight(relHeight(35, 1080))
+        catalogoLabel.setMaximumHeight(relHeight(45, 1080))
         catalogoLabel.setObjectName("labelFrameLivros")
         catalogoLabel.setText("Catálogo")
         containerCatalogo.layout().addWidget(catalogoLabel)
