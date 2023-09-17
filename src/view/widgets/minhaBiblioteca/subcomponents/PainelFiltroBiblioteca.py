@@ -4,6 +4,7 @@ from src.view.components.BotaoAvaliacao import BotaoAvaliacao
 from src.view.widgets.minhaBiblioteca.subcomponents.FormularioLivro import FormularioLivro
 from src.view.utils import widgetSearch
 from src.view.utils.container import verticalFrame, horizontalFrame, gridFrame
+from src.controller.telaPrincipal import getGeneros
 from src.view.utils.imageTools import relHeight, relWidth
 
 
@@ -165,16 +166,7 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         self.groupRadio = QtWidgets.QButtonGroup()
         self.groupRadio.setExclusive(False)
 
-        generos = (
-            "Terror",
-            "Fantasia",
-            "Aventura",
-            "Romance",
-            "Matemática",
-            "Geografia",
-            "Linguagens",
-            "Literatura",
-        )
+        generos = getGeneros()
 
         quant_linhas, coluna, linha = 5, 0, 0
         for contador, genero in enumerate(generos):

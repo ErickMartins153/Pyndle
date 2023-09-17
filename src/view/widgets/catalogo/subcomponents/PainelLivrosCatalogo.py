@@ -55,7 +55,6 @@ class PainelLivrosCatalogo(QtWidgets.QScrollArea):
             self.displayBotoesLivros(3, relWidth(200, 1920), relHeight(280, 1080))
 
     def displayBotoesLivros(self, quantColunas: int, width: int, height: int):
-        print("DisplayBotaoLivro")
         """
         Adiciona os livros ao Painel de Livros
         :param quantColunas: Define a quantidade de colunas em que serão dispostos
@@ -76,7 +75,6 @@ class PainelLivrosCatalogo(QtWidgets.QScrollArea):
                 linha += 1
 
     def getLivrosCatalogo(self, genero: str = None, ordemAlfabetica: bool = None):
-        print("getLivro")
         livrosCatalogoBD = filtrarCatalogo(genero, ordemAlfabetica)
 
         for botao in self.listaBotaoLivro:

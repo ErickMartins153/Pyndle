@@ -293,6 +293,6 @@ def filtrarBiblioteca(idUsuario, genero: str = None, avaliacao: int = None, orde
 
 def getGeneros():
     return (
-        "Terror", "Fantasia", "Aventura", "Romance",
-        "Matemática", "Geografia", "Linguagens", "Literatura",
+        'Aventura', 'Fantasia', 'Geografia', 'Linguagens', 'Literatura', 'Matemática', 
+        'Romance', 'Terror', 'Hentai', "Mistério",
     )

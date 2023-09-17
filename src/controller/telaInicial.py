@@ -15,7 +15,6 @@ def checarLogin(nomeUsuario: str, senha: str = None):
         """, (nomeUsuario,))
 
         count = quantidadeUsuario.fetchone()[0]
-        print(count)
 
     else:
         count = 0
@@ -29,7 +28,6 @@ def checarLogin(nomeUsuario: str, senha: str = None):
 
             senhaBD = (sgbd.fetchone())
 
-            print(nomeUsuario)
 
             if(len(nomeUsuario) == 0):
                 return 0 #Informe seu login
