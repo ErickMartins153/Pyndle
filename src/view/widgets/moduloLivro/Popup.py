@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import (
     QMessageBox,
 )
 from PyQt6.QtGui import QImage, QPixmap
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 from src.view.widgets.moduloLivro.LeitorPDF import LeitorPDF
 from src.controller.telaPreviaLivro import dadosLivro, getPagAtual
 from src.controller.telaInicial import dadosUsuario
@@ -19,13 +19,15 @@ from src.view.utils.imageTools import getResizedImage, relHeight, relWidth
 from src.controller.telaPrincipal import apagarLivro
 
 class Popup(QDialog):
+    # Sinais
+    sinalLivroApagado = pyqtSignal()
+
     def __init__(self, nomeUsuario: str, idLivro: int, parent):
         super().__init__()
         # atributos ----------------
         self.idUsuario = dadosUsuario(nomeUsuario)["idUsuario"]
         self.idLivro = idLivro
         self.parent = parent
-        self.atualizarLivrosPainel()
         self.dadosLivro = dadosLivro(idLivro)
         self.titulo = self.dadosLivro["titulo"]
         self.genero = self.dadosLivro["genero"]
@@ -188,15 +190,13 @@ class Popup(QDialog):
         caixaConfirmacao.exec()
 
         if caixaConfirmacao.clickedButton() == botaoSim:
-            #apagarLivro(self.idLivro, self.idUsuario)
-            self.atualizarLivrosPainel()
+            # Apaga o livro e a relação de pyndle.db
+            apagarLivro(self.idLivro, self.idUsuario)
+
+            # Emite o sinal de que o livro foi apagado
+            self.sinalLivroApagado.emit()
 
             self.accept()
 
         else:
-            print("nao deletou")
-
-    def atualizarLivrosPainel(self):
-        pass
-        # fundoDashboard = getIrmaos(self.parent)["fundoDashboard"]
-        # fundoDashboard.resizeEvent(None)
+            self.accept()

@@ -192,7 +192,7 @@ class FormularioLogin(QtWidgets.QFrame):
                 QMessageBox.critical(self, "Erro", "Usuário não cadastrado")
 
         except IndexError:
-            print("Usuário não encontrado")
+            pass
 
     def registrarBotaoClicado(self):
         self.entradaSenha.clear()

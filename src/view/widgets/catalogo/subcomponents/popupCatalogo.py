@@ -13,6 +13,7 @@ from src.controller.telaPreviaLivro import dadosLivro
 from src.controller.telaInicial import dadosUsuario
 from src.controller.telaPrincipal import adicionarlivrosPessoais
 from src.view.utils.imageTools import getResizedImage, relHeight, relWidth
+from src.view.utils import widgetSearch
 
 class PopupCatalogo(QDialog):
     # Sinais
@@ -131,7 +132,15 @@ class PopupCatalogo(QDialog):
         adicionarlivrosPessoais(self.idUsuario, self.idLivro)
         self.hide()
 
+        # Abre PopUp de "Minha Biblioteca"
         popUpBiblioteca = Popup(self.nomeUsuario, self.idLivro, self)
+        # Quando o livro for apagado, manda sinal para atualizar a dashboard
+        try:
+            popUpBiblioteca.sinalLivroApagado.connect(self.parent.atualizarLivros)
+        except AttributeError:
+            pass
+
+        #Emite sinal que o livro foi adicionado para atualizar a dashboard
         self.sinalLivroAdicionado.emit()
         popUpBiblioteca.exec()
         self.close()

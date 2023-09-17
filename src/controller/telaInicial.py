@@ -7,46 +7,50 @@ sgbd = conexao.cursor()
 
 
 def checarLogin(nomeUsuario: str, senha: str = None):
+    """
+    Utilizado para checar se as informações de login do usuário esão certas
+    :param nomeUsuario: Nome do usuário que foi inserido
+    :param senha: Senha inserida pelo usuário
+    """
 
-    if(len(nomeUsuario) > 0):
+    if len(nomeUsuario) > 0:
         quantidadeUsuario = sgbd.execute("""
         SELECT COUNT(login) FROM usuarios 
         WHERE login = ?
         """, (nomeUsuario,))
 
         count = quantidadeUsuario.fetchone()[0]
-        print(count)
 
     else:
         count = 0
 
-    if (len(senha) > 0):
+    if len(senha) > 0:
 
-            sgbd.execute("""
-            SELECT senha FROM usuarios
-            WHERE login = (?)
-            """, (nomeUsuario,))
+        sgbd.execute("""
+        SELECT senha FROM usuarios
+        WHERE login = (?)
+        """, (nomeUsuario,))
 
-            senhaBD = (sgbd.fetchone())
+        senhaBD = (sgbd.fetchone())
 
-            print(nomeUsuario)
 
-            if(len(nomeUsuario) == 0):
-                return 0 #Informe seu login
-            elif(count != 0 and len(nomeUsuario) > 0 and senhaBD[0] == senha):
-                return 1 #usuario cadastrado e senha correta. pode logar
-            elif(count >= 1 and senhaBD[0] != senha):
-                return 2 #usuario cadastrado mas senha errada
-            elif(count == 0):
-                return 6 #usuario não cadastrado
-            
+        if len(nomeUsuario) == 0:
+            return 0  # Informe seu login
+        elif count != 0 and len(nomeUsuario) > 0 and senhaBD[0] == senha:
+            return 1  # usuario cadastrado e senha correta. pode logar
+        elif count >= 1 and senhaBD[0] != senha:
+            return 2  # usuario cadastrado mas senha errada
+        elif count == 0:
+            return 6  # usuario não cadastrado
+
     else:
-        if(len(nomeUsuario) == 0):
-            return 3 #informe seu login e senha
-        elif(count >= 1):
-            return 4 #informe  sua senha
-        elif(count == 0):
-            return 5 #usuário não cadastrado
+        if len(nomeUsuario) == 0:
+            return 3  # informe seu login e senha
+        elif count >= 1:
+            return 4  # informe  sua senha
+        elif count == 0:
+            return 5  # usuário não cadastrado
+
 
 def checar(nomeUsuario: str, senha: str = None):
     """
