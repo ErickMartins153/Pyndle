@@ -5,6 +5,7 @@ from src.view.components.FotoPerfil import FotoPerfil
 from src.controller import telaInicial
 from src.view.utils import widgetSearch
 from src.view.utils.imageTools import relHeight, relWidth
+import PIL
 
 import pyautogui
 
@@ -276,20 +277,24 @@ class FormularioRegistro(QtWidgets.QFrame):
 
     def dropEvent(self, event):
         if event.mimeData().hasImage:
-            event.setDropAction(Qt.DropAction.CopyAction)
-            event.mimeData().urls()[0].toLocalFile()
 
-            with open(f"{event.mimeData().urls()[0].toLocalFile()}", "rb") as arquivos:
-                newBimage = arquivos.read()
+            try:
+                event.setDropAction(Qt.DropAction.CopyAction)
+                event.mimeData().urls()[0].toLocalFile()
 
-            # Define o atributo binaryFoto com o diretório da foto recebida
-            self.binaryFoto = newBimage
+                with open(f"{event.mimeData().urls()[0].toLocalFile()}", "rb") as arquivos:
+                    newBimage = arquivos.read()
 
-            self.foto.setStyleSheet("""
-            background-color: transparent;
-            """)
-            self.foto.changePhoto(newBimage, 100)
-            event.accept()
+                # Define o atributo binaryFoto com o diretório da foto recebida
+                self.binaryFoto = newBimage
+
+                self.foto.setStyleSheet("""
+                background-color: transparent;
+                """)
+                self.foto.changePhoto(newBimage, 100)
+                event.accept()
+            except PIL.UnidentifiedImageError:
+                self.tornarFotoPerfilPadrao()
 
         else:
             event.ignore()

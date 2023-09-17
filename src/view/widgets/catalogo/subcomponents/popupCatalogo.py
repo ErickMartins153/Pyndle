@@ -5,6 +5,7 @@ from PyQt6.QtWidgets import (
     QFrame,
     QLabel,
     QPushButton,
+    QSpacerItem
 )
 from PyQt6.QtGui import QImage, QPixmap
 from PyQt6.QtCore import Qt, pyqtSignal
@@ -14,6 +15,7 @@ from src.controller.telaInicial import dadosUsuario
 from src.controller.telaPrincipal import adicionarlivrosPessoais
 from src.view.utils.imageTools import getResizedImage, relHeight, relWidth
 from src.view.utils import widgetSearch
+from src.view.utils.container import verticalFrame
 
 class PopupCatalogo(QDialog):
     # Sinais
@@ -21,7 +23,8 @@ class PopupCatalogo(QDialog):
 
     def __init__(self, nomeUsuario: str, idLivro: int, parent):
         super().__init__()
-        # atributos ----------------------------------------------
+
+        # ATRIBUTOS ----------------------------------------------
         self.idLivro = idLivro
         self.nomeUsuario = nomeUsuario
         self.idUsuario = dadosUsuario(nomeUsuario)["idUsuario"]
@@ -32,100 +35,138 @@ class PopupCatalogo(QDialog):
         self.autor = self.dadosLivro["autor"]
         self.anoPublicacao = self.dadosLivro["anoPublicacao"]
         self.capaLivro = getResizedImage(
-            self.dadosLivro["capaLivro"], relWidth(240, 1920), relHeight(336, 1080)
+            self.dadosLivro["capaLivro"], relWidth(280, 1920), relHeight(392, 1080)
         )
         self.arquivoPDF = self.dadosLivro["arquivoPdf"]
         self.qtdPaginas = self.dadosLivro["pagTotal"]
 
-        # Configurações-------------------------------------------
+
+        # CONFIGURAÇÕES -------------------------------------------
 
         self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
         self.setWindowTitle(self.titulo)
         self.setWindowModality(Qt.WindowModality.ApplicationModal)
-        self.setFixedSize(700, 450)
+        self.setFixedSize(relWidth(550, 1366), relHeight(450, 768))
         self.setWindowFlag(Qt.WindowType.Window, False)
         self.setWindowFlag(Qt.WindowType.WindowCloseButtonHint, False)
 
 
-        # ---------------------------------------------------------
+        # LAYOUT ------------------------------------------------------------
         layout = QHBoxLayout()
         layout.setObjectName("fundo")
         self.setLayout(layout)
 
-        groupImagemBotao = QFrame(self)
+
+        # CONTAINER (Grupo com botão de adicionar e capa) -----------------------------
+
+        groupImagemBotao = verticalFrame(self)
         groupImagemBotao.setObjectName("groupImagemBotao")
-        # groupImagemBotao.setFixedSize(300, 660)
         layout.addWidget(groupImagemBotao)
 
-        ImagemBotaoLayout = QVBoxLayout()
-        ImagemBotaoLayout.setObjectName("ImagemBotaoLayout")
-        ImagemBotaoLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        groupImagemBotao.setLayout(ImagemBotaoLayout)
+        groupImagemBotao.layout().setObjectName("ImagemBotaoLayout")
+        groupImagemBotao.layout().setAlignment(Qt.AlignmentFlag.AlignCenter)
+        groupImagemBotao.setLayout(groupImagemBotao.layout())
+
+
+        # CAPA DO LIVRO --------------------------------------------------------------
 
         imagemCapaLivro = QImage.fromData(self.capaLivro)
         capa = QLabel(self)
+        capa.setAlignment(Qt.AlignmentFlag.AlignCenter)
         pixmap = QPixmap.fromImage(imagemCapaLivro)
         capa.setPixmap(pixmap)
+        groupImagemBotao.layout().addWidget(capa, alignment=Qt.AlignmentFlag.AlignCenter)
 
-        # colocar um espaço em cima e embaixo da capa, garantindo que ela fique no centro do frame
-        ImagemBotaoLayout.addStretch()
-        ImagemBotaoLayout.addWidget(capa, alignment=Qt.AlignmentFlag.AlignCenter)
-        ImagemBotaoLayout.addStretch()
+
+        # SPACER --------------------------------------------------------------------
+
+        spacer = QSpacerItem(0, relHeight(50, 1080))
+        groupImagemBotao.layout().addSpacerItem(spacer)
+
+
+        # BOTÃO DE ADICIONAR NA BIBLIOTECA ------------------------------------------
+
+        containerBotaoAdicionar = QVBoxLayout()
+        containerBotaoAdicionar.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        groupImagemBotao.layout().addLayout(containerBotaoAdicionar)
 
         AdicionarBibliotecaBotao = QPushButton(groupImagemBotao)
         AdicionarBibliotecaBotao.setObjectName("lerLivroBotao")
         AdicionarBibliotecaBotao.setText("Adicionar livro")
         AdicionarBibliotecaBotao.clicked.connect(self.adicionarBiblioteca)
-        ImagemBotaoLayout.addWidget(AdicionarBibliotecaBotao)
+        containerBotaoAdicionar.addWidget(AdicionarBibliotecaBotao)
 
-        groupInfos = QFrame(self)
+
+        # CONTAINER (Onde fica botão de fechar e metadados) --------------------------
+
+        groupInfos = verticalFrame(self)
         groupInfos.setObjectName("groupTexto")
-        # groupInfos.setFixedHeight(660)
         layout.addWidget(groupInfos)
 
-        infosLayout = QVBoxLayout()
-        infosLayout.setObjectName("infosLayout")
-        groupInfos.setLayout(infosLayout)
+        groupInfos.layout().setObjectName("infosLayout")
+        groupInfos.setLayout(groupInfos.layout())
+
+
+        # CONTAINER (Grupo com os labels de metadados) ------------------------------
+        groupMetadado = verticalFrame(groupInfos)
+        groupMetadado.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
+        groupMetadado.layout().setSpacing(50)
+        groupInfos.layout().addWidget(groupMetadado)
+
+        # LABEL (Informações do livro) ----------------------------------------------
 
         h1 = QLabel("Informações do livro")
-        infosLayout.addWidget(h1)
+        h1.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        groupMetadado.layout().addWidget(h1)
         h1.setObjectName("h1")
         h1.setMaximumHeight(50)
 
+
+        # METADADOS DO PDF ----------------------------------------------------------
+
+        # Mostrar título
         tituloLabel = QLabel(f"Titulo: {self.titulo}")
         tituloLabel.setObjectName("info")
         tituloLabel.setMaximumHeight(20)
-        infosLayout.addWidget(tituloLabel)
+        groupMetadado.layout().addWidget(tituloLabel)
 
+        # Mostrar gênero
         generoLabel = QLabel(f"Gênero: {self.genero}")
         generoLabel.setObjectName("info")
         generoLabel.setMaximumHeight(20)
-        infosLayout.addWidget(generoLabel)
+        groupMetadado.layout().addWidget(generoLabel)
 
+        # Mostrar autor
         autorLabel = QLabel(f"Autor: {self.autor}")
         autorLabel.setMaximumHeight(20)
         autorLabel.setObjectName("info")
-        infosLayout.addWidget(autorLabel)
+        groupMetadado.layout().addWidget(autorLabel)
 
+        # Mostrar ano
         anoLabel = QLabel(f"Ano: {self.anoPublicacao}")
         anoLabel.setMaximumHeight(20)
         anoLabel.setObjectName("info")
-        infosLayout.addWidget(anoLabel)
+        groupMetadado.layout().addWidget(anoLabel)
 
+        # Mostrar quantidade de páginas
         qtdPaginasLabel = QLabel(f"Total de páginas: {self.qtdPaginas}")
         qtdPaginasLabel.setMaximumHeight(20)
         qtdPaginasLabel.setObjectName("info")
-        infosLayout.addWidget(qtdPaginasLabel)
+        groupMetadado.layout().addWidget(qtdPaginasLabel)
 
-        layoutBotaoFechar = QVBoxLayout()
-        layoutBotaoFechar.setAlignment(Qt.AlignmentFlag.AlignBottom)
+
+        # BOTÃO DE FECHAR ---------------------------------------------------------
+        layoutBotaoFechar = verticalFrame(groupInfos)
+        layoutBotaoFechar.layout().setAlignment(Qt.AlignmentFlag.AlignCenter)
+        groupInfos.layout().addWidget(layoutBotaoFechar)
+
         botaoFechar = QPushButton("Fechar", self)
         botaoFechar.clicked.connect(self.accept)
-        layoutBotaoFechar.addWidget(botaoFechar)
+        layoutBotaoFechar.layout().addWidget(botaoFechar)
 
-        # Adicionar layout botão fechar ao layout principal
-        infosLayout.addLayout(layoutBotaoFechar)
-        self.setLayout(layout)
+        # DEFININDO PROPORÇÃO DO CONTAINER DE METADADOS ---------------------------
+        groupInfos.layout().setStretch(0, 60)
+        groupInfos.layout().setStretch(1, 20)
 
 
     def adicionarBiblioteca(self):
