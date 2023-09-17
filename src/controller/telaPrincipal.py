@@ -2,6 +2,7 @@ import sqlite3
 import fitz as PyMuPDF
 import io
 from PIL import Image
+from PyQt6.QtWidgets import QMessageBox
 
 # Definindo conexão com o banco de dados
 conexao = sqlite3.connect(r"src\model\Pyndle.db")
@@ -84,8 +85,10 @@ def uploadLivro(arquivo, idUsuario: int):
         return ultimoLivroId
 
     except Exception as e:
-        print(e)
-        print(f"Ocorreu um erro ao processar o arquivo PDF: {e}")
+        msg = QMessageBox()
+        msg.setText(f"Ocorreu um erro ao processar o arquivo PDF: {e}")
+        msg.setWindowTitle("Erro")
+        msg.exec()
 
 
 def checarRelacaoUsuarioLivro(idUsuario: int, idLivro: int):
