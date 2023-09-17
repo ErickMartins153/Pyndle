@@ -269,6 +269,7 @@ class FundoDashboard(QtWidgets.QFrame):
 
         # Abrindo PopUp
         popupBiblioteca = Popup(usuarioAtual, self.sender().getID(), self)
+        popupBiblioteca.sinalLivroApagado.connect(self.atualizarLivros)
         popupBiblioteca.exec()
 
 
@@ -286,17 +287,19 @@ class FundoDashboard(QtWidgets.QFrame):
         # Caso o usuário já possua o livro, abre o PopUp de "Minha Biblioteca"
         if telaPrincipal.checarRelacaoUsuarioLivro(usuarioAtual["idUsuario"], self.sender().getID()):
             popupBiblioteca = Popup(usuarioAtual["login"], self.sender().getID(), self)
+            popupBiblioteca.sinalLivroApagado.connect(self.atualizarLivros)
             popupBiblioteca.exec()
         # Caso contrário, abre o PopUp do "Catálogo" com informações do usuário
         else:
             popupCatalogo = PopupCatalogo(usuarioAtual["login"], self.sender().getID(), self)
-            popupCatalogo.sinalLivroAdicionado.connect(self.livroCatalogoAdicionado)
+            popupCatalogo.sinalLivroAdicionado.connect(self.atualizarLivros)
             popupCatalogo.exec()
 
 
-    def livroCatalogoAdicionado(self):
+    def atualizarLivros(self):
         """
         Utilizado quando um livro do catalogo é adicionado para atualizar os livros de "Minha Biblioteca"
+        ou quando um livro de "Minha Biblioteca" é apagado
         """
         self.livrosDispostos = 0
         self.resizeAndDisplayLivros()
