@@ -9,9 +9,9 @@ Este projeto foi desenvolvido por:
 
 - [Erick Martins](https://github.com/ErickMartins153)
 - [João Lucas](https://github.com/JoaoLucasCordeiro)
-- [Rony Rangel](https://github.com/RonyRangelSS)
 - [Luan Vilaça](https://github.com/Luan-Vn4)
 - [Michael Albuquerque](https://github.com/Malbuq)
+- [Rony Rangel](https://github.com/RonyRangelSS)
 
 ## Funcionalidades Principais
 
@@ -43,27 +43,26 @@ Você pode instalar as dependências usando o `pip`:
 
 ```bash
 pip install PyQt6 PyMuPDF matplotlib
+```
 
-Como Executar
+### Como Executar
 
 Para executar o Pyndle, siga estas etapas:
 
-    Clone este repositório para o seu computador:
+Clone este repositório para o seu computador:
 
-bash
-
+```bash
 git clone https://github.com/ErickMartins153/Pyndle.git
 cd Pyndle
+```
+Execute o programa:
 
-    Execute o programa:
-
-bash
-
+```bash
 python main.py
-
+```
 Isso iniciará o aplicativo Pyndle.
 
-Contribuição
+### Contribuição
 
 O Pyndle é um projeto em andamento. Se você deseja contribuir, sinta-se à vontade para abrir um problema ou enviar uma solicitação de pull.
 
