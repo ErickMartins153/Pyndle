@@ -177,7 +177,8 @@ class FormularioLogin(QtWidgets.QFrame):
                 ].setNomeUsuario(usuario)
 
                 self.AtualizacaoUsuario.emit(usuario)
-
+                self.entradaSenha.clear()
+                self.entradaUsuario.clear()
             elif(status == 0):
                 QMessageBox.critical(self, "Erro", "Informe seu login")
             elif(status == 2):
