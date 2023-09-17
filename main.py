@@ -1,4 +1,3 @@
-
 from PyQt6 import QtWidgets, QtCore
 import sys
 from src.view.widgets.MainWindow import MainWindow

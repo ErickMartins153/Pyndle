@@ -1,3 +1,9 @@
+"""
+Módulo que contém conteiners utilizados para organizar as janelas\n
+Fornece widgets e frames com layout já embutidos
+"""
+
+
 from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtWidgets import QSizePolicy
 from PyQt6.QtCore import Qt
@@ -73,7 +79,7 @@ class gridFrame(QtWidgets.QFrame):
 
 
 class verticalWidget(QtWidgets.QWidget):
-    def __init__(self, parent: QtWidgets.QFrame | QtWidgets.QWidget, objectName: str):
+    def __init__(self, parent: QtWidgets.QFrame | QtWidgets.QWidget, objectName: str = ""):
         """
         Widget com layout vertical embutido
         :param parent: parente do frame, objeto no qual estará inserido

@@ -285,11 +285,9 @@ class FormularioRegistro(QtWidgets.QFrame):
             # Define o atributo binaryFoto com o diretório da foto recebida
             self.binaryFoto = newBimage
 
-            self.foto.setStyleSheet(
-                """
+            self.foto.setStyleSheet("""
             background-color: transparent;
-            """
-            )
+            """)
             self.foto.changePhoto(newBimage, 100)
             event.accept()
 

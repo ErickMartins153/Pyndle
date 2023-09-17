@@ -7,26 +7,26 @@ class Dashboard(QtWidgets.QWidget):
     def __init__(self, parent: QtWidgets.QWidget):
         """
         Widget utilizado para modelar a dashboard presente na "MainWindow.py"\n
-        Obs.: Utiliza o componente Menu.py
 
         :param parent: Define o parente do widget
         """
-        # Configurações
+
+        # CONFIGURAÇÕES --------------------------------
         super().__init__()
         self.setParent(parent)
         self.setStyleSheet(open("src/view/assets/styles/dashboard/dashboard.css").read())
 
-        # Definição do layout
+        # LAYOUT ---------------------------------------
         dashboardLayout = QtWidgets.QVBoxLayout()
         dashboardLayout.setSpacing(0)
         self.setLayout(dashboardLayout)
 
-        # QFrame (menu) ------------------------------
+        # MENU ------------------------------------
         menu = Menu(self)
         menu.setObjectName("menu")
         dashboardLayout.addWidget(menu)
 
-        # QFrame (fundo) -----------------------------
+        # FUNDO DASHBOARD -----------------------------
         fundoDashboard = FundoDashboard(self)
         fundoDashboard.setObjectName("fundoDashboard")
         dashboardLayout.addWidget(fundoDashboard)

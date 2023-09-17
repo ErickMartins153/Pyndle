@@ -5,6 +5,7 @@ from src.view.widgets.minhaBiblioteca.TelaMinhaBiblioteca import TelaMinhaBiblio
 from src.view.widgets.catalogo.TelaCatalogo import TelaCatalogo
 from src.view.assets.styles import non_css_styles
 from src.view.utils.imageTools import relHeight, relWidth
+from src.view.utils.container import verticalWidget
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -12,17 +13,13 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Janela principal que contém todos os outros widgets e funcionalidades
 
-        Atributos:
+        ATRIBUTOS:
             - usuarioAtual (tuple): possui todas as informações do usuário atual. É definida após o ação de logar
-
-        Métodos:
-            - getUsuario(): retorna a tupla com as informações do usuário atual da aplicação
-            - setUsuario(): define a tupla com as informações usuário atual da aplicação
         """
-        # Atributos
+        # ATRIBUTOS ----------------------------------
         self.usuarioAtual = tuple()
 
-        # Configurações
+        # CONFIGURAÇÕES ------------------------------
         super().__init__()
         self.setAcceptDrops(True)
         self.setObjectName("mainWindow")
@@ -30,32 +27,31 @@ class MainWindow(QtWidgets.QMainWindow):
         QtGui.QFontDatabase.addApplicationFont("src/view/assets/fonts/Baskervville.ttf")
         self.setStyleSheet(open("src/view/assets/styles/mainWindow.css").read())
         self.setMinimumSize(relWidth(1300, 1920), relHeight(980, 1080))
-        # self.currentSize = {"width": self.width(), "height": self.height()}
 
-        # Central QWidget (mainWindowSpace)
-        mainWindowSpace = QtWidgets.QWidget(self)
-        mainWindowSpace.setObjectName("mainWindowSpace")
+
+        # WIDGET CENTRAL ----------------------------------------------------
+        mainWindowSpace = verticalWidget(self, "mainWindowSpace")
+        mainWindowSpace.layout().setContentsMargins(
+            relWidth(25, 1920),
+            relHeight(15, 1080),
+            relWidth(25, 1920),
+            relHeight(15, 1080),
+        )
         self.setCentralWidget(mainWindowSpace)
 
-        # mainWindowLayout
-        mainWindowLayout = QtWidgets.QVBoxLayout()
-        mainWindowLayout.setContentsMargins(
-            relWidth(25, 1920),
-            relHeight(15, 1080),
-            relWidth(25, 1920),
-            relHeight(15, 1080),
-        )
-        mainWindowSpace.setLayout(mainWindowLayout)
 
-        # QStackedWidget (paginas) ---------------------------------
+        # STACKED WIDGET (contém as janelas) ---------------------------------
         self.paginas = QtWidgets.QStackedWidget(self)
         self.paginas.setObjectName("paginas")
-        mainWindowLayout.addWidget(self.paginas)
-        self.paginas.setGraphicsEffect(
-            non_css_styles.BoxShadow(
-                QtGui.QColor(0, 0, 0, 85), relWidth(4, 1920), relHeight(5, 1080), 4
+
+        # Definindo efeito de DropShadow
+        self.paginas.setGraphicsEffect(non_css_styles.BoxShadow(
+            QtGui.QColor(0, 0, 0, 85),
+            relWidth(4, 1920),
+            relHeight(5, 1080), 4
             )
         )
+
 
         # Instância login
         telaLogin = TelaLogin(self.paginas)
@@ -74,10 +70,23 @@ class MainWindow(QtWidgets.QMainWindow):
         catalogo.setObjectName("catalago")
         self.paginas.addWidget(catalogo)
 
-        self.paginas.setCurrentIndex(0)
+
+        mainWindowSpace.layout().addWidget(self.paginas)
+        # self.paginas.setCurrentIndex(0)
+
+    # (MÉTODOS) ---------------------------------------------
 
     def getUsuario(self):
+        """
+        Obtém dados do usuário atual que está logado\n
+        **OBS: Utilizado em funções, classes ou métodos que precisam obter informações do usuário**
+        """
         return self.usuarioAtual
 
+
     def setUsuario(self, tuplaUsuario: tuple):
+        """
+        Define o usuário atual que está logado
+        :param tuplaUsuario:
+        """
         self.usuarioAtual = tuplaUsuario

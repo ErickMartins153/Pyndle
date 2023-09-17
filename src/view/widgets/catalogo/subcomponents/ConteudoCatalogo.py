@@ -7,18 +7,26 @@ from src.view.utils.imageTools import relHeight
 
 
 class ConteudoCatalogo(QtWidgets.QFrame):
+    """
+    Conteúdo do "Catálogo" onde estão dispostos os painéis de filtro e livro
+    """
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
 
-        # Configurações
+        # CONFIGURAÇÕES -------------------------------------------
+
         self.setParent(parent)
 
-        # Definição de layout
+
+        # LAYOUT --------------------------------------------------
+
         conteudoCatalogoLayout = QtWidgets.QVBoxLayout()
         conteudoCatalogoLayout.setSpacing(0)
         self.setLayout(conteudoCatalogoLayout)
 
-        # QLabel (Catalogo)
+
+        # LABEL ("Catálogo") --------------------------------------
+
         conteinerLabelCatalogo = QtWidgets.QHBoxLayout()
         conteudoCatalogoLayout.addLayout(conteinerLabelCatalogo)
 
@@ -31,7 +39,9 @@ class ConteudoCatalogo(QtWidgets.QFrame):
         labelCatalogo.setMinimumHeight(relHeight(60, 1080))
         conteinerLabelCatalogo.addWidget(labelCatalogo)
 
-        # Definição do contêiner com os painéis
+
+        # CONTAINER DE PAINÉIS ------------------------------------
+
         groupPaineis = QtWidgets.QHBoxLayout()
         groupPaineis.setSpacing(0)
         conteudoCatalogoLayout.addLayout(groupPaineis)
@@ -61,6 +71,9 @@ class ConteudoCatalogo(QtWidgets.QFrame):
         containerPainelLivros.layout().addWidget(painelLivros)
 
         groupPaineis.addWidget(containerPainelLivros)
+
+
+        # PROPORÇÃO DOS PAINÉIS ------------------------------------
 
         groupPaineis.setStretch(0, 41)
         groupPaineis.setStretch(1, 100)

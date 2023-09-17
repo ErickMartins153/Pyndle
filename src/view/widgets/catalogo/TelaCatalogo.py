@@ -4,25 +4,34 @@ from src.view.widgets.catalogo.subcomponents.ConteudoCatalogo import ConteudoCat
 from src.view.utils.imageTools import relHeight, relWidth
 
 class TelaCatalogo(QtWidgets.QFrame):
+    """
+    Tela que contém o conteúdo do "Catálogo"
+    """
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
 
-        # Configurações
+        # CONFIGURAÇÕES ----------------------------------------
+
         self.setParent(parent)
         self.setStyleSheet(open("src/view/assets/styles/catalagoEMinhaBiblioteca/telaCatalogoBiblioteca.css").read())
 
 
-        # Definição do layout
+        # LAYOUT -----------------------------------------------
+
         telaCatalogoLayout = QtWidgets.QVBoxLayout()
         telaCatalogoLayout.setSpacing(0)
         self.setLayout(telaCatalogoLayout)
 
-        # QFrame (Menu)
+
+        # MENU -------------------------------------------------
+
         menu = Menu(self)
         menu.setObjectName("menu")
         telaCatalogoLayout.addWidget(menu)
 
-        # QFrame (ConteudoCatalogo)
+
+        # CONTEÚDO DO CATÁLOGO ---------------------------------
+
         conteudoCatalogo = ConteudoCatalogo(self)
         conteudoCatalogo.setObjectName("conteudoFrame")
         conteudoCatalogo.setStyleSheet(f"""

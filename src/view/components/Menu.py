@@ -93,6 +93,7 @@ class Menu(QtWidgets.QFrame):
         menuLayout.addWidget(botao)
         botao.clicked.connect(self.deslogar)
 
+
     def deslogar(self):
         QtWidgets.QApplication.quit()
 
@@ -101,4 +102,17 @@ class Menu(QtWidgets.QFrame):
             imagemUsuario = dadosUsuario(nomeUsuario)["fotoPerfil"]
             self.fotoPerfil.changePhoto(imagemUsuario, 50)
         except (PIL.UnidentifiedImageError, TypeError):
-            pass
+            with open('src/view/assets/icons/default_user.jpg', 'rb') as img_file:
+                imagemUsuario = img_file.read()
+                self.fotoPerfil.changePhoto(imagemUsuario, 50)
+
+'''=======
+        imagemUsuario = dadosUsuario(nomeUsuario)["fotoPerfil"]
+
+        if(imagemUsuario is None):
+            with open('src/view/assets/icons/default_user.jpg', 'rb') as img_file:
+                imagemUsuario = img_file.read()
+            self.fotoPerfil.changePhoto(imagemUsuario, 50)
+        else:
+            self.fotoPerfil.changePhoto(imagemUsuario, 50)
+>>>>>>> 08cd1082d268ec309870d55676b0cb4fcfce5d80'''
