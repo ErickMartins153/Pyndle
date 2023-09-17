@@ -188,13 +188,13 @@ class Popup(QDialog):
         caixaConfirmacao.exec()
 
         if caixaConfirmacao.clickedButton() == botaoSim:
-            #apagarLivro(self.idLivro, self.idUsuario)
+            apagarLivro(self.idLivro, self.idUsuario)
             self.atualizarLivrosPainel()
 
             self.accept()
 
         else:
-            print("nao deletou")
+            self.accept()
 
     def atualizarLivrosPainel(self):
         pass

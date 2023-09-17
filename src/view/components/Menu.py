@@ -102,7 +102,7 @@ class Menu(QtWidgets.QFrame):
             imagemUsuario = dadosUsuario(nomeUsuario)["fotoPerfil"]
             self.fotoPerfil.changePhoto(imagemUsuario, 50)
         except (PIL.UnidentifiedImageError, TypeError):
-            with open('src/view/assets/icons/default_user.jpg', 'rb') as img_file:
+            with open('src/view/assets/images/default_user.jpg', 'rb') as img_file:
                 imagemUsuario = img_file.read()
                 self.fotoPerfil.changePhoto(imagemUsuario, 50)
 
