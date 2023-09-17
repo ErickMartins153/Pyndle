@@ -201,7 +201,7 @@ class FormularioRegistro(QtWidgets.QFrame):
         repetirSenha = self.entradaRepetirSenha.text()
         if senha == "" or usuario == "" or repetirSenha == "":
             return
-        if telaInicial.checar(usuario):
+        if telaInicial.checar(usuario) is True:
             self.printarMensagemDeErro("O usuário já existe 😢")
             return
 

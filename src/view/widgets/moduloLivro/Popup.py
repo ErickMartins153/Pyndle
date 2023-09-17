@@ -16,7 +16,7 @@ from src.view.widgets.moduloLivro.Grafico import Grafico
 from src.view.components.BotaoAvaliacao import BotaoAvaliacao
 from src.controller.telaPreviaLivro import salvarAvaliacao, pegarAvaliacao
 from src.view.utils.imageTools import getResizedImage, relHeight, relWidth
-
+from src.controller.telaPrincipal import apagarLivro
 
 class Popup(QDialog):
     def __init__(self, nomeUsuario: str, idLivro: int, parent):
@@ -188,7 +188,7 @@ class Popup(QDialog):
         caixaConfirmacao.exec()
 
         if caixaConfirmacao.clickedButton() == botaoSim:
-            # apagarLivro(self.idLivro, self.idUsuario)
+            #apagarLivro(self.idLivro, self.idUsuario)
             self.atualizarLivrosPainel()
 
             self.accept()

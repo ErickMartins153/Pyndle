@@ -4,6 +4,7 @@ from src.view.components.Logo import Logo
 from src.controller import telaInicial
 from src.view.utils import widgetSearch
 from src.view.utils.imageTools import relHeight, relWidth
+from PyQt6.QtWidgets import QMessageBox
 
 
 class FormularioLogin(QtWidgets.QFrame):
@@ -163,24 +164,35 @@ class FormularioLogin(QtWidgets.QFrame):
         senha = self.entradaSenha.text()
 
         try:
-            status = telaInicial.checar(usuario, senha)
-            if status is True:
+            status = telaInicial.checarLogin(usuario, senha)
+            if status == 1:
                 # mainWindow para definir o usuario
                 mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
                 mainWindow.setUsuario(telaInicial.dadosUsuario(usuario))
                 # Mudando para a tela principal
                 widgetSearch.getAncestrais(self)["paginas"].setCurrentIndex(1)
                 # Define o nome de usuário no "bem vindo" da tela principal
-                widgetSearch.getDescendentes(mainWindow)["fundoDashboard"].setNomeUsuario(usuario)
-                # Dispões livros de "Minha Biblioteca"
-                widgetSearch.getDescendentes(mainWindow)["fundoDashboard"].resizeAndDisplayLivros()
-                # Sinal emitido ao logar que é utilizado para definir a foto de perfil do menu
+                widgetSearch.getDescendentes(mainWindow)[
+                    "fundoDashboard"
+                ].setNomeUsuario(usuario)
+
                 self.AtualizacaoUsuario.emit(usuario)
 
-            else:
-                pass
+            elif(status == 0):
+                QMessageBox.critical(self, "Erro", "Informe seu login")
+            elif(status == 2):
+                QMessageBox.critical(self, "Erro", "Senha incompatível")
+            elif(status == 3):
+                QMessageBox.critical(self, "Erro", "Informe seu login e senha")
+            elif(status == 4):
+                QMessageBox.critical(self, "Erro", "Informe sua senha")
+            elif(status == 5):
+                QMessageBox.critical(self, "Erro", "Usuário não cadastrado")
+            elif(status == 6):
+                QMessageBox.critical(self, "Erro", "Usuário não cadastrado")
+
         except IndexError:
-            pass
+            print("Usuário não encontrado")
 
     def registrarBotaoClicado(self):
         self.entradaSenha.clear()

@@ -133,11 +133,12 @@ def apagarLivro(idLivro: int, idUsuario: int):
         conexao.commit()
 
         # Apagando livro de pyndle.db
-        sgbd.execute("""
-            DELETE FROM livros 
-            WHERE idLivro = ?
-        """, (idLivro,))
-        conexao.commit()
+        if(idLivro > 7):
+            sgbd.execute("""
+                DELETE FROM livros 
+                WHERE idLivro = ?
+            """, (idLivro,))
+            conexao.commit()
 
 
 def updateDados(dados: dict, idLivro: int):

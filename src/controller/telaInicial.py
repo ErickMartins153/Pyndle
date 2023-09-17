@@ -6,6 +6,48 @@ conexao = sqlite3.connect("src/model/Pyndle.db")
 sgbd = conexao.cursor()
 
 
+def checarLogin(nomeUsuario: str, senha: str = None):
+
+    if(len(nomeUsuario) > 0):
+        quantidadeUsuario = sgbd.execute("""
+        SELECT COUNT(login) FROM usuarios 
+        WHERE login = ?
+        """, (nomeUsuario,))
+
+        count = quantidadeUsuario.fetchone()[0]
+        print(count)
+
+    else:
+        count = 0
+
+    if (len(senha) > 0):
+
+            sgbd.execute("""
+            SELECT senha FROM usuarios
+            WHERE login = (?)
+            """, (nomeUsuario,))
+
+            senhaBD = (sgbd.fetchone())
+
+            print(nomeUsuario)
+
+            if(len(nomeUsuario) == 0):
+                return 0 #Informe seu login
+            elif(count != 0 and len(nomeUsuario) > 0 and senhaBD[0] == senha):
+                return 1 #usuario cadastrado e senha correta. pode logar
+            elif(count >= 1 and senhaBD[0] != senha):
+                return 2 #usuario cadastrado mas senha errada
+            elif(count == 0):
+                return 6 #usuario não cadastrado
+            
+    else:
+        if(len(nomeUsuario) == 0):
+            return 3 #informe seu login e senha
+        elif(count >= 1):
+            return 4 #informe  sua senha
+        elif(count == 0):
+            return 5 #usuário não cadastrado
+
 def checar(nomeUsuario: str, senha: str = None):
     """
     Função para checar se o usuário existe no banco de dados\n
@@ -84,7 +126,7 @@ def registrarUsuario(nomeUsuario: str, senha: str, fotoPerfil: bytes):
 
     # Define uma foto padrão caso o usuário não tenha definido
     if fotoPerfil == b'':
-        with open('src/view/assets/icons/default_user.jpg', 'rb') as img_file:
+        with open('src/view/assets/images/default_user.jpg', 'rb') as img_file:
             fotoPerfil = img_file.read()
 
     # Adiciona o usuário no banco de dados checando, caso não exista um com aquele login
