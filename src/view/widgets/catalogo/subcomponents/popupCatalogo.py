@@ -39,11 +39,9 @@ class PopupCatalogo(QDialog):
         # Configurações-------------------------------------------
 
         self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
-        self.setWindowTitle(self.titulo)
-        self.setWindowModality(Qt.WindowModality.ApplicationModal)
+        self.setWindowFlag(Qt.WindowType.CustomizeWindowHint, True)
+        self.setWindowFlag(Qt.WindowType.WindowTitleHint, False)
         self.setFixedSize(700, 450)
-        self.setWindowFlag(Qt.WindowType.Window, False)
-        self.setWindowFlag(Qt.WindowType.WindowCloseButtonHint, False)
 
 
         # ---------------------------------------------------------
@@ -79,7 +77,6 @@ class PopupCatalogo(QDialog):
 
         groupInfos = QFrame(self)
         groupInfos.setObjectName("groupTexto")
-        # groupInfos.setFixedHeight(660)
         layout.addWidget(groupInfos)
 
         infosLayout = QVBoxLayout()

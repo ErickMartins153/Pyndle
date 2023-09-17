@@ -21,7 +21,7 @@ from src.controller.telaPrincipal import apagarLivro
 class Popup(QDialog):
     def __init__(self, nomeUsuario: str, idLivro: int, parent):
         super().__init__()
-        # atributos ----------------
+        # atributos ----------------------------------------------
         self.idUsuario = dadosUsuario(nomeUsuario)["idUsuario"]
         self.idLivro = idLivro
         self.parent = parent
@@ -39,13 +39,14 @@ class Popup(QDialog):
         self.qtdPaginas = self.dadosLivro["pagTotal"]
         self.porcentagemLido = self.lido / self.qtdPaginas * 100
 
-        self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
-        self.setWindowTitle(self.titulo)
-        self.setWindowModality(Qt.WindowModality.ApplicationModal)
-        self.setFixedSize(700, 700)
-        self.setWindowFlag(Qt.WindowType.Window, False)
-        self.setWindowFlag(Qt.WindowType.WindowCloseButtonHint, False)
+        # Configurações-------------------------------------------
 
+        self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
+        self.setWindowFlag(Qt.WindowType.CustomizeWindowHint, True)
+        self.setWindowFlag(Qt.WindowType.WindowTitleHint, False)
+        self.setFixedSize(700, 700)
+
+        # ---------------------------------------------------------
         layout = QHBoxLayout()
         layout.setObjectName("fundo")
         self.setLayout(layout)
@@ -188,13 +189,13 @@ class Popup(QDialog):
         caixaConfirmacao.exec()
 
         if caixaConfirmacao.clickedButton() == botaoSim:
-            #apagarLivro(self.idLivro, self.idUsuario)
+            apagarLivro(self.idLivro, self.idUsuario)
             self.atualizarLivrosPainel()
 
             self.accept()
 
         else:
-            print("nao deletou")
+            self.accept()
 
     def atualizarLivrosPainel(self):
         pass

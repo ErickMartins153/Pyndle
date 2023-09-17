@@ -39,9 +39,9 @@ class FormularioLivro(QDialog):
 
         self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
         self.setWindowTitle("Adicionar Livro")
-        self.setWindowModality(Qt.WindowModality.ApplicationModal)
+        self.setWindowFlag(Qt.WindowType.WindowCloseButtonHint, True)
+        self.setWindowTitle("Adicionar Livro")
         self.setFixedSize(700, 700)
-        self.setWindowFlag(Qt.WindowType.Window, False)
 
         entradasHeight = relHeight(40, 1080)
 
