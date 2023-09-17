@@ -143,7 +143,6 @@ def apagarLivro(idLivro: int, idUsuario: int):
             """, (idLivro,))
             conexao.commit()
 
-
 def updateDados(dados: dict, idLivro: int):
     """
     Atualiza os dados de um determinado livro
@@ -159,54 +158,6 @@ def updateDados(dados: dict, idLivro: int):
 
     # Salvando dados
     conexao.commit()
-
-
-def buscarPalavraChave(arquivo, palavraChave: str):
-    """
-    Função para buscar por uma palavra específica no livro
-    :param arquivo: Arquivo PDF no qual você deseja buscar a palavra
-    :param palavraChave: Palavra que deseja encontrar
-    :return: Páginas nas quais a palavra foi encontrada
-    """
-
-    # Abrindo arquivo pdf
-    documento = PyMuPDF.open(arquivo)
-    paginasEncontradas = []
-
-    # Buscando por palavras nas páginas do arquivo
-    for paginaNum, pagina in enumerate(documento, start=1):
-        texto = pagina.get_text()
-        if palavraChave.lower() in texto.lower():
-            paginasEncontradas.append(paginaNum)
-
-    documento.close()
-
-    # Retorna o número de todas as páginas do livro em que a palavra foi encontrada
-    return paginasEncontradas
-
-
-def adicionarLivroCatalogo(titulo, genero, autor, anoPublicacao, arquivoPdf):
-    """
-    Adiciona livros no catálogo
-    :param titulo: Título do livro
-    :param genero: Gênero do livro
-    :param autor: Autor do livro
-    :param anoPublicacao: Ano de publicação do livro
-    :param arquivoPdf: diretório do documento PDF
-    """
-
-    # Abre o arquivo PDF
-    livro = PyMuPDF.open(arquivoPdf)
-    # Obtendo quantidade de páginas do documento
-    pagTotal = livro.page_count
-    # Obtendo bytes do documento
-    arquivoPdfBytes = open(arquivoPdf, "rb").read()
-
-    sgbd.execute("""
-        INSERT INTO livros (titulo, genero, autor, anoPublicacao, arquivoPdf, pagTotal) 
-        VALUES (?, ?, ?, ?, ?, ?)
-    """, (titulo, genero, autor, anoPublicacao, arquivoPdfBytes, pagTotal))
-
 
 def filtrarCatalogo(genero: str = None, ordemAlfabetica: bool = None):
     """
