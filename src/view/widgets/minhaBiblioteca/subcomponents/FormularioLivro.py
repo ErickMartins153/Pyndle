@@ -141,7 +141,7 @@ class FormularioLivro(QDialog):
         # Label de título
         tituloLabel = QLabel("Titulo:")
         tituloLabel.setObjectName("info")
-        tituloLabel.setMaximumHeight(20)
+        tituloLabel.setMaximumHeight(relHeight(20, 1080))
         groupTitulo.layout().addWidget(tituloLabel)
 
         # Entrada de título
