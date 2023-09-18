@@ -307,4 +307,4 @@ class PainelFiltroCatalogo(QtWidgets.QFrame):
         # Obtém o painél de livros
         widgetSearch.getIrmaos(self)["painelLivrosCatalogo"].getLivrosCatalogo(self.generoMarcado, self.ordemAlf)
         # Atualiza os livros dispostos
-        widgetSearch.getIrmaos(self)["painelLivrosCatalogo"].resizeAndDisplayCatalogo(None)
+        widgetSearch.getIrmaos(self)["painelLivrosCatalogo"].resizeAndDisplayCatalogo()
