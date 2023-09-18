@@ -27,7 +27,7 @@ class PopupCatalogo(QDialog):
         e adicioná-los a biblioteca pessoal
         :param nomeUsuario: Nome do usuário que está vizualizando o PopUp
         :param idLivro: ID do livro que está sendo exposto
-        :param parent: widget o qual o PopUp está relacionado
+        :param parent: widget o qual o PopUp está recl
         """
         super().__init__()
 
@@ -70,12 +70,11 @@ class PopupCatalogo(QDialog):
 
         groupImagemBotao = verticalFrame(self)
         groupImagemBotao.setObjectName("groupImagemBotao")
-        groupImagemBotao.setStyleSheet(f"""
-            border-radius: {relHeight(20, 1080)}px;
-        """)
         layout.addWidget(groupImagemBotao)
 
+        groupImagemBotao.layout().setObjectName("ImagemBotaoLayout")
         groupImagemBotao.layout().setAlignment(Qt.AlignmentFlag.AlignCenter)
+        groupImagemBotao.setLayout(groupImagemBotao.layout())
 
 
         # CAPA DO LIVRO --------------------------------------------------------------
@@ -112,7 +111,9 @@ class PopupCatalogo(QDialog):
         groupInfos = verticalFrame(self)
         groupInfos.setObjectName("groupTexto")
         layout.addWidget(groupInfos)
+
         groupInfos.layout().setObjectName("infosLayout")
+        groupInfos.setLayout(groupInfos.layout())
 
 
         # CONTAINER (Grupo com os labels de metadados) ------------------------------
@@ -124,7 +125,7 @@ class PopupCatalogo(QDialog):
         # LABEL (Informações do livro) ----------------------------------------------
 
         h1 = QLabel("Informações do livro")
-        h1.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        h1.setAlignment(Qt.AlignmentFlag.AlignCenter)
         groupMetadado.layout().addWidget(h1)
         h1.setObjectName("h1")
         h1.setMaximumHeight(50)
@@ -197,7 +198,7 @@ class PopupCatalogo(QDialog):
         except AttributeError:
             pass
 
-        # Emite sinal que o livro foi adicionado para atualizar a dashboard
+        #Emite sinal que o livro foi adicionado para atualizar a dashboard
         self.sinalLivroAdicionado.emit()
         popUpBiblioteca.exec()
         self.close()
