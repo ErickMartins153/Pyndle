@@ -7,16 +7,10 @@ from src.view.utils.imageTools import relHeight, relWidth
 from src.view.components.Logo import Logo
 from src.view.utils.widgetSearch import getAncestrais
 import PIL
-
+import sqlite3
 
 class Menu(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
-        """
-        Widget utilizado para modelar o Menu/NavBar do aplicativo
-
-        :param parent: Define o parente do widget
-        """
-
         super().__init__()
         self.setParent(parent)
         self.setStyleSheet(open("src/view/assets/styles/menu.css").read())
@@ -24,7 +18,6 @@ class Menu(QtWidgets.QFrame):
         self.setMaximumHeight(70)
 
         menuLayout = QtWidgets.QHBoxLayout()
-        # menuLayout.setContentsMargins(20, 15, 20, 15)
         self.setLayout(menuLayout)
 
         # Logo -------------------------------
@@ -32,37 +25,24 @@ class Menu(QtWidgets.QFrame):
         self.logo.setObjectName("logo")
         self.logo.setFixedHeight(relHeight(50, 1080))
         menuLayout.addWidget(self.logo)
-        """
-        fundoLogo = QtWidgets.QFrame(self)
-        fundoLogo.setObjectName("fundoLogo")
-        menuLayout.addWidget(fundoLogo)
 
-        fundoLogoLayout = QtWidgets.QHBoxLayout()
-        fundoLogoLayout.setContentsMargins(5, 0, 5, 0)
-        fundoLogoLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
-        fundoLogo.setLayout(fundoLogoLayout)
-
-        pyndleLogo = QtWidgets.QLabel(fundoLogo)
-        pyndleLogo.setObjectName("pyndleLogo")
-        pyndleLogo.setText("Pyndle")
-        fundoLogoLayout.addWidget(pyndleLogo)
-"""
         # Distancia1 ----------------------------
         distancia1 = QtWidgets.QSpacerItem(40, 40)
         menuLayout.addSpacerItem(distancia1)
 
         # QLineEdit (Barra Pesquisa) ------------
-        pesquisa = QtWidgets.QLineEdit()
-        menuLayout.addWidget(pesquisa)
+        self.pesquisa = QtWidgets.QLineEdit()  # Definindo self.pesquisa como um atributo da classe
+        menuLayout.addWidget(self.pesquisa)
 
-        pesquisa.setObjectName("pesquisa")
-        pesquisa.setMinimumSize(200, 37)
-        pesquisa.setMaximumHeight(37)
-        pesquisa.setPlaceholderText("Pesquisar")
+        self.pesquisa.setObjectName("pesquisa")
+        self.pesquisa.setMinimumSize(200, 37)
+        self.pesquisa.setMaximumHeight(37)
+        self.pesquisa.setPlaceholderText("Pesquisar")
 
         botaoPesquisa = QtWidgets.QPushButton()
         botaoPesquisa.setText("🔍")
         botaoPesquisa.setObjectName("botaoPesquisa")
+        botaoPesquisa.clicked.connect(self.pesquisaLivro)
         menuLayout.addWidget(botaoPesquisa)
 
         # Distancia2 ----------------------------
@@ -108,3 +88,19 @@ class Menu(QtWidgets.QFrame):
                 imagemUsuario = img_file.read()
                 self.fotoPerfil.changePhoto(imagemUsuario, 50)
 
+    def pesquisaLivro(self):
+        titulo_pesquisa = self.pesquisa.text()
+
+        connection = sqlite3.connect('../../model/Pyndle.db')
+        db = connection.cursor()
+
+        db.execute("SELECT * FROM livros WHERE titulo LIKE ? ", (f"%{titulo_pesquisa}%", ))
+        resultados = db.fetchall()
+
+        connection.close()
+
+        if resultados:
+            for livro in resultados:
+                print(f"O livro foi encontrado: {livro['titulo']}")
+        else:
+            print("Livro não encontrado")
