@@ -7,11 +7,11 @@ from PyQt6.QtWidgets import (
     QScrollArea,
     QWidget
 )
-from PyQt6.QtCore import pyqtSignal, Qt
+from PyQt6.QtCore import pyqtSignal, Qt, QBuffer, QByteArray, QIODevice
 from PyQt6.QtGui import QImage, QPixmap
 from src.controller.telaPreviaLivro import setPagAtual, getPagAtual
 from src.view.widgets.moduloLivro.DisplayPDF import DisplayPDF
-from src.view.utils.imageTools import relHeight, relWidth, getScreenResolution
+from src.view.utils.imageTools import relHeight, relWidth, getScreenResolution, getResizedImage
 from src.view.utils.container import verticalFrame, horizontalFrame
 
 
@@ -118,6 +118,19 @@ class LeitorPDF(QDialog):
             # Definindo QPixmap
             pixmap = QPixmap.fromImage(imagem_qt)
 
+            if pixmap.height() < getScreenResolution()["height"]:
+                # Obtendo proporção
+                height = pixmap.height() * getScreenResolution()["height"] // pixmap.height()
+                print(height)
+                width = pixmap.width() * getScreenResolution()["height"] // pixmap.height()
+                print(width)
+                # Redimensionando
+                resizedPixmap = self.getResizedPixmap(pixmap, width, height)
+
+                # Envia o pixmap redimensionado
+                self.displayPDF.definirPagina(resizedPixmap)
+                return
+
             # Enviando QPixmap para o display de pdf
             self.displayPDF.definirPagina(pixmap)
 
@@ -155,3 +168,18 @@ class LeitorPDF(QDialog):
             paginaAtual = self.totalPaginas
         setPagAtual(self.idUsuario, self.idLivro, paginaAtual)
         self.sinalPaginaAtual.emit(paginaAtual)
+
+    def getResizedPixmap(self, pixmap: QPixmap, width: int, height: int):
+
+        ba = QByteArray()
+        buff = QBuffer(ba)
+        buff.open(QIODevice.OpenModeFlag.WriteOnly)
+        pixmap.save(buff, "PNG")
+
+        bimage = ba.data()
+
+        resizedBimage = getResizedImage(bimage, width, height)
+
+        resizedPixmap = QPixmap().fromImage(QImage.fromData(resizedBimage))
+
+        return resizedPixmap
