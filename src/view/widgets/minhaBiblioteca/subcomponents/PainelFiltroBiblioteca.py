@@ -69,7 +69,7 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         border-radius: {relHeight(20, 1080)}px
         """)
         frameFiltros.setObjectName("frameFiltros")
-        frameFiltros.setFixedSize(relWidth(350, 1920), relHeight(550, 1080))
+        frameFiltros.setFixedSize(relWidth(385, 1920), relHeight(550, 1080))
         layoutFrame.addWidget(frameFiltros)
 
         frameFiltros.layout().setContentsMargins(
@@ -104,6 +104,7 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         # LABEL ("ORDEM ALFABÉTICA") ------------------------------------
         labelOrdemAlf = QtWidgets.QLabel("Ordem Alfabética |")
         labelOrdemAlf.setAlignment(Qt.AlignmentFlag.AlignVCenter)
+        labelOrdemAlf.setMinimumWidth(relWidth(220, 1920))
         labelOrdemAlf.setObjectName("filtroLabel")
         labelOrdemAlf.setStyleSheet(
             f"""
@@ -116,6 +117,7 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
 
         # Definição do layout
         botaoAlfLayout = QtWidgets.QHBoxLayout()
+        botaoAlfLayout.setSpacing(0)
         botaoAlfLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         frameFiltros.layout().addLayout(botaoAlfLayout, 40, 1, 1, 2)
 
@@ -153,7 +155,7 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
 
 
         # SPACER ---------------------------------------------------------------
-        spacer = QtWidgets.QSpacerItem(relWidth(40, 1920), 0)
+        spacer = QtWidgets.QSpacerItem(relWidth(10, 1920), 0)
 
         botaoAlfLayout.addSpacerItem(spacer)
 

@@ -169,3 +169,11 @@ def relHeight(numerador: int, denominador: int):
     rHeight = height * numerador // denominador
 
     return rHeight
+
+
+def getScreenResolution():
+    """
+    Função para obter a resolução da tela atual em forma de dicionário
+    """
+    width, height = pyautogui.size()
+    return {"width": width, "height": height}

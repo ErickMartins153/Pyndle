@@ -30,3 +30,4 @@ src/view/components/ModuloLivro/__pycache__/LeitorPDF.cpython-311.pyc
 src/view/components/ModuloLivro/__pycache__/Popup.cpython-311.pyc
 src/view/utils/__pycache__/imageTools.cpython-311.pyc
 
+src/model/Pyndle.db

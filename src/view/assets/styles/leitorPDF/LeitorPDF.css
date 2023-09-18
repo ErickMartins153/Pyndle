@@ -1,0 +1,50 @@
+/* DisplayPDF.py */
+
+/* LeitorPDF.py */
+
+#navBar {
+    background-color: #313131;
+}
+
+#labelPagina {
+    color: #fffdfd;
+    background-color: #565656;
+    border: 0.5px solid black;
+    font-weight: 700;
+}
+
+
+/* BARRA DE ROLAMENTO */
+
+/* SCROOL BAR VERTICAL */
+QScrollBar:vertical, QScrollBar:horizontal{
+    border: none;
+    width: 20px;
+    margin: 0 0;
+    background-color: #F0D097;
+}
+
+/* BARRA VERTICAL */
+QScrollBar::handle:vertical, QScrollBar::handle:horizontal{
+    background-color: #F0D097;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover{
+    background-color: #4E3D2C;
+}
+
+/* BOTÃO CIMA | SCROLL BAR */
+QScrollBar::sub-line:vertical, QScrollBar::sub-line:horizontal{
+    background-color: transparent;
+}
+
+/* BOTÃO BAIXO | SCROLL BAR */
+QScrollBar::add-line:vertical, QScrollBar::add-line:horizontal {
+    background-color: transparent;
+}
+
+/* ARROW */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical, QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal{
+    background: none;
+}

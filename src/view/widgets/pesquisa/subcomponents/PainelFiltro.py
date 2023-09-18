@@ -69,7 +69,7 @@ class PainelFiltro(QtWidgets.QFrame):
         """)
 
         # Definindo configurações do layout do grid
-        frameFiltros.setFixedSize(relWidth(350, 1920), relHeight(550, 1080))
+        frameFiltros.setFixedSize(relWidth(385, 1920), relHeight(550, 1080))
         painelFiltroLayout.addWidget(frameFiltros)
 
         frameFiltros.layout().setContentsMargins(
@@ -110,6 +110,7 @@ class PainelFiltro(QtWidgets.QFrame):
         # Instanciamento do label
         labelOrdemAlf = QtWidgets.QLabel("Ordem Alfabética |")
         labelOrdemAlf.setAlignment(Qt.AlignmentFlag.AlignVCenter)
+        labelOrdemAlf.setMinimumWidth(relWidth(220, 1920))
         labelOrdemAlf.setObjectName("filtroLabel")
         labelOrdemAlf.setStyleSheet(f"""
             font-size: {relHeight(20, 1080)}px;
@@ -150,7 +151,7 @@ class PainelFiltro(QtWidgets.QFrame):
 
 
         # Spacer para colocar os botões de UpArrow e DownArrow à esquerda
-        spacer = QtWidgets.QSpacerItem(relWidth(40, 1920), 0)
+        spacer = QtWidgets.QSpacerItem(relWidth(10, 1920), 0)
         botaoAlfLayout.addSpacerItem(spacer)
 
 
