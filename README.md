@@ -1,6 +1,6 @@
 # Pyndle - Leitor de livros e PDF's!
 
-O **Pyndle** é uma aplicação de leitura de livros digitais inspirada no Kindle. Ele oferece recursos para cadastro e login, navegação no catálogo de livros, gestão de sua biblioteca pessoal, a capacidade de adicionar PDFs próprios à biblioteca e a leitura de PDFs com informações detalhadas sobre cada obra. Você pode classificar os livros com estrelas e acompanhar seu progresso de leitura por meio de um gráfico. Este projeto faz parte da metodologia de avaliação da disciplina Programação 1do cusro de Engenharia de software ofertada pela universidade de Pernamnuco Campus Garanhuns, regida pelo Docente Adauto Trigueiro.
+O **Pyndle** é uma aplicação de leitura de livros digitais inspirada no Kindle. Ele oferece recursos para cadastro e login, navegação no catálogo de livros, gestão de sua biblioteca pessoal, a capacidade de adicionar PDFs próprios à biblioteca e a leitura de PDFs com informações detalhadas sobre cada obra. Você pode classificar os livros com estrelas e acompanhar seu progresso de leitura por meio de um gráfico. Este projeto faz parte da metodologia de avaliação da disciplina Programação 1do cusro de Engenharia de software ofertada pela universidade de Pernambuco Campus Garanhuns, regida pelo Docente Adauto Trigueiro.
 
 
 ## Autores
