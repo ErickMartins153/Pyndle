@@ -91,16 +91,11 @@ class Menu(QtWidgets.QFrame):
     def pesquisaLivro(self):
         titulo_pesquisa = self.pesquisa.text()
 
-        connection = sqlite3.connect('../../model/Pyndle.db')
+        connection = sqlite3.connect('src/model/Pyndle.db')
         db = connection.cursor()
 
-        db.execute("SELECT * FROM livros WHERE titulo LIKE ? ", (f"%{titulo_pesquisa}%", ))
+        db.execute("SELECT titulo FROM livros WHERE titulo LIKE ? ", (f"%{titulo_pesquisa}%", ))
         resultados = db.fetchall()
+        print(resultados)
 
         connection.close()
-
-        if resultados:
-            for livro in resultados:
-                print(f"O livro foi encontrado: {livro['titulo']}")
-        else:
-            print("Livro não encontrado")
