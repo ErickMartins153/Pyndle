@@ -91,18 +91,15 @@ class LeitorPDF(QDialog):
             self.paginaAtual -= 1
             self.mostrarPagina()
 
+            
     def keyPressEvent(self, event):
-        """
-        Navegar pelas páginas usando as teclas direita e esquerda.
-        """
-        if event.key() == Qt.Key.Key_Escape:
-            return
-        elif event.key() == Qt.Key.Key_Right or event.key() == 68:
-            # Seta para a direita
+        if event.key() == Qt.Key.Key_Right or event.key() == 68:
+        # Seta para a direita
             self.passarPagina()
         elif event.key() == Qt.Key.Key_Left or event.key() == 65:
-            # Seta para a esquerda
+        # Seta para a esquerda
             self.voltarPagina()
+
 
     def closeEvent(self, event):
         """
