@@ -1,7 +1,8 @@
 from PyQt6 import QtWidgets
-from PyQt6.QtCore import Qt
-from src.view.components.FotoPerfil import FotoPerfil
+from PyQt6.QtCore import Qt, pyqtSignal
 from src.controller.telaInicial import dadosUsuario
+from src.controller.telaPrincipal import pesquisarLivro
+from src.view.components.FotoPerfil import FotoPerfil
 from src.view.utils.widgetSearch import getAncestrais, getDescendentes
 from src.view.utils.imageTools import relHeight, relWidth
 from src.view.components.Logo import Logo
@@ -10,6 +11,9 @@ import PIL
 import sqlite3
 
 class Menu(QtWidgets.QFrame):
+    #Sinal para enviar o resultado da pesquisa para a telaPesquisa
+    sinalPesquisa = pyqtSignal(list)
+
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
         self.setParent(parent)
@@ -89,13 +93,9 @@ class Menu(QtWidgets.QFrame):
                 self.fotoPerfil.changePhoto(imagemUsuario, 50)
 
     def pesquisaLivro(self):
-        titulo_pesquisa = self.pesquisa.text()
-
-        connection = sqlite3.connect('src/model/Pyndle.db')
-        db = connection.cursor()
-
-        db.execute("SELECT titulo FROM livros WHERE titulo LIKE ? ", (f"%{titulo_pesquisa}%", ))
-        resultados = db.fetchall()
-        print(resultados)
-
-        connection.close()
+        
+        textoPesquisa = self.pesquisa.text()
+        resultadoPesquisa = pesquisarLivro(textoPesquisa)
+        self.sinalPesquisa.emit(resultadoPesquisa)
+        mainWindow = getAncestrais(self)["mainWindow"]
+        mainWindow.paginas.setCurrentIndex(4)

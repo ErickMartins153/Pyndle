@@ -191,7 +191,6 @@ def filtrarCatalogo(genero: str = None, ordemAlfabetica: bool = None):
 
     # Recupera os resultados da consulta
     resultado = sgbd.fetchall()
-
     return resultado
 
 
@@ -241,9 +240,72 @@ def filtrarBiblioteca(idUsuario, genero: str = None, avaliacao: int = None, orde
 
     return resultado
 
+def filtrarLivros(idUsuario, genero: str = None, avaliacao: int = None, ordemAlfabetica: bool = None):
+    """
+    Filtra os livros que pertencem a biblioteca pessoal do usuário
+    :param idUsuario: ID do usuário do qual deseja filtrar os livros pessoais
+    :param genero: Gênero dos livros que deseja filtrar
+    :param avaliacao: Avaliação dos livros que deseja filtrar
+    :param ordemAlfabetica: Ordem que deseja filtar os livros
+    """
+
+    # Começa com uma consulta base que seleciona todos os campos de livros do catálogo
+    consulta = "SELECT * FROM livros WHERE idLivro = ?"
+
+    # Verifica se o gênero foi especificado e adiciona a cláusula correspondente
+    if genero is not None:
+        consulta += f" AND genero = ?"
+
+    # Verifica se a avaliação foi especificada e adiciona a cláusula correspondente
+    if avaliacao is not None:
+        consulta += """
+            AND idLivro IN
+            (SELECT idLivro FROM usuariosLivros WHERE idUsuario = ? AND avaliacao = ?)
+        """
+
+    # Adiciona a cláusula ORDER BY para ordenação alfabética, se necessário
+    if ordemAlfabetica is not None:
+        if ordemAlfabetica:
+            consulta += " ORDER BY titulo ASC"
+        else:
+            consulta += " ORDER BY titulo DESC"
+
+    # Cria uma tupla de parâmetros para a consulta
+    parametros = (idUsuario,)
+
+    if genero:
+        parametros += (genero,)
+    if avaliacao:
+        parametros += (idUsuario, avaliacao,)
+
+    # Executa a consulta com os parâmetros apropriados
+    sgbd.execute(consulta, parametros)
+
+    # Recupera os resultados da consulta
+    resultado = sgbd.fetchall()
+
+    return resultado
+
 
 def getGeneros():
     return (
-        'Aventura', 'Fantasia', 'Geografia', 'Linguagens', 'Literatura', 'Matemática', 
-        'Romance', 'Terror', 'Hentai', "Mistério",
+        'Aventura', 'Fantasia', 'Literatura', 'Matemática', 
+        'Romance', 'Terror', 'Hentai', "Ciências da Computação", 'Engenharia de Software'
     )
+
+def pesquisarLivro(textoPesquisa):
+
+    connection = sqlite3.connect('src/model/Pyndle.db')
+    db = connection.cursor()
+
+    if(len(textoPesquisa) == 0 or textoPesquisa[0] == ' '):
+        pass
+    else:
+        db.execute("SELECT idLivro FROM livros WHERE titulo LIKE ? ", (f"%{textoPesquisa}%", ))
+        resultados = db.fetchall()
+        lista = []
+        for i in range(len(resultados)):
+            lista.append(int(resultados[i][0]))
+
+        connection.close()
+        return lista

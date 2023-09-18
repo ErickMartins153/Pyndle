@@ -3,6 +3,7 @@ from src.view.widgets.login.TelaLogin import TelaLogin
 from src.view.widgets.dashboard.Dashboard import Dashboard
 from src.view.widgets.minhaBiblioteca.TelaMinhaBiblioteca import TelaMinhaBiblioteca
 from src.view.widgets.catalogo.TelaCatalogo import TelaCatalogo
+from src.view.widgets.pesquisa.TelaPesquisa import TelaPesquisa
 from src.view.assets.styles import non_css_styles
 from src.view.utils.imageTools import relHeight, relWidth
 from src.view.utils.container import verticalWidget
@@ -58,9 +59,9 @@ class MainWindow(QtWidgets.QMainWindow):
         telaLogin.setObjectName("telaLogin")
         self.paginas.addWidget(telaLogin)
         # Instância dashboard (pagina)
-        dashboard = Dashboard(self.paginas)
-        dashboard.setObjectName("dashboard")
-        self.paginas.addWidget(dashboard)
+        self.dashboard = Dashboard(self.paginas)
+        self.dashboard.setObjectName("dashboard")
+        self.paginas.addWidget(self.dashboard)
         # Instância biblioteca (pagina)
         biblioteca = TelaMinhaBiblioteca(self.paginas)
         biblioteca.setObjectName("biblioteca")
@@ -69,6 +70,10 @@ class MainWindow(QtWidgets.QMainWindow):
         catalogo = TelaCatalogo(self.paginas)
         catalogo.setObjectName("catalago")
         self.paginas.addWidget(catalogo)
+        # Instância resultadoPesquisa (pagina)
+        resultadoPesquisa = TelaPesquisa(self.paginas)
+        resultadoPesquisa.setObjectName("resultadoPesquisa")
+        self.paginas.addWidget(resultadoPesquisa)
 
 
         mainWindowSpace.layout().addWidget(self.paginas)

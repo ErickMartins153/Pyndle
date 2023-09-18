@@ -22,9 +22,9 @@ class Dashboard(QtWidgets.QWidget):
         self.setLayout(dashboardLayout)
 
         # MENU ------------------------------------
-        menu = Menu(self)
-        menu.setObjectName("menu")
-        dashboardLayout.addWidget(menu)
+        self.menu = Menu(self)
+        self.menu.setObjectName("menu")
+        dashboardLayout.addWidget(self.menu)
 
         # FUNDO DASHBOARD -----------------------------
         fundoDashboard = FundoDashboard(self)
