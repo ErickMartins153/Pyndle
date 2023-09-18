@@ -1,13 +1,15 @@
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtWidgets import QMessageBox
 from src.view.components.Logo import Logo
 from src.controller import telaInicial
 from src.view.utils import widgetSearch
 from src.view.utils.imageTools import relHeight, relWidth
-from PyQt6.QtWidgets import QMessageBox
+from src.view.utils.container import verticalFrame
 
 
 class FormularioLogin(QtWidgets.QFrame):
+    # SINAIS
     AtualizacaoUsuario = pyqtSignal(str)
 
     def __init__(self, parent: QtWidgets.QWidget):
@@ -19,8 +21,8 @@ class FormularioLogin(QtWidgets.QFrame):
         Métodos:
             - logarBotaoCliclado(): verifica o usuário e muda para a tela principal
         """
-        # Configurações
 
+        # CONFIGURAÇÕES ----------------------------------------------------
         super().__init__()
         self.setParent(parent)
         self.setContentsMargins(
@@ -30,43 +32,50 @@ class FormularioLogin(QtWidgets.QFrame):
             relHeight(60, 1080),
         )
 
-        # Definição do layout do formulário
+        # LAYOUT ------------------------------------------------------------
         formLayout = QtWidgets.QVBoxLayout()
         formLayout.setSpacing(relHeight(40, 1080))
         formLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         self.setLayout(formLayout)
 
-        # LOGO -----------------------------------------
-        # 480x200
+
+        # LOGO --------------------------------------------------------------
+
         self.logo = Logo(relWidth(480, 1920), relHeight(200, 1080), relHeight(30, 1080))
         self.logo.setObjectName("logo")
         self.logo.setFixedHeight(relHeight(200, 1080))
         formLayout.addWidget(self.logo)
 
-        # ENTRADAS -------------------------------------
 
-        # Frame
+        # CONTAINER DAS ENTRADAS -------------------------------------------------------------------
 
-        entradasFrame = QtWidgets.QFrame(self)
+        entradasFrame = verticalFrame(self)
         entradasFrame.setMinimumHeight(relHeight(400, 1080))
         formLayout.addWidget(entradasFrame)
 
-        entradasLayout = QtWidgets.QVBoxLayout(self)
-        entradasLayout.setContentsMargins(
-            relWidth(150, 1920), 0, relWidth(150, 1920), 0
+        entradasFrame.layout().setContentsMargins(
+            relWidth(150, 1920),
+            0,
+            relWidth(150, 1920),
+            0
         )
-        entradasLayout.setSpacing(relHeight(25, 1080))
-        entradasFrame.setLayout(entradasLayout)
+        entradasFrame.layout().setSpacing(relHeight(25, 1080))
+        entradasFrame.setLayout(entradasFrame.layout())
 
-        # elementos
+        # TAMANHOS DAS ENTRADAS ---------------------------------------------------------------------
 
         entradasHeight = relHeight(40, 1080)
         espacoLabelEntrada = relHeight(30, 1080)
 
+
+        # USUÁRIO ------------------------------------------------------------
+
+        # Definindo layout para agrupar Label e Entrada
         groupUsuario = QtWidgets.QVBoxLayout()
         groupUsuario.setSpacing(relHeight(5, 1080))
-        entradasLayout.addLayout(groupUsuario)
+        entradasFrame.layout().addLayout(groupUsuario)
 
+        # Definindo label ("Usuário")
         usuarioLabel = QtWidgets.QLabel(entradasFrame)
         usuarioLabel.setText("Usuário")
         usuarioLabel.setStyleSheet(f"font-size: {relHeight(30, 1080)}px")
@@ -74,29 +83,34 @@ class FormularioLogin(QtWidgets.QFrame):
         usuarioLabel.setObjectName("labelCaixa")
         groupUsuario.addWidget(usuarioLabel)
 
+        # Criando entrada de usuário
         self.entradaUsuario = QtWidgets.QLineEdit(entradasFrame)
-        self.entradaUsuario.setMinimumHeight(entradasHeight)
+        self.entradaUsuario.setFixedHeight(entradasHeight)
         self.entradaUsuario.setObjectName("caixaEntrada")
-        self.entradaUsuario.setStyleSheet(
-            f"""
-        font-size: {relHeight(25, 1080)};
-        border-radius: {relHeight(20, 1080)}px;
-        padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
-        """
-        )
+        self.entradaUsuario.setStyleSheet(f"""
+            font-size: {relHeight(25, 1080)};
+            border-radius: {relHeight(20, 1080)}px;
+            padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
+        """)
         groupUsuario.addWidget(self.entradaUsuario)
 
+
+        # SENHA ---------------------------------------------------------------
+
+        # Criando layout para agrupar label e entrada da senha
         groupSenha = QtWidgets.QVBoxLayout()
         groupSenha.setSpacing(relHeight(5, 1080))
-        entradasLayout.addLayout(groupSenha)
+        entradasFrame.layout().addLayout(groupSenha)
 
+        # Definindo label ("senha")
         senhaLabel = QtWidgets.QLabel(entradasFrame)
         senhaLabel.setText("Senha")
-        senhaLabel.setMaximumHeight(espacoLabelEntrada)
+        senhaLabel.setFixedHeight(espacoLabelEntrada)
         senhaLabel.setObjectName("labelCaixa")
         senhaLabel.setStyleSheet(f"font-size: {relHeight(30, 1080)}px")
         groupSenha.addWidget(senhaLabel)
 
+        # Definindo entrada de senha
         self.entradaSenha = QtWidgets.QLineEdit(entradasFrame)
         self.entradaSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.entradaSenha.returnPressed.connect(self.logarBotaoCliclado)
@@ -108,25 +122,27 @@ class FormularioLogin(QtWidgets.QFrame):
         padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
         """
         )
-        self.entradaSenha.setMinimumHeight(entradasHeight)
+        self.entradaSenha.setFixedHeight(entradasHeight)
         self.entradaSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         groupSenha.addWidget(self.entradaSenha)
 
+
         # BOTÕES --------------------------
 
-        # Frame
-        botoesFrame = QtWidgets.QFrame(self)
-        botoesFrameLayout = QtWidgets.QVBoxLayout(botoesFrame)
-        botoesFrameLayout.setContentsMargins(
+        # CONTAINER (Onde os botões são agrupados) -------------------------------------
+        botoesFrame = verticalFrame(self)
+
+        botoesFrame.layout().setContentsMargins(
             relWidth(80, 1920),
             relHeight(10, 1080),
             relWidth(80, 1920),
             relHeight(10, 1080),
         )
-        botoesFrameLayout.setSpacing(relHeight(10, 1080))
-        botoesFrame.setLayout(botoesFrameLayout)
-        entradasLayout.addWidget(botoesFrame)
+        botoesFrame.layout().setSpacing(relHeight(10, 1080))
 
+        entradasFrame.layout().addWidget(botoesFrame)
+
+        # Definindo botão de login
         self.logarBotao = QtWidgets.QPushButton(botoesFrame)
         self.logarBotao.setObjectName("logarBotao")
         self.logarBotao.setStyleSheet(
@@ -138,8 +154,9 @@ class FormularioLogin(QtWidgets.QFrame):
         self.logarBotao.setMinimumHeight(relHeight(50, 1080))
         self.logarBotao.setText("Logar")
         self.logarBotao.clicked.connect(self.logarBotaoCliclado)
-        botoesFrameLayout.addWidget(self.logarBotao)
+        botoesFrame.layout().addWidget(self.logarBotao)
 
+        # Definindo botão de registro
         self.registrarBotao = QtWidgets.QPushButton(botoesFrame)
         self.registrarBotao.setObjectName(f"registrarBotao")
         self.registrarBotao.setStyleSheet(
@@ -151,9 +168,10 @@ class FormularioLogin(QtWidgets.QFrame):
         self.registrarBotao.setMinimumHeight(relHeight(50, 1080))
         self.registrarBotao.setText("Registrar")
         self.registrarBotao.clicked.connect(self.registrarBotaoClicado)
-        botoesFrameLayout.addWidget(self.registrarBotao)
+        botoesFrame.layout().addWidget(self.registrarBotao)
 
-    # Métodos
+
+    # (MÉTODOS) -------------------------------------------------------
 
     def logarBotaoCliclado(self):
         """
@@ -177,25 +195,36 @@ class FormularioLogin(QtWidgets.QFrame):
                 ].setNomeUsuario(usuario)
 
                 self.AtualizacaoUsuario.emit(usuario)
-
-            elif(status == 0):
+                self.entradaSenha.clear()
+                self.entradaUsuario.clear()
+            elif status == 0:
                 QMessageBox.critical(self, "Erro", "Informe seu login")
-            elif(status == 2):
+            elif status == 2:
                 QMessageBox.critical(self, "Erro", "Senha incompatível")
-            elif(status == 3):
+            elif status == 3:
                 QMessageBox.critical(self, "Erro", "Informe seu login e senha")
-            elif(status == 4):
+            elif status == 4:
                 QMessageBox.critical(self, "Erro", "Informe sua senha")
-            elif(status == 5):
+            elif status == 5:
                 QMessageBox.critical(self, "Erro", "Usuário não cadastrado")
-            elif(status == 6):
+            elif status == 6:
                 QMessageBox.critical(self, "Erro", "Usuário não cadastrado")
 
         except IndexError:
             pass
 
+
     def registrarBotaoClicado(self):
+        """
+        Limpa as caixas de entrada e muda para a tela de registro
+        """
+
+        # Limpando entradas
         self.entradaSenha.clear()
         self.entradaUsuario.clear()
+
+        # Escondendo formulário de login
         self.hide()
+
+        # Trocando para tela de registro
         widgetSearch.getIrmaos(self)["formularioRegistro"].show()

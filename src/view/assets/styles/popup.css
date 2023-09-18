@@ -1,3 +1,7 @@
+* {
+  font-family: Poppins, sans-serif;
+}
+
 QPushButton {
   background: #CCB081;
   border: 0.5px solid #3D3D3D;
@@ -15,7 +19,7 @@ QPushButton:hover {
 }
 
 #info {
-font-family: 'Baskervville';
+font-family: 'Poppins';
 font-style: normal;
 font-weight: 400;
 font-size: 16px;

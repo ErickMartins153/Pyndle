@@ -6,6 +6,12 @@ from src.view.utils.imageTools import relHeight, relWidth
 
 class BotaoAvaliacao(QtWidgets.QHBoxLayout):
     def __init__(self):
+        """
+        Grupo de botões utilizados para definir avaliações
+
+        ATRIBUTOS:
+            - avaliacao: Armazena a avaliação atual daquele objeto
+        """
         super().__init__()
         # Atributos
         self.avaliacao = 0
@@ -29,7 +35,16 @@ class BotaoAvaliacao(QtWidgets.QHBoxLayout):
             self.addWidget(botaoAvaliacao)
 
 
+    # MÉTODOS --------------------------------------------------------
+
     def setAvaliacao(self, avaliacao: int):
+        """
+        Define a avaliação atual e muda a quantidade de estrelas preenchidas de acordo
+        :param avaliacao:
+        :return:
+        """
+
+        # Caso a avaliação recebida seja a mesma, reseta a avaliação
         if avaliacao == self.avaliacao:
             self.avaliacao = 0
             for botao in self.listaBotoes:
@@ -38,6 +53,7 @@ class BotaoAvaliacao(QtWidgets.QHBoxLayout):
                 background-color: transparent;
                 """)
 
+        # Caso contrário, altera a avaliação atual e a quantidade de estrelas dispostas
         else:
             self.avaliacao = avaliacao
 
@@ -55,8 +71,14 @@ class BotaoAvaliacao(QtWidgets.QHBoxLayout):
 
 
     def getAvaliacao(self):
+        """
+        Obtém a avaliação atual
+        """
         return self.avaliacao
 
 
     def getBotoes(self):
+        """
+        Obtém uma lista com todos os botões
+        """
         return self.listaBotoes

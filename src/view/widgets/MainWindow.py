@@ -24,7 +24,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setAcceptDrops(True)
         self.setObjectName("mainWindow")
 
-        QtGui.QFontDatabase.addApplicationFont("src/view/assets/fonts/Baskervville.ttf")
+        QtGui.QFontDatabase.addApplicationFont("src/view/assets/fonts/Poppins.ttf")
         self.setStyleSheet(open("src/view/assets/styles/mainWindow.css").read())
         self.setMinimumSize(relWidth(1300, 1920), relHeight(980, 1080))
 

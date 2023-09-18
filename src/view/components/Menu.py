@@ -5,6 +5,7 @@ from src.controller.telaInicial import dadosUsuario
 from src.view.utils.widgetSearch import getAncestrais, getDescendentes
 from src.view.utils.imageTools import relHeight, relWidth
 from src.view.components.Logo import Logo
+from src.view.utils.widgetSearch import getAncestrais
 import PIL
 
 
@@ -88,14 +89,15 @@ class Menu(QtWidgets.QFrame):
 
         # botão de logout simplificado
         botao = QtWidgets.QPushButton()
-        botao.setText("Sair")
-        botao.setObjectName("sair")
+        botao.setText("Logout")
+        botao.setObjectName("logout")
         menuLayout.addWidget(botao)
         botao.clicked.connect(self.deslogar)
 
 
     def deslogar(self):
-        QtWidgets.QApplication.quit()
+        mainWindow = getAncestrais(self)["mainWindow"]
+        mainWindow.paginas.setCurrentIndex(0)
 
     def getFotoPerfil(self, nomeUsuario):
         try:
@@ -106,13 +108,3 @@ class Menu(QtWidgets.QFrame):
                 imagemUsuario = img_file.read()
                 self.fotoPerfil.changePhoto(imagemUsuario, 50)
 
-'''=======
-        imagemUsuario = dadosUsuario(nomeUsuario)["fotoPerfil"]
-
-        if(imagemUsuario is None):
-            with open('src/view/assets/icons/default_user.jpg', 'rb') as img_file:
-                imagemUsuario = img_file.read()
-            self.fotoPerfil.changePhoto(imagemUsuario, 50)
-        else:
-            self.fotoPerfil.changePhoto(imagemUsuario, 50)
->>>>>>> 08cd1082d268ec309870d55676b0cb4fcfce5d80'''

@@ -8,27 +8,33 @@ from src.view.utils.imageTools import relHeight, relWidth
 
 class TelaMinhaBiblioteca(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
+        """
+        Widget onde estão dispostos o menu e o conteúdo de "Minha Biblioteca"
+        :param parent: Parente do widget
+        """
         super().__init__()
 
-        # Configurações
+        # CONFIGURAÇÕES -----------------------------------
         self.setParent(parent)
         self.setStyleSheet(
-            open(
-                "src/view/assets/styles/catalagoEMinhaBiblioteca/telaCatalogoBiblioteca.css"
-            ).read()
-        )
+            open("src/view/assets/styles/catalagoEMinhaBiblioteca/telaCatalogoBiblioteca.css").read())
 
-        # Definição do layout
+        # LAYOUT -------------------------------------------
+
         telaCatalogoLayout = QtWidgets.QVBoxLayout()
         telaCatalogoLayout.setSpacing(0)
         self.setLayout(telaCatalogoLayout)
 
-        # QFrame (Menu)
+
+        # MENU ---------------------------------------------
+
         menu = Menu(self)
         menu.setObjectName("menu")
         telaCatalogoLayout.addWidget(menu)
 
-        # QFrame (ConteudoCatalogo)
+
+        # CONTEÚDO DO CATÁLOGO -----------------------------
+
         conteudoMinhaBiblioteca = ConteudoMinhaBiblioteca(self)
         conteudoMinhaBiblioteca.setObjectName("conteudoFrame")
         conteudoMinhaBiblioteca.setStyleSheet(

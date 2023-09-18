@@ -8,20 +8,28 @@ from src.view.utils.imageTools import relHeight
 
 class ConteudoMinhaBiblioteca(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
+        """
+        Frame que dispões o conteúdo de "Minha Biblioteca"
+        :param parent: Parente do widget
+        """
         super().__init__()
 
-        # Configurações
+        # CONFIGURAÇÕES ---------------------------------------
         self.setParent(parent)
 
-        # Definição de layout
+
+        # LAYOU -----------------------------------------------
         conteudoCatalogoLayout = QtWidgets.QVBoxLayout()
         conteudoCatalogoLayout.setSpacing(0)
         self.setLayout(conteudoCatalogoLayout)
 
-        # QLabel (Catalogo)
+        # LABEL ("MINHA BIBLIOTECA") -----------------------------------
+
+        # Layout para ajustar a posição do label
         conteinerLabelCatalogo = QtWidgets.QHBoxLayout()
         conteudoCatalogoLayout.addLayout(conteinerLabelCatalogo)
 
+        # Definindo label
         labelCatalogo = QtWidgets.QLabel("MINHA BIBLIOTECA")
         labelCatalogo.setObjectName("labelConteudo")
         labelCatalogo.setStyleSheet(f"""
@@ -31,12 +39,16 @@ class ConteudoMinhaBiblioteca(QtWidgets.QFrame):
         labelCatalogo.setMinimumHeight(relHeight(60, 1080))
         conteinerLabelCatalogo.addWidget(labelCatalogo)
 
-        # Definição do contêiner com os painéis
+
+        # CONTAINER DOS PAINEIS DE LIVRO E FILTROS ---------------------------------------
+
         groupPaineis = QtWidgets.QHBoxLayout()
         groupPaineis.setSpacing(0)
         conteudoCatalogoLayout.addLayout(groupPaineis)
 
-        # Painel de filtragem
+
+        # PAINEL DE FILTROS --------------------------------------------------------------
+
         painelFiltro = PainelFiltroBiblioteca(self)
         painelFiltro.setObjectName("painelFiltroBiblioteca")
         painelFiltro.setStyleSheet(f"""
@@ -46,7 +58,10 @@ class ConteudoMinhaBiblioteca(QtWidgets.QFrame):
         """)
         groupPaineis.addWidget(painelFiltro)
 
-        # Painel de livros
+
+        # PAINEL DE LIVROS ----------------------------------------------------------------
+
+        # Container onde ficará o painel de livros | Adiciona bordas
         containerPainelLivros = verticalFrame(self, "containerPainelLivros")
         containerPainelLivros.setStyleSheet(f"""
             border-top-right-radius: {relHeight(15, 1080)}px;
@@ -55,6 +70,7 @@ class ConteudoMinhaBiblioteca(QtWidgets.QFrame):
             border-bottom-left-radius: 0;
         """)
 
+        # Instância do painel de livros
         painelLivrosBiblioteca = PainelLivrosBiblioteca(self)
         painelLivrosBiblioteca.setObjectName("painelLivrosBiblioteca")
         containerPainelLivros.layout().addWidget(painelLivrosBiblioteca)

@@ -47,13 +47,13 @@ class FundoDashboard(QtWidgets.QFrame):
         fundoLayout.addWidget(self.saudacao)
 
         self.saudacao.setText(f"Bem vindo, <usuario>!")
-        self.saudacao.setMaximumHeight(relHeight(35, 1080))
+        self.saudacao.setMaximumHeight(relHeight(20, 1080))
         self.saudacao.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         # CONTAINER (MINHA BIBLIOTECA) ----------------------------------------
 
         ContainerMinhaBiblioteca = verticalFrame(self, "ContainerConteudo")
-        ContainerMinhaBiblioteca.setMinimumHeight(relHeight(100, 1080))
+        ContainerMinhaBiblioteca.setMinimumHeight(relHeight(380, 1080))
         ContainerMinhaBiblioteca.layout().setSpacing(relHeight(14, 1080))
         fundoLayout.addWidget(ContainerMinhaBiblioteca)
 
@@ -108,7 +108,7 @@ class FundoDashboard(QtWidgets.QFrame):
         # CONTAINER (CATALOGO) ----------------------------------------------------
         containerCatalogo = verticalFrame(self, "ContainerConteudo")
         containerCatalogo.layout().setSpacing(relHeight(14, 1080))
-        containerCatalogo.setMinimumHeight(relHeight(100, 1080))
+        containerCatalogo.setMinimumHeight(relHeight(380, 1080))
         fundoLayout.addWidget(containerCatalogo)
 
         # Label (Catálogo)
@@ -130,6 +130,7 @@ class FundoDashboard(QtWidgets.QFrame):
             relWidth(50, 1920),
             relHeight(5, 1080),
         )
+        catalogoFrame.layout().setAlignment(Qt.AlignmentFlag.AlignVCenter)
         catalogoFrame.setStyleSheet(f"""
         border-radius: {relHeight(15, 1080)}px;
         """)
@@ -184,11 +185,11 @@ class FundoDashboard(QtWidgets.QFrame):
 
             # Redimensionando livros do "Catálogo"
             for livroCatalogo in self.listaLivrosCatalogo:
-                livroCatalogo.resizeButton(relWidth(220, 1920), relHeight(308, 1080))
+                livroCatalogo.resizeButton(relWidth(200, 1920), relHeight(280, 1080))
 
             # Redimensionando livros de "Minha Biblioteca"
             for livroMyLivro in self.listaMeusLivros:
-                livroMyLivro.resizeButton(relWidth(220, 1920), relHeight(308, 1080))
+                livroMyLivro.resizeButton(relWidth(200, 1920), relHeight(280, 1080))
 
         else:
             # Dispõe 4 livros e verifica se o usuário está logado
@@ -318,7 +319,7 @@ class FundoDashboard(QtWidgets.QFrame):
 
         # Atualiza e dispões livros da janela "Minha Biblioteca"
         painelLivrosBiblioteca.getLivrosMinhaBiblioteca()
-        painelLivrosBiblioteca.resizeEvent(None)
+        painelLivrosBiblioteca.resizeAndDisplayBiblioteca()
 
         # Muda a janela para "Minha Biblioteca"
         widgetSearch.getDescendentes(mainWindow)["paginas"].setCurrentIndex(2)
@@ -336,7 +337,7 @@ class FundoDashboard(QtWidgets.QFrame):
 
         # Atualiza e dispõe livros da janela "Catálogo"
         painelLivrosCatalogo.getLivrosCatalogo()
-        painelLivrosCatalogo.resizeEvent(None)
+        painelLivrosCatalogo.resizeAndDisplayCatalogo()
 
         # Muda a janela para "Catálogo"
         widgetSearch.getDescendentes(mainWindow)["paginas"].setCurrentIndex(3)

@@ -125,7 +125,7 @@ class horizontalWidget(QtWidgets.QWidget):
 
 
 class gridWidget(QtWidgets.QWidget):
-    def __init__(self, parent: QtWidgets.QFrame | QtWidgets.QWidget, objectName: str):
+    def __init__(self, parent: QtWidgets.QFrame | QtWidgets.QWidget, objectName: str = ""):
         """
         Widget com layout de grid embutido
         :param parent: parente do frame, objeto no qual estará inserido

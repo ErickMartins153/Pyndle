@@ -8,6 +8,7 @@ from PyQt6.QtWidgets import (
     QFileDialog,
     QLineEdit,
     QComboBox,
+    QSpacerItem
 )
 from PyQt6.QtGui import QImage, QPixmap, QIntValidator
 from PyQt6.QtCore import Qt
@@ -20,13 +21,20 @@ from src.controller.telaPrincipal import (
 )
 from src.view.utils.imageTools import relHeight, relWidth, getResizedImage
 from src.view.utils.widgetSearch import getAncestrais
+from src.view.utils.container import verticalFrame
 
 
 # noinspection PyAttributeOutsideInit
 class FormularioLivro(QDialog):
     def __init__(self, parent):
+        """
+        PopUp para registro de livro pelo usuário
+        :param parent:
+        """
         super().__init__()
-        # Atributos
+
+        # ATRIBUTOS --------------------------------------------
+
         self.parent = parent
         self.idUsuario = getAncestrais(self.parent)["mainWindow"].getUsuario()[
             "idUsuario"
@@ -37,87 +45,130 @@ class FormularioLivro(QDialog):
         self.contemPDF = False
         self.generos = getGeneros()
 
+        # CONFIGURAÇÕES --------------------------------------
+
         self.setStyleSheet(open("src/view/assets/styles/popup.css").read())
         self.setWindowTitle("Adicionar Livro")
-        self.setWindowModality(Qt.WindowModality.ApplicationModal)
-        self.setFixedSize(700, 700)
-        self.setWindowFlag(Qt.WindowType.Window, False)
+        self.setWindowFlag(Qt.WindowType.WindowCloseButtonHint, True)
+        self.setWindowTitle("Adicionar Livro")
+        self.setFixedSize(relWidth(550, 1366), relHeight(450, 768))
 
-        entradasHeight = relHeight(40, 1080)
+
+        # LAYOUT --------------------------------------------------------------
 
         layout = QHBoxLayout()
         layout.setObjectName("fundo")
         self.setLayout(layout)
 
-        groupImagemBotao = QFrame(self)
+        # CONTAINER (Frame com capa do livro e botão de adicionar) -----------------------
+
+        groupImagemBotao = verticalFrame(self)
+        groupImagemBotao.setMinimumWidth(relWidth(275, 1366))
         groupImagemBotao.setObjectName("groupImagemBotao")
-        groupImagemBotao.setFixedSize(300, 610)
-        groupImagemBotao.setStyleSheet(
-            f"""
-        border-radius: {relHeight(20, 1080)}px;
-        """
-        )
+        groupImagemBotao.setStyleSheet(f"""
+            border-radius: {relHeight(20, 1080)}px;
+        """)
         layout.addWidget(groupImagemBotao)
 
-        ImagemBotaoLayout = QVBoxLayout()
-        ImagemBotaoLayout.setObjectName("ImagemBotaoLayout")
-        ImagemBotaoLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        groupImagemBotao.setLayout(ImagemBotaoLayout)
+        groupImagemBotao.layout().setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        # imagemCapaLivro = QImage()
+        # CAPA DO LIVRO -------------------------------------------------------
+
         self.capa = QLabel(self)
+        self.capa.setMinimumSize(relWidth(340, 1920), relHeight(476, 1080))
+        self.capa.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        groupImagemBotao.layout().addWidget(self.capa, alignment=Qt.AlignmentFlag.AlignCenter)
 
-        # colocar um espaço em cima e embaixo da capa, garantindo que ela fique no centro do frame
-        ImagemBotaoLayout.addStretch()
-        ImagemBotaoLayout.addWidget(self.capa, alignment=Qt.AlignmentFlag.AlignCenter)
-        ImagemBotaoLayout.addStretch()
 
-        botaoAdicionarPDF = QPushButton(self)
+        # SPACER --------------------------------------------------------------
+
+        spacer = QSpacerItem(0, relHeight(25, 1080))
+        groupImagemBotao.layout().addSpacerItem(spacer)
+
+        # BOTÃO DE ADICIONAR LIVRO --------------------------------------------
+
+        containerBotaoAdicionar = QVBoxLayout()
+        containerBotaoAdicionar.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        groupImagemBotao.layout().addLayout(containerBotaoAdicionar)
+
+        botaoAdicionarPDF = QPushButton(groupImagemBotao)
         botaoAdicionarPDF.setText("Adicionar PDF")
         botaoAdicionarPDF.clicked.connect(self.adicionarPDF)
-        ImagemBotaoLayout.addWidget(botaoAdicionarPDF)
+        containerBotaoAdicionar.layout().addWidget(botaoAdicionarPDF)
 
-        groupInfos = QFrame(self)
+
+        # CONTAINER (Onde os metadados são dispostos e botão de registrar) --------------------------
+
+        groupInfos = verticalFrame(self)
         groupInfos.setObjectName("groupTexto")
         layout.addWidget(groupInfos)
+        groupInfos.layout().setObjectName("infosLayout")
 
-        groupLabelInput = QFrame(self)
-        groupLabelInput.setObjectName("groupLabelInput")
-        # groupLabelInput.setLayout(layoutFrame)
 
-        infosLayout = QVBoxLayout()
-        layout.setSpacing(-10)
-        infosLayout.setObjectName("infosLayout")
-        groupInfos.setLayout(infosLayout)
+        # CONTAINER (Grupo com os labels de metadados) ------------------------------
+
+        groupMetadado = verticalFrame(groupInfos)
+        groupMetadado.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
+        groupMetadado.layout().setSpacing(0)
+        groupInfos.layout().addWidget(groupMetadado)
+
+
+        # LABEL (Informações do livro) ----------------------------------------------
 
         h1 = QLabel("Informações do livro")
-        infosLayout.addWidget(h1)
+        h1.setStyleSheet(f"""
+            font-size: {relHeight(32, 1080)}px;
+        """)
+        groupMetadado.layout().addWidget(h1)
         h1.setObjectName("h1")
         h1.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-        h1.setMaximumHeight(50)
+        h1.setMaximumHeight(relHeight(50, 1080))
 
+        # METADADOS DO PDF ----------------------------------------------------------
+
+        # MEDIDAS DAS ENTRADAS ------------------------------------------------
+
+        entradasHeight = relHeight(40, 1080)
+
+
+        # TÍTULO --------------------------------------------------------------------
+
+        # Grupo de título
+        groupTitulo = verticalFrame(groupMetadado)
+        groupTitulo.layout().setAlignment(Qt.AlignmentFlag.AlignCenter)
+        groupMetadado.layout().addWidget(groupTitulo)
+
+        # Label de título
         tituloLabel = QLabel("Titulo:")
         tituloLabel.setObjectName("info")
         tituloLabel.setMaximumHeight(20)
-        infosLayout.addWidget(tituloLabel)
+        groupTitulo.layout().addWidget(tituloLabel)
+
+        # Entrada de título
 
         self.entradaTitulo = QLineEdit(self)
         self.entradaTitulo.setObjectName("caixaEntrada")
-        self.entradaTitulo.setStyleSheet(
-            f"""
-         font-size: {relHeight(25, 1080)};
-         border-radius: {relHeight(20, 1080)}px;
-         padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
-        
-        """
-        )
-        self.entradaTitulo.setMaximumHeight(entradasHeight)
-        infosLayout.addWidget(self.entradaTitulo)
+        self.entradaTitulo.setStyleSheet(f"""
+             font-size: {relHeight(25, 1080)};
+             border-radius: {relHeight(20, 1080)}px;
+             padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
+        """)
+        self.entradaTitulo.setMinimumHeight(entradasHeight)
+        groupTitulo.layout().addWidget(self.entradaTitulo)
 
+
+        # GÊNERO ---------------------------------------------------------------------
+
+        # Grupo de gênero
+        groupGenero = verticalFrame(groupMetadado)
+        groupGenero.layout().setAlignment(Qt.AlignmentFlag.AlignVCenter)
+        groupMetadado.layout().addWidget(groupGenero)
+
+        # Label de gênero
         generoLabel = QLabel(f"Gênero:")
         generoLabel.setObjectName("info")
         generoLabel.setMaximumHeight(20)
-        infosLayout.addWidget(generoLabel)
+        groupGenero.layout().addWidget(generoLabel)
 
         # criar opcão de comboBox(similar ao select do html)
         self.entradaGenero = QComboBox(self)
@@ -131,54 +182,94 @@ class FormularioLivro(QDialog):
             self.entradaGenero.addItem(genero)
 
         self.entradaGenero.activated.connect(self.handleEscolha)
-        infosLayout.addWidget(self.entradaGenero)
+        groupGenero.layout().addWidget(self.entradaGenero)
 
+
+        # AUTOR -------------------------------------------------------
+
+        # Grupo de Autor
+        groupAutor = verticalFrame(groupMetadado)
+        groupAutor.layout().setAlignment(Qt.AlignmentFlag.AlignCenter)
+        groupMetadado.layout().addWidget(groupAutor)
+
+        # Label de autor
         autorLabel = QLabel(f"Autor:")
         autorLabel.setMaximumHeight(20)
         autorLabel.setObjectName("info")
-        infosLayout.addWidget(autorLabel)
+        groupAutor.layout().addWidget(autorLabel)
 
+        # Entrada de autor
         self.entradaAutor = QLineEdit(self)
         self.entradaAutor.setObjectName("caixaEntrada")
-        self.entradaAutor.setStyleSheet(
-            f"""
-         font-size: {relHeight(25, 1080)};
-         border-radius: {relHeight(20, 1080)}px;
-         padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
-        
-        """
-        )
-        self.entradaAutor.setMaximumHeight(entradasHeight)
-        infosLayout.addWidget(self.entradaAutor)
+        self.entradaAutor.setStyleSheet(f"""
+             font-size: {relHeight(25, 1080)};
+             border-radius: {relHeight(20, 1080)}px;
+             padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
+        """)
+        self.entradaAutor.setMinimumHeight(entradasHeight)
+        groupAutor.layout().addWidget(self.entradaAutor)
 
+
+        # ANO DE PUBLICAÇÃO ------------------------------------------------
+
+        # Grupo de ano
+        groupAno = verticalFrame(groupMetadado)
+        groupAno.layout().setAlignment(Qt.AlignmentFlag.AlignCenter)
+        groupMetadado.layout().addWidget(groupAno)
+
+        # Label de ano
         anoLabel = QLabel(f"Ano:")
         anoLabel.setMaximumHeight(20)
         anoLabel.setObjectName("info")
-        infosLayout.addWidget(anoLabel)
+        groupAno.layout().addWidget(anoLabel)
 
+        # Entrada de ano
         self.entradaAno = QLineEdit(self)
         self.entradaAno.setValidator(QIntValidator())
         self.entradaAno.setObjectName("caixaEntrada")
-        self.entradaAno.setStyleSheet(
-            f"""
-         font-size: {relHeight(25, 1080)};
-         border-radius: {relHeight(20, 1080)}px;
-         padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
-        
-        """
-        )
-        self.entradaAno.setMaximumHeight(entradasHeight)
-        infosLayout.addWidget(self.entradaAno)
+        self.entradaAno.setStyleSheet(f"""
+             font-size: {relHeight(25, 1080)};
+             border-radius: {relHeight(20, 1080)}px;
+             padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
+        """)
+        self.entradaAno.setMinimumHeight(entradasHeight)
+        groupAno.layout().addWidget(self.entradaAno)
 
+
+        # QUANTIDADE DE PÁGINAS ------------------------------------------------------
+
+        # Label de páginas
         self.qtdPaginasLabel = QLabel(f"Total de páginas: adicione arquivo PDF!")
-        self.qtdPaginasLabel.setMaximumHeight(20)
+        self.qtdPaginasLabel.setStyleSheet(f"""
+            font-size: {relHeight(16, 1080)}px;
+        """)
+        self.qtdPaginasLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.qtdPaginasLabel.setMinimumHeight(50)
         self.qtdPaginasLabel.setObjectName("info")
-        infosLayout.addWidget(self.qtdPaginasLabel)
+        groupMetadado.layout().addWidget(self.qtdPaginasLabel)
 
+
+        # BOTÃO DE CADASTRAR LIVRO --------------------------------------------------
+
+        # Container de botão de registrar
+        containerBotaoRegistrar = QVBoxLayout()
+        containerBotaoRegistrar.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        groupInfos.layout().addLayout(containerBotaoRegistrar)
+
+        # Definindo botão
         button = QPushButton("Cadastrar Livro", self)
         button.clicked.connect(self.cadastrarLivro)
-        infosLayout.addWidget(button)
+        containerBotaoRegistrar.layout().addWidget(button)
         self.setLayout(layout)
+
+
+        # DEFININDO PROPORÇÃO DO CONTAINER DE METADADOS ---------------------------
+        groupInfos.layout().setStretch(0, 120)
+        groupInfos.layout().setStretch(1, 20)
+
+
+    # MÉTODOS -------------------------------------------
+
 
     def handleEscolha(self):
         self.generoEscolhido = self.sender().currentText()

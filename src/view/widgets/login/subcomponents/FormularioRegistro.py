@@ -5,6 +5,7 @@ from src.view.components.FotoPerfil import FotoPerfil
 from src.controller import telaInicial
 from src.view.utils import widgetSearch
 from src.view.utils.imageTools import relHeight, relWidth
+from src.view.utils.container import verticalFrame
 import PIL
 
 import pyautogui
@@ -15,11 +16,19 @@ width, height = tela
 
 class FormularioRegistro(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
+        """
+        Formulário com todas as entradas para registrar usuários
+        :param parent: Parente do widget
+
+        ATRIBUTOS:
+            - binaryFoto: Atributo que armazena a foto atual definida pelo usuário durante o registro
+        """
         super().__init__()
-        # Atributos
+
+        # ATRIBUTOS ---------------------------------------------
         self.binaryFoto = b""
 
-        # Configurações
+        # CONFIGURAÇÕES -----------------------------------------
         self.setParent(parent)
         self.setContentsMargins(
             relWidth(20, 1920),
@@ -34,6 +43,7 @@ class FormularioRegistro(QtWidgets.QFrame):
         formLayout.setSpacing(relHeight(20, 1080))
         self.setLayout(formLayout)
 
+
         # LOGO -----------------------------------------
 
         # self.logo = Logo(240, 100)
@@ -42,8 +52,10 @@ class FormularioRegistro(QtWidgets.QFrame):
         self.logo.setFixedHeight(relHeight(100, 1080))
         formLayout.addWidget(self.logo)
 
+
         # ENTRADAS -------------------------------------
-        # Foto de perfil
+
+        # FOTO DE PERFIL --------------------------------------------
         layout = QtWidgets.QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -55,7 +67,7 @@ class FormularioRegistro(QtWidgets.QFrame):
         layout.addWidget(self.foto)
         formLayout.addLayout(layout)
 
-        # LABEL ERRO
+        # LABEL DE ERRO --------------------------------------------
         mensagemErroLayout = QtWidgets.QHBoxLayout()
         formLayout.addLayout(mensagemErroLayout)
 
@@ -66,104 +78,132 @@ class FormularioRegistro(QtWidgets.QFrame):
         self.mensagemDeErroLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         mensagemErroLayout.addWidget(self.mensagemDeErroLabel)
 
-        # Frame das entradas
-        entradasFrame = QtWidgets.QFrame(self)
-        entradasFrame.setMinimumHeight(relHeight(400, 1080))
-        formLayout.addWidget(entradasFrame)
-        self.entradasLayout = QtWidgets.QVBoxLayout(self)
-        self.entradasLayout.setSpacing(relHeight(10, 1080))
-        self.entradasLayout.setContentsMargins(
-            relWidth(150, 1920), 0, relWidth(150, 1920), 0
-        )
-        entradasFrame.setLayout(self.entradasLayout)
 
-        # elementos
+        # CONTAINER DAS ENTRADAS --------------------------------------
+        self.entradasFrame = verticalFrame(self)
+        self.entradasFrame.setMinimumHeight(relHeight(400, 1080))
+        formLayout.addWidget(self.entradasFrame)
+
+        self.entradasFrame.layout().setSpacing(relHeight(10, 1080))
+        self.entradasFrame.layout().setContentsMargins(
+            relWidth(150, 1920),
+            0,
+            relWidth(150, 1920),
+            0
+        )
+
+
+        # MEDIDAS DAS ENTRADAS --------------------------------------------
 
         entradasHeight = relHeight(40, 1080)
         espacoLabelEntrada = relHeight(30, 1080)
 
+
+        # USUÁRIO ---------------------------------------------------------
+
+        # Layout para agrupar label e entrada de usuário
         groupUsuario = QtWidgets.QVBoxLayout()
         groupUsuario.setSpacing(relHeight(5, 1080))
-        self.entradasLayout.addLayout(groupUsuario)
+        self.entradasFrame.layout().addLayout(groupUsuario)
 
-        usuarioLabel = QtWidgets.QLabel(entradasFrame)
+        # Definindo label de usuário
+        usuarioLabel = QtWidgets.QLabel(self.entradasFrame)
         usuarioLabel.setObjectName("labelCaixa")
-        usuarioLabel.setStyleSheet(f"font-size: {relHeight(30, 1080)}px")
+        usuarioLabel.setStyleSheet(f"""
+            font-size: {relHeight(30, 1080)}px
+        """)
         usuarioLabel.setText("Usuário")
         usuarioLabel.setMaximumHeight(espacoLabelEntrada)
         groupUsuario.addWidget(usuarioLabel)
 
-        self.entradaUsuario = QtWidgets.QLineEdit(entradasFrame)
+        # Definindo entrada de usuário
+        self.entradaUsuario = QtWidgets.QLineEdit(self.entradasFrame)
         self.entradaUsuario.setObjectName("caixaEntrada")
-        self.entradaUsuario.setStyleSheet(
-            f"""
-        font-size: {relHeight(25, 1080)};
-        border-radius: {relHeight(20, 1080)}px;
-        padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
-        """
-        )
+        self.entradaUsuario.setStyleSheet(f"""
+            font-size: {relHeight(25, 1080)};
+            border-radius: {relHeight(20, 1080)}px;
+            padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
+        """)
         self.entradaUsuario.setMaximumHeight(entradasHeight)
         groupUsuario.addWidget(self.entradaUsuario)
 
+
+        # SENHA --------------------------------------------------------------
+
+        # Layout agrupando label e entrada de senha
         groupSenha = QtWidgets.QVBoxLayout()
         groupSenha.setSpacing(relHeight(5, 1080))
-        self.entradasLayout.addLayout(groupSenha)
+        self.entradasFrame.layout().addLayout(groupSenha)
 
-        senhaLabel = QtWidgets.QLabel(entradasFrame)
+        # Label da senha
+        senhaLabel = QtWidgets.QLabel(self.entradasFrame)
         senhaLabel.setObjectName("labelCaixa")
+        senhaLabel.setStyleSheet(f"""
+            font-size: {relHeight(30, 1080)}px
+        """)
         senhaLabel.setMaximumHeight(espacoLabelEntrada)
         senhaLabel.setText("Senha")
         groupSenha.addWidget(senhaLabel)
 
-        self.entradaSenha = QtWidgets.QLineEdit(entradasFrame)
+        # Entrada da senha
+        self.entradaSenha = QtWidgets.QLineEdit(self.entradasFrame)
         self.entradaSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.entradaSenha.setObjectName("caixaEntrada")
-        self.entradaSenha.setStyleSheet(
-            f"""
-                font-size: {relHeight(25, 1080)};
-                border-radius: {relHeight(20, 1080)}px;
-                padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
-        """
-        )
+        self.entradaSenha.setStyleSheet(f"""
+            font-size: {relHeight(25, 1080)};
+            border-radius: {relHeight(20, 1080)}px;
+            padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
+        """)
         self.entradaSenha.setMaximumHeight(entradasHeight)
         groupSenha.addWidget(self.entradaSenha)
 
+
+        # REPETIR SENHA ------------------------------------------------------------
+
+        # Layout agrupando label e entradas de repetir senha
         groupRepetirSenha = QtWidgets.QVBoxLayout()
         groupRepetirSenha.setSpacing(relHeight(5, 1080))
-        self.entradasLayout.addLayout(groupRepetirSenha)
+        self.entradasFrame.layout().addLayout(groupRepetirSenha)
 
-        repetirSenhaLabel = QtWidgets.QLabel(entradasFrame)
+        # Definindo label de repetir senha
+        repetirSenhaLabel = QtWidgets.QLabel(self.entradasFrame)
         repetirSenhaLabel.setObjectName("labelCaixa")
-        repetirSenhaLabel.setStyleSheet(f"font-size: {relHeight(30, 1080)}px")
+        repetirSenhaLabel.setStyleSheet(f"""
+            font-size: {relHeight(30, 1080)}px
+        """)
         repetirSenhaLabel.setText("Repita sua senha")
         repetirSenhaLabel.setMaximumHeight(espacoLabelEntrada)
         groupRepetirSenha.addWidget(repetirSenhaLabel)
 
-        self.entradaRepetirSenha = QtWidgets.QLineEdit(entradasFrame)
+        # Definindo entrada de repetir senha
+        self.entradaRepetirSenha = QtWidgets.QLineEdit(self.entradasFrame)
         self.entradaRepetirSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.entradaRepetirSenha.setObjectName("caixaEntrada")
-        self.entradaRepetirSenha.setStyleSheet(
-            f"""
-                font-size: {relHeight(25, 1080)};
-                border-radius: {relHeight(20, 1080)}px;
-                padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
-        """
-        )
+        self.entradaRepetirSenha.setStyleSheet(f"""
+            font-size: {relHeight(25, 1080)};
+            border-radius: {relHeight(20, 1080)}px;
+            padding: {relHeight(2, 1080)}px {relWidth(10, 1920)}px;
+        """)
         self.entradaRepetirSenha.setMaximumHeight(entradasHeight)
         groupRepetirSenha.addWidget(self.entradaRepetirSenha)
 
-        # BOTÕES --------------------------
-        # Frame
-        botoesFrame = QtWidgets.QFrame(self)
-        self.entradasLayout.addWidget(botoesFrame)
 
-        botoesFrameLayout = QtWidgets.QVBoxLayout(botoesFrame)
-        botoesFrameLayout.setContentsMargins(80, 0, 80, 0)
-        botoesFrameLayout.setContentsMargins(
+        # BOTÕES --------------------------------
+
+        # CONTAINER AGRUPANDO BOTÕES -----------------------------------------------
+
+        botoesFrame = verticalFrame(self)
+        self.entradasFrame.layout().addWidget(botoesFrame)
+
+        botoesFrame.layout().setContentsMargins(80, 0, 80, 0)
+        botoesFrame.layout().setContentsMargins(
             relWidth(80, 1920), 0, relWidth(80, 1920), 0
         )
-        botoesFrameLayout.setSpacing(relHeight(10, 1080))
-        botoesFrame.setLayout(botoesFrameLayout)
+        botoesFrame.layout().setSpacing(relHeight(10, 1080))
+        botoesFrame.setLayout(botoesFrame.layout())
+
+
+        # BOTÃO DE REGISTRAR --------------------------------------------------------
 
         self.registrarBotao = QtWidgets.QPushButton(botoesFrame)
         self.registrarBotao.setObjectName("registrarBotao")
@@ -176,7 +216,10 @@ class FormularioRegistro(QtWidgets.QFrame):
         self.registrarBotao.setMinimumHeight(relHeight(50, 1080))
         self.registrarBotao.setText("Registrar")
         self.registrarBotao.clicked.connect(self.checarRegistro)
-        botoesFrameLayout.addWidget(self.registrarBotao)
+        botoesFrame.layout().addWidget(self.registrarBotao)
+
+
+        # BOTÃO PARA VOLTAR À TELA DE LOGIN -------------------------------------------
 
         self.telaLoginBotao = QtWidgets.QPushButton(botoesFrame)
         self.telaLoginBotao.setObjectName("logarBotao")
@@ -189,9 +232,10 @@ class FormularioRegistro(QtWidgets.QFrame):
         self.telaLoginBotao.setMinimumHeight(relHeight(50, 1080))
         self.telaLoginBotao.setText("Tela de Login")
         self.telaLoginBotao.clicked.connect(self.voltarTelaLogin)
-        botoesFrameLayout.addWidget(self.telaLoginBotao)
+        botoesFrame.layout().addWidget(self.telaLoginBotao)
 
-    # Funções ------------------------------------------------------------
+
+    # (MÉTODOS) ------------------------------------------------------------
     def checarRegistro(self):
         """
         Checa se usuário/senha/repetir senha existem, se o usuário já consta no banco de dados \n
@@ -242,6 +286,9 @@ class FormularioRegistro(QtWidgets.QFrame):
         self.mensagemDeErroLabel.setText(mensagem)
 
     def limparLabelMensagemDeErro(self):
+        """
+        Remove a mensagem de erro da tela de registro
+        """
         self.mensagemDeErroLabel.setText(" ")
         self.mensagemDeErroLabel.setObjectName(" ")
         self.setStyleSheet(open("src/view/assets/styles/login/telaLogin.css").read())
@@ -261,7 +308,8 @@ class FormularioRegistro(QtWidgets.QFrame):
         """
         )
 
-    # Eventos ----------------------------------------------------------
+
+    # EVENTOS ----------------------------------------------------------
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasImage:

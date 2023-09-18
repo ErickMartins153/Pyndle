@@ -4,34 +4,45 @@ from src.view.components.BotaoAvaliacao import BotaoAvaliacao
 from src.view.widgets.minhaBiblioteca.subcomponents.FormularioLivro import FormularioLivro
 from src.view.utils import widgetSearch
 from src.view.utils.container import verticalFrame, horizontalFrame, gridFrame
+from src.controller.telaPrincipal import getGeneros
 from src.view.utils.imageTools import relHeight, relWidth
 
 
 class PainelFiltroBiblioteca(QtWidgets.QFrame):
     def __init__(self, parent: QtWidgets.QWidget):
+        """
+        Painel contendo os filtros de "Minha Biblioteca"
+        :param parent: Parente do widget
+        """
         super().__init__()
 
-        # Atributos
+        # ATRIBUTOS --------------------------------------------
+
         self.generoMarcado = None
         self.ordemAlf = None
         self.avaliacao = None
 
-        # Configurações
+        # CONFIGURAÇÕES -----------------------------------------
+
         self.setParent(parent)
         self.setMinimumWidth(relWidth(400, 1920))
         self.setMaximumWidth(relWidth(500, 1920))
 
-        # Definindo Layout
+        # LAYOUT --------------------------------------------------------
+
         painelFiltroLayout = QtWidgets.QVBoxLayout()
         painelFiltroLayout.setSpacing(relHeight(50, 1080))
         self.setLayout(painelFiltroLayout)
 
-        # QPushButton (Botão de voltar) -----------------------------------
+        # BOTÃO DE VOLTAR -------------------------------------------------------
+
+        # Layout para posicionar botão de voltar
         conteinerBotaoVoltar = horizontalFrame(self)
         conteinerBotaoVoltar.setMaximumHeight(relHeight(60, 1080))
         conteinerBotaoVoltar.layout().setAlignment(Qt.AlignmentFlag.AlignLeft)
         painelFiltroLayout.addWidget(conteinerBotaoVoltar)
 
+        # Definindo botão de voltar
         botaoVoltar = QtWidgets.QPushButton()
         botaoVoltar.setObjectName("botaoVoltar")
         botaoVoltar.setStyleSheet(
@@ -44,35 +55,40 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         botaoVoltar.setMinimumSize(relWidth(40, 1920), relHeight(40, 1080))
         conteinerBotaoVoltar.layout().addWidget(botaoVoltar)
 
-        # QFrame -----------------------------------------------------
+
+        # FRAME COM OS FILTROS ----------------------------------------------------
+
+        # Layout no qual as informações do frame serão posicionados | Também ajuda no alinhamento
         layoutFrame = QtWidgets.QVBoxLayout()
         layoutFrame.setAlignment(Qt.AlignmentFlag.AlignCenter)
         painelFiltroLayout.addLayout(layoutFrame)
 
-        frameFiltros = QtWidgets.QFrame(self)
-        frameFiltros.setStyleSheet(
-            f"""
+        # Frame propriamente dito
+        frameFiltros = gridFrame(self)
+        frameFiltros.setStyleSheet(f"""
         border-radius: {relHeight(20, 1080)}px
-        """
-        )
+        """)
         frameFiltros.setObjectName("frameFiltros")
         frameFiltros.setFixedSize(relWidth(350, 1920), relHeight(550, 1080))
         layoutFrame.addWidget(frameFiltros)
 
-        layoutFrameFiltros = QtWidgets.QGridLayout()
-        layoutFrameFiltros.setContentsMargins(
+        frameFiltros.layout().setContentsMargins(
             relWidth(20, 1920),
             relHeight(20, 1080),
             relWidth(20, 1920),
             relHeight(20, 1080),
         )
-        frameFiltros.setLayout(layoutFrameFiltros)
+        frameFiltros.setLayout(frameFiltros.layout())
 
-        # QLabel ("FILTROS") -----------------------------------------------
+
+        # LABEL ("FILTRAGEM") -------------------------------------------------------
+
+        # Layout para posicionar o label
         layoutLabelFiltros = QtWidgets.QHBoxLayout()
         layoutLabelFiltros.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layoutFrameFiltros.addLayout(layoutLabelFiltros, 0, 0, 100, 3)
+        frameFiltros.layout().addLayout(layoutLabelFiltros, 0, 0, 100, 3)
 
+        # Definindo label de filtragem
         labelFiltros = QtWidgets.QLabel("FILTRAGEM")
         labelFiltros.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         labelFiltros.setStyleSheet(
@@ -82,9 +98,10 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         )
         layoutLabelFiltros.addWidget(labelFiltros)
 
-        # (Ordem Alfabética) ----------------------------------------------
 
-        # Label "Ordem Alfabética"
+        # ORDEM ALFABÉTICA -------------------------------------------------------
+
+        # LABEL ("ORDEM ALFABÉTICA") ------------------------------------
         labelOrdemAlf = QtWidgets.QLabel("Ordem Alfabética |")
         labelOrdemAlf.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         labelOrdemAlf.setObjectName("filtroLabel")
@@ -93,15 +110,18 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         font-size: {relHeight(20, 1080)}px;
         """
         )
-        layoutFrameFiltros.addWidget(labelOrdemAlf, 40, 0, 1, 1)
+        frameFiltros.layout().addWidget(labelOrdemAlf, 40, 0, 1, 1)
 
-        # Layout para posicionar botões upArrow e downArrow
+        # LAYOUT (UP_ARROW E DOWN_ARROW) ------------------------------------
+
+        # Definição do layout
         botaoAlfLayout = QtWidgets.QHBoxLayout()
         botaoAlfLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        layoutFrameFiltros.addLayout(botaoAlfLayout, 40, 1, 1, 2)
-        # layoutFrameFiltros.setRowStretch(1, 9)
+        frameFiltros.layout().addLayout(botaoAlfLayout, 40, 1, 1, 2)
 
-        # Botões UpArrow e DownArrow
+
+        # BOTÃO DE UP_ARROW -------------------------------------------------
+
         self.botaoAlfUp = QtWidgets.QPushButton()
         self.botaoAlfUp.setStyleSheet(
             f"""
@@ -114,6 +134,9 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         self.botaoAlfUp.setObjectName("botaoAlfUp")
         self.botaoAlfUp.clicked.connect(self.botaoOrdAlfClicado)
         botaoAlfLayout.addWidget(self.botaoAlfUp)
+
+
+        # BOTÃO DE DOWN_ARROW ------------------------------------------------
 
         self.botaoAlfDown = QtWidgets.QPushButton()
         self.botaoAlfDown.setStyleSheet(
@@ -128,20 +151,22 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         self.botaoAlfDown.clicked.connect(self.botaoOrdAlfClicado)
         botaoAlfLayout.addWidget(self.botaoAlfDown)
 
-        # Spacer
+
+        # SPACER ---------------------------------------------------------------
         spacer = QtWidgets.QSpacerItem(relWidth(40, 1920), 0)
 
         botaoAlfLayout.addSpacerItem(spacer)
 
+
         # (Gêneros) ---------------------------------------------------
 
-        # Container
+        # CONTAINER (Onde fica o label e o container dos gêneros) -------------------
         conteinerGenero = verticalFrame(self, "conteinerGenero")
         conteinerGenero.layout().setSpacing(0)
         conteinerGenero.layout().setContentsMargins(0, 0, 0, 0)
-        layoutFrameFiltros.addWidget(conteinerGenero, 60, 0, 3, 3)
+        frameFiltros.layout().addWidget(conteinerGenero, 60, 0, 3, 3)
 
-        # Label ("Gêneros")
+        # LABEL ("GÊNEROS") ----------------------------------------------------
         labelGeneros = QtWidgets.QLabel("Gêneros:")
         labelGeneros.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         labelGeneros.setObjectName("filtroLabel")
@@ -153,7 +178,7 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         )
         conteinerGenero.layout().addWidget(labelGeneros)
 
-        # LayoutGeneros
+        # LAYOUT (GENEROS) -----------------------------------------------------
         groupGeneros = gridFrame(self, "groupGeneros")
         groupGeneros.setStyleSheet("background-color: transparent")
         groupGeneros.layout().setAlignment(Qt.AlignmentFlag.AlignLeft)
@@ -161,20 +186,12 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         groupGeneros.layout().setSpacing(10)
         conteinerGenero.layout().addWidget(groupGeneros)
 
-        # RadioButtons ("Generos")
+        # Definindo radioButtons de gênero
         self.groupRadio = QtWidgets.QButtonGroup()
         self.groupRadio.setExclusive(False)
 
-        generos = (
-            "Terror",
-            "Fantasia",
-            "Aventura",
-            "Romance",
-            "Matemática",
-            "Geografia",
-            "Linguagens",
-            "Literatura",
-        )
+        # Coleta os gêneros definidos em TelaPrincipal.py
+        generos = getGeneros()
 
         quant_linhas, coluna, linha = 5, 0, 0
         for contador, genero in enumerate(generos):
@@ -204,14 +221,15 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         font-size: {relHeight(20, 1080)}px;
         """
         )
-        layoutFrameFiltros.addWidget(avaliacaoLabel, 80, 0, 1, 3)
+        frameFiltros.layout().addWidget(avaliacaoLabel, 80, 0, 1, 3)
 
         # Botões de avaliação
 
         self.botaoAvaliacao = BotaoAvaliacao(0)
         for botao in self.botaoAvaliacao.getBotoes():
             botao.clicked.connect(self.botaoAvaliacaoClicado)
-        layoutFrameFiltros.addLayout(self.botaoAvaliacao, 81, 0, 1, 1)
+        frameFiltros.layout().addLayout(self.botaoAvaliacao, 81, 0, 1, 1)
+
 
         # (BOTÃO FILTRAR) ----------------------------------------
         botaoFiltrar = QtWidgets.QPushButton()
@@ -227,9 +245,10 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         )
         botaoFiltrar.clicked.connect(self.botaoFiltrarClicado)
         botaoFiltrar.setFixedSize(relWidth(100, 1920), relHeight(50, 1080))
-        layoutFrameFiltros.addWidget(
+        frameFiltros.layout().addWidget(
             botaoFiltrar, 90, 0, 1, 3, Qt.AlignmentFlag.AlignCenter
         )
+
 
         # (BOTÃO ADICIONAR) -----------------------------------------
         containerBotaoAdicionar = verticalFrame(self)
@@ -249,7 +268,14 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         botaoAdicionar.setMinimumSize(relWidth(40, 1920), relHeight(40, 1080))
         containerBotaoAdicionar.layout().addWidget(botaoAdicionar)
 
+
+    # MÉTODOS ----------------------------------------------------
+
     def voltarBotaoClicado(self):
+        """
+        Volta de "Minha Biblioteca" para a "Dashboard"
+        :return:
+        """
         mainWindow = widgetSearch.getAncestrais(self)["mainWindow"]
         widgetSearch.getDescendentes(mainWindow)["paginas"].setCurrentIndex(1)
         widgetSearch.getDescendentes(mainWindow)["fundoDashboard"].resizeAndDisplayLivros()
@@ -265,48 +291,77 @@ class PainelFiltroBiblioteca(QtWidgets.QFrame):
         self.botaoAlfUp.setChecked(False)
         self.botaoAvaliacao.setAvaliacao(0)
 
+
     def adicionarBotaoCliclado(self):
+        """
+        Abre o PopUp do livro
+        """
         popup = FormularioLivro(self)
         popup.exec()
 
+
     def radioButtonClicado(self):
+        """
+        Trata o comportamento dos radioButtons de gênero
+        **OBS**: Apenas permite que um seja selecionado por vez
+        """
+
+        # Verifica se o botão que enviou o sinal já não está marcado
         if self.sender().text() != self.generoMarcado:
             self.generoMarcado = self.sender().text()
             for botao in self.groupRadio.buttons():
                 if botao != self.sender():
                     botao.setChecked(False)
+
+        # Caso o botão que enviou o sinal esteja marcado, remove a marcação
         else:
             self.generoMarcado = None
             self.sender().setChecked(False)
 
-        """if self.generoMarcado:
-            for botao in self.groupRadio.buttons():
-                if self.sender() == botao and botao.isChecked():
-                    botao.setChecked(False)"""
 
     def botaoOrdAlfClicado(self):
+        """
+        Controla o tratamento dos UpArrow e DownArrow
+        **OBS**: Apenas permite que um seja selecionado por vez
+        :return:
+        """
+
+        # Trata a informação do botão recebido com lógica booleana
         if self.sender().objectName() == "botaoAlfUp":
             ordem = True
         else:
             ordem = False
 
+        # Verifica se o sinal recebido já não é do botão que já está ativo
         if ordem != self.ordemAlf:
             self.ordemAlf = ordem
             if ordem is True:
                 self.botaoAlfDown.setChecked(False)
             else:
                 self.botaoAlfUp.setChecked(False)
+
+        # Caso o botão que enviou o sinal seja aquele que já está marcado, remove marcação
         else:
             self.ordemAlf = None
             self.sender().setChecked(False)
 
     def botaoAvaliacaoClicado(self):
+        """
+        Trata o retorno do grupo de botões de avaliação
+        """
+
+        # Caso seja diferente de 0, apenas define o valor
         if self.botaoAvaliacao.getAvaliacao() != 0:
             self.avaliacao = self.botaoAvaliacao.getAvaliacao()
+        # Caso contrário, a avaliação considerada é nula
         else:
             self.avaliacao = None
 
     def botaoFiltrarClicado(self):
+        """
+        Filtra os livros de "Minha Biblioteca"
+        """
+
+        # Acessa o painel de livros e atualiza os livros com o filtro
         widgetSearch.getIrmaos(self)["painelLivrosBiblioteca"].getLivrosMinhaBiblioteca(
-            self.generoMarcado, self.avaliacao, self.ordemAlf
-        )
+            self.generoMarcado, self.avaliacao, self.ordemAlf)

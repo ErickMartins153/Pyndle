@@ -1,6 +1,6 @@
 /* ConteudoCatalogo.py e ConteudoMinhaBiblioteca.py */
 #conteudoFrame{
-    background-color: #FFF9EF;
+    background-color: #F0D097;
 }
 
 #botaoVoltar{
@@ -21,6 +21,10 @@
 }
 
 #containerPainelLivros{
+    background-color: #F0D097;
+}
+
+#painelLivrosCatalogo{
     background-color: #F0D097;
 }
 
