@@ -100,9 +100,13 @@ class LeitorPDF(QDialog):
         if self.paginaAtual == self.totalPaginas:
             self.paginaAtual -= 1
         if self.documentoPdf is not None and 0 <= self.paginaAtual < self.totalPaginas:
+            # Obtendo página
             pagina = self.documentoPdf[self.paginaAtual]
 
+            # Extraindo pixmap da páginas
             imagem_pymupdf = pagina.get_pixmap()
+
+            # Criando QImage
             imagem_qt = QImage(
                 imagem_pymupdf.samples,
                 imagem_pymupdf.width,
@@ -111,14 +115,12 @@ class LeitorPDF(QDialog):
                 QImage.Format.Format_RGB888,
             )
 
+            # Definindo QPixmap
             pixmap = QPixmap.fromImage(imagem_qt)
 
+            # Enviando QPixmap para o display de pdf
             self.displayPDF.definirPagina(pixmap)
 
-            # Atualize a visibilidade dos botões com base na página atual
-
-            # self.botaoPaginaAnterior.setEnabled(self.paginaAtual > 0)
-            # self.botaoProximaPagina.setEnabled(self.paginaAtual < self.totalPaginas - 1)
 
     def passarPagina(self):
         if self.documentoPdf is not None and self.paginaAtual < self.totalPaginas - 1:

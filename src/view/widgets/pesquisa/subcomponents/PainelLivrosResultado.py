@@ -4,6 +4,7 @@ from src.view.components.BotaoImagem import BotaoImagem
 from src.view.widgets.moduloLivro.Popup import Popup
 from src.view.widgets.catalogo.subcomponents.popupCatalogo import PopupCatalogo
 from src.controller.telaPreviaLivro import dadosLivro
+from src.controller.telaPrincipal import pesquisarLivro
 from src.view.utils import widgetSearch
 from src.view.utils.imageTools import relHeight, relWidth
 from src.view.utils.container import gridWidget
@@ -11,7 +12,7 @@ from src.view.utils.container import gridWidget
 
 class PainelLivrosResultado(QtWidgets.QScrollArea):
     # noinspection PyTypeChecker
-    def __init__(self, parent: QtWidgets.QWidget, idLivrosFiltro):
+    def __init__(self, parent: QtWidgets.QWidget, textoPesquisa: str):
         """
         Painel onde são dispostos os livros com barra de Scroll para navegar
         :param parent: Parente do Widget
@@ -19,8 +20,7 @@ class PainelLivrosResultado(QtWidgets.QScrollArea):
         super().__init__()
         # ATRIBUTOS -----------------------------------------------------------------
         self.listaBotaoLivro = list()  # Lista para acessar os BotoesLivros em métodos
-        self.idLivrosFiltro = idLivrosFiltro
-
+        self.textoPesquisa = textoPesquisa
 
         # CONFIGURAÇÕES --------------------------------------------------------------
         self.setParent(parent)
@@ -98,10 +98,12 @@ class PainelLivrosResultado(QtWidgets.QScrollArea):
         :return:
         """
 
-        # Obtendo livros do "Catálogo" filtrado
+        resultadoPesquisa = pesquisarLivro(self.textoPesquisa, genero, ordemAlfabetica)
+
+        # Obtendo livros da "Pesquisa" filtrado
         livrosFiltroBD = list()
-        for id in self.idLivrosFiltro:
-            livrosFiltroBD.append(dadosLivro(id))
+        for registro in resultadoPesquisa:
+            livrosFiltroBD.append({"idLivro": registro["idLivro"], "capaLivro": registro["capaLivro"]})
         
 
         # Destruindo os botões existentes

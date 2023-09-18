@@ -12,7 +12,7 @@ import sqlite3
 
 class Menu(QtWidgets.QFrame):
     #Sinal para enviar o resultado da pesquisa para a telaPesquisa
-    sinalPesquisa = pyqtSignal(list)
+    sinalPesquisa = pyqtSignal(str)
 
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__()
@@ -95,7 +95,6 @@ class Menu(QtWidgets.QFrame):
     def pesquisaLivro(self):
         
         textoPesquisa = self.pesquisa.text()
-        resultadoPesquisa = pesquisarLivro(textoPesquisa)
-        self.sinalPesquisa.emit(resultadoPesquisa)
+        self.sinalPesquisa.emit(textoPesquisa)
         mainWindow = getAncestrais(self)["mainWindow"]
         mainWindow.paginas.setCurrentIndex(4)

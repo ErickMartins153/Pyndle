@@ -17,7 +17,7 @@ class ConteudoFiltro(QtWidgets.QFrame):
         # CONFIGURAÇÕES -------------------------------------------
 
         self.setParent(parent)
-        self.idLivrosFiltro = getAncestrais(self)["mainWindow"].dashboard.menu.sinalPesquisa.connect(self.getIdLivrosFiltro)
+        self.idLivrosFiltro = getAncestrais(self)["mainWindow"].dashboard.menu.sinalPesquisa.connect(self.getPesquisaFiltro)
 
         # LAYOUT --------------------------------------------------
 
@@ -58,7 +58,7 @@ class ConteudoFiltro(QtWidgets.QFrame):
         self.groupPaineis.addWidget(painelFiltro)
 
         # Painel de livros
-        painelLivros = PainelLivrosResultado(self, list())
+        painelLivros = PainelLivrosResultado(self, "")
         painelLivros.setObjectName("painelLivrosResultado")
         self.groupPaineis.addWidget(painelLivros)
        
@@ -69,11 +69,9 @@ class ConteudoFiltro(QtWidgets.QFrame):
         self.groupPaineis.setStretch(0, 41)
         self.groupPaineis.setStretch(1, 100)
     
-    def getIdLivrosFiltro(self, idLivros):
-        print(self.groupPaineis.count())
-        print(self.groupPaineis.itemAt(1).widget().objectName())
+    def getPesquisaFiltro(self, textoPesquisa: str):
         self.groupPaineis.itemAt(1).widget().deleteLater()
 
-        painelLivros = PainelLivrosResultado(self, idLivros)
+        painelLivros = PainelLivrosResultado(self, textoPesquisa)
         painelLivros.setObjectName("painelLivrosResultado")
         self.groupPaineis.addWidget(painelLivros)

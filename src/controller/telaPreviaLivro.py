@@ -99,7 +99,8 @@ def getPagAtual(id_livro, id_usuario):
     """
 
     # Coleta a última página lida pelo usuário em pyndle.db
-    sgbd.execute("""
+    sgbd.execute("""-- noinspection SqlNoDataSourceInspectionForFile
+
         SELECT pagAtual FROM usuariosLivros 
         WHERE idLivro = ? AND idUsuario = ?
     """, (id_livro, id_usuario,))

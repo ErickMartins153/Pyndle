@@ -136,7 +136,7 @@ def apagarLivro(idLivro: int, idUsuario: int):
         conexao.commit()
 
         # Apagando livro de pyndle.db
-        if(idLivro > 7):
+        if idLivro > 7:
             sgbd.execute("""
                 DELETE FROM livros 
                 WHERE idLivro = ?
@@ -293,19 +293,31 @@ def getGeneros():
         'Romance', 'Terror', 'Hentai', "Ciências da Computação", 'Engenharia de Software'
     )
 
-def pesquisarLivro(textoPesquisa):
+def pesquisarLivro(textoPesquisa: str, genero: str = None, ordemAlfabetica: bool = None):
 
-    connection = sqlite3.connect('src/model/Pyndle.db')
-    db = connection.cursor()
+    # Começa com uma consulta base que seleciona todos os campos de livros da minha biblioteca
+    consulta = "SELECT * FROM livros WHERE titulo LIKE ? "
 
-    if(len(textoPesquisa) == 0 or textoPesquisa[0] == ' '):
-        pass
-    else:
-        db.execute("SELECT idLivro FROM livros WHERE titulo LIKE ? ", (f"%{textoPesquisa}%", ))
-        resultados = db.fetchall()
-        lista = []
-        for i in range(len(resultados)):
-            lista.append(int(resultados[i][0]))
+    # Verifica se o gênero foi especificado e adiciona a cláusula correspondente
+    if genero is not None:
+        consulta += f" AND genero = ?"
 
-        connection.close()
-        return lista
+    # Adiciona a cláusula ORDER BY para ordenação alfabética, se necessário
+    if ordemAlfabetica is not None:
+        if ordemAlfabetica:
+            consulta += " ORDER BY titulo ASC"
+        else:
+            consulta += " ORDER BY titulo DESC"
+
+    # Cria uma tupla de parâmetros para a consulta
+    parametros = (f"%{textoPesquisa}%",)
+
+    if genero is not None:
+        parametros += (genero,)
+
+    # Executa a consulta com os parâmetros apropriados
+    sgbd.execute(consulta, parametros)
+
+    # Recupera os resultados da consulta
+    resultado = sgbd.fetchall()
+    return resultado
